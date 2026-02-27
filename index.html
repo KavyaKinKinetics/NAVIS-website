@@ -4,82 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAVIS | End-of-Life Governance for LEO</title>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="navis_logo_icon.png">
     <script src="https://cdn.tailwindcss.com "></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            400: '#4d94ff',
+                            500: '#0066FF',
+                            600: '#0052cc',
+                            700: '#003d99',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300 ;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js "></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root { 
+            --color-bg: #050b14; 
+            --color-primary: #0f172a; 
+            --color-accent: #0066FF; 
+            --color-text: #e2e8f0; 
+            --color-muted: #94a3b8; 
         }
+        body { font-family: 'Inter', sans-serif; background-color: var(--color-bg); color: var(--color-text); overflow-x: hidden; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg); }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        .text-gradient { background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .reveal-text { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-text.active { opacity: 1; transform: translateY(0); }
         
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .font-display {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-        
-        /* SpaceX-style Navigation */
-        .nav-main {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 3rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-            background: transparent;
-        }
-        
-        .nav-main.scrolled {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 3rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav-link {
-            font-size: 0.75rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(255, 255, 255, 0.8);
-            transition: color 0.3s ease;
-            text-decoration: none;
-            margin-left: 2.5rem;
-        }
-        
-        .nav-link:hover {
-            color: #ffffff;
-        }
-        
-        /* Hero Section - Clean SpaceX Style */
-        .hero {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 0 5vw 15vh;
-            background: #000;
-            overflow: hidden;
-        }
-        
+        /* Hero Background Image Styling */
         .hero-bg {
             position: absolute;
             top: 0;
@@ -87,697 +52,187 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.6;
+            object-position: center;
             z-index: 0;
+            opacity: 0.6;
         }
         
+        /* Gradient overlay for better text readability */
         .hero-overlay {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.95) 100%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(5, 11, 20, 0.3) 0%, rgba(5, 11, 20, 0.7) 50%, rgba(5, 11, 20, 0.95) 100%);
             z-index: 1;
         }
         
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            max-width: 900px;
-        }
-        
-        .hero-label {
-            font-size: 0.875rem;
-            color: #3b82f6;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        
-        .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .hero-subtitle {
-            font-size: clamp(1rem, 1.5vw, 1.25rem);
-            color: rgba(255, 255, 255, 0.7);
-            max-width: 600px;
-            line-height: 1.7;
-            margin-bottom: 2.5rem;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .btn-primary {
-            background: #ffffff;
-            color: #000000;
-        }
-        
-        .btn-primary:hover {
-            background: #3b82f6;
-            color: #ffffff;
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .btn-secondary:hover {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.1);
-        }
-        
-        /* Scroll Indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            animation: bounce 2s infinite;
-            z-index: 10;
-        }
-        
-        .scroll-indicator span {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
-        
-        /* Content Sections */
-        .section {
-            padding: 8rem 5vw;
-            position: relative;
-        }
-        
-        .section-dark {
-            background: #000000;
-        }
-        
-        .section-darker {
-            background: #0a0a0a;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-label {
-            font-size: 0.75rem;
-            color: #3b82f6;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .section-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .section-text {
-            font-size: 1.125rem;
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.8;
-            max-width: 700px;
-        }
-        
-        /* Grid Layouts */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-        
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-        
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-        
-        @media (max-width: 1024px) {
-            .grid-2, .grid-3, .grid-4 {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Cards */
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .card:hover {
-            border-color: rgba(59, 130, 246, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-        }
-        
-        .card-number {
-            font-size: 0.875rem;
-            color: #3b82f6;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-        }
-        
-        .card-text {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-        }
-        
-        /* Feature List */
-        .feature-list {
-            list-style: none;
-            margin-top: 2rem;
-        }
-        
-        .feature-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(59, 130, 246, 0.1);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
-            color: #3b82f6;
-        }
-        
-        /* Comparison Section */
-        .comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .comparison-col {
-            padding: 3rem;
-        }
-        
-        .comparison-col:first-child {
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.02);
-        }
-        
-        .comparison-col:last-child {
-            background: rgba(59, 130, 246, 0.05);
-        }
-        
-        .comparison-title {
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .comparison-list {
-            list-style: none;
-        }
-        
-        .comparison-list li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 0;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .comparison-list li.negative {
-            color: rgba(255, 255, 255, 0.4);
-        }
-        
-        .comparison-list li.positive {
-            color: #ffffff;
-        }
-        
-        /* Stats */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            margin-top: 4rem;
-            padding-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .stat-value {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 1px;
-            background: linear-gradient(to bottom, #3b82f6, transparent);
-        }
-        
-        .timeline-item {
-            position: relative;
-            padding-bottom: 3rem;
-            padding-left: 2rem;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 0.5rem;
-            width: 9px;
-            height: 9px;
-            background: #000;
-            border: 2px solid #3b82f6;
-            border-radius: 50%;
-            transform: translateX(-4px);
-        }
-        
-        .timeline-date {
-            font-size: 0.75rem;
-            color: #3b82f6;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .timeline-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .timeline-text {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        /* Contact Cards */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-        
-        .contact-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
-        
-        .contact-card:hover {
-            border-color: rgba(59, 130, 246, 0.5);
-            background: rgba(59, 130, 246, 0.05);
-            transform: translateY(-5px);
-        }
-        
-        .contact-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1.5rem;
-            background: rgba(59, 130, 246, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .contact-icon svg {
-            width: 24px;
-            height: 24px;
-            color: #3b82f6;
-        }
-        
-        /* Footer */
-        .footer {
-            padding: 3rem 5vw;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-        
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-        }
-        
-        .footer-link {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-link:hover {
-            color: #ffffff;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-main {
-                padding: 1rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .hero {
-                padding: 0 1.5rem 10vh;
-            }
-            
-            .section {
-                padding: 4rem 1.5rem;
-            }
-            
-            .comparison {
-                grid-template-columns: 1fr;
-            }
-            
-            .comparison-col:first-child {
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-        }
-        
-        /* Utility */
-        .text-blue {
-            color: #3b82f6;
-        }
-        
-        .mb-4 {
-            margin-bottom: 1rem;
-        }
-        
-        .mb-6 {
-            margin-bottom: 1.5rem;
-        }
-        
-        .mb-8 {
-            margin-bottom: 2rem;
-        }
-        
-        .mt-8 {
-            margin-top: 2rem;
-        }
-        
-        .max-w-3xl {
-            max-width: 800px;
-        }
-        
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        /* Logo styling */
+        .nav-logo {
+            height: 40px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        .nav-logo:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
-<body>
+<body class="antialiased selection:bg-navy-500 selection:text-white">
 
-    <!-- Navigation -->
-    <nav class="nav-main" id="navbar">
-        <div class="flex items-center gap-3">
-            <img src="navis_logo_icon.png" alt="NAVIS" class="h-8 w-auto brightness-0 invert">
-            <span class="font-display font-bold tracking-widest text-sm">NAVIS</span>
+    <!-- Navigation with Logo -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 border-b border-white/5">
+                <div class="flex items-center gap-3">
+                    <!-- NAVIS Logo Icon -->
+                    <img src="navis_logo_icon.png" alt="NAVIS" class="nav-logo">
+                    <span class="text-xl font-bold tracking-wider text-white font-['Space_Grotesk']">NAVIS</span>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#problem" class="text-sm text-slate-400 hover:text-white transition-colors">The Problem</a>
+                    <a href="#solution" class="text-sm text-slate-400 hover:text-white transition-colors">Framework</a>
+                    <a href="#differentiation" class="text-sm text-slate-400 hover:text-white transition-colors">Differentiation</a>
+                    <a href="#roadmap" class="text-sm text-slate-400 hover:text-white transition-colors">Roadmap</a>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="mailto:contact@navis-space.com" class="hidden md:block text-sm text-slate-300 hover:text-white transition-colors">Contact</a>
+                    <button class="bg-white/5 hover:bg-white/10 text-white px-5 py-2 rounded text-sm font-medium border border-white/10 transition-all hover:border-navy-500/30">
+                        Request Demo
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="nav-links">
-            <a href="#problem" class="nav-link">The Problem</a>
-            <a href="#solution" class="nav-link">Framework</a>
-            <a href="#differentiation" class="nav-link">Differentiation</a>
-            <a href="#roadmap" class="nav-link">Roadmap</a>
-            <a href="#contact" class="nav-link">Contact</a>
-        </div>
-        <a href="#contact" class="btn btn-primary hidden md:inline-flex">Request Demo</a>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <img src="navis_intelligence_hero.png" alt="Orbital View" class="hero-bg">
+    <!-- Hero Section with Background Image -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Image -->
+        <img src="navis_intelligence_hero.png" alt="NAVIS Intelligence" class="hero-bg">
+        
+        <!-- Gradient Overlay for text readability -->
         <div class="hero-overlay"></div>
         
-        <div class="hero-content">
-            <div class="hero-label">Decision Intelligence for LEO</div>
-            <h1 class="hero-title font-display">
+        <!-- Animated Canvas Overlay (subtle effect) -->
+        <canvas id="orbital-canvas" class="absolute inset-0 z-[2] opacity-30 pointer-events-none"></canvas>
+        
+        <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-700/30 border border-navy-500/20 mb-8 reveal-text backdrop-blur-sm">
+                <span class="w-2 h-2 rounded-full bg-navy-400 animate-pulse"></span>
+                <span class="text-xs font-medium text-navy-400 tracking-wide uppercase">Decision Intelligence for LEO</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight reveal-text drop-shadow-lg" style="transition-delay: 100ms;">
                 Orbital Sustainability<br>
-                Decision Infrastructure
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-navy-400 to-blue-600">Decision Infrastructure</span>
             </h1>
-            <p class="hero-subtitle">
+            
+            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed reveal-text drop-shadow-md" style="transition-delay: 200ms;">
                 NAVIS is the governance-grade intelligence layer that determines when a satellite should exit orbit — balancing regulatory mandates, stochastic collision risk, disposal reliability, and economic exposure in one structured decision engine.
             </p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">
-                    Request Demo
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text" style="transition-delay: 300ms;">
+                <a href="mailto:demo@navis-space.com?subject=Demo Request" class="group relative px-8 py-4 bg-navy-500 hover:bg-navy-400 text-white font-semibold rounded transition-all overflow-hidden shadow-lg shadow-navy-500/20">
+                    <span class="relative z-10">Request Demo</span>
+                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </a>
-                <a href="#solution" class="btn btn-secondary">
-                    Explore Framework
+                <a href="#contact" class="px-8 py-4 bg-slate-900/50 backdrop-blur-sm border border-slate-600 hover:border-white text-white font-medium rounded transition-all hover:bg-slate-800/50">
+                    Read White Paper
                 </a>
             </div>
         </div>
-        
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-white/50">
-                <path d="M12 5v14M19 12l-7 7-7-7"/>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+            <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
         </div>
     </section>
 
     <!-- Problem Section -->
-    <section id="problem" class="section section-dark">
-        <div class="container">
-            <div class="grid-2">
-                <div class="reveal">
-                    <div class="section-label">The Challenge</div>
-                    <h2 class="section-title font-display">
-                        Orbital Congestion Is No Longer a Tracking Problem. It Is a Governance Problem.
-                    </h2>
+    <section id="problem" class="py-24 relative bg-[#050b14]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">The Challenge</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 reveal-text">Orbital Congestion Is No Longer a Tracking Problem. It Is a Governance Problem.</h3>
+                    <div class="space-y-6 text-slate-400 reveal-text">
+                        <p>Low Earth Orbit is scaling rapidly. Constellations are increasing orbital density, regulatory scrutiny is tightening, and insurers are reducing exposure to space risk.</p>
+                        <p>Operators have conjunction alerts and tracking systems — but no structured framework that determines the optimal disposal timing of a satellite.</p>
+                        <p>Today, end-of-life decisions are fragmented across engineering, compliance, and finance — without a unified quantitative model.</p>
+                    </div>
                 </div>
-                <div class="reveal">
-                    <p class="section-text mb-6">
-                        Low Earth Orbit is scaling rapidly. Constellations are increasing orbital density, regulatory scrutiny is tightening, and insurers are reducing exposure to space risk.
-                    </p>
-                    <p class="section-text mb-6">
-                        Operators have conjunction alerts and tracking systems — but no structured framework that determines the optimal disposal timing of a satellite.
-                    </p>
-                    <p class="section-text text-white">
-                        Today, end-of-life decisions are fragmented across engineering, compliance, and finance — without a unified quantitative model.
-                    </p>
+                
+                <div class="relative reveal-text">
+                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-navy-500/10 rounded-full blur-3xl"></div>
+                        <div class="space-y-6 relative z-10">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-navy-400 shrink-0">
+                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                                </div>
+                                <div><h4 class="text-white font-semibold mb-1">Engineering</h4><p class="text-sm text-slate-500">Focuses on fuel levels and technical health, often ignoring economic value.</p></div>
+                            </div>
+                            <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-blue-400 shrink-0">
+                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                </div>
+                                <div><h4 class="text-white font-semibold mb-1">Compliance</h4><p class="text-sm text-slate-500">Tracks static rules (e.g., 25-year rule) without dynamic risk assessment.</p></div>
+                            </div>
+                            <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-indigo-400 shrink-0">
+                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                </div>
+                                <div><h4 class="text-white font-semibold mb-1">Finance</h4><p class="text-sm text-slate-500">Models depreciation but lacks orbital context for risk-adjusted valuation.</p></div>
+                            </div>
+                        </div>
+                        <div class="mt-8 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+                            <p class="text-sm text-red-200 text-center font-medium">Result: Disconnected silos leading to fragmented, suboptimal disposal decisions.</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="grid-3 mt-8">
-                <div class="card reveal">
-                    <div class="card-number">01</div>
-                    <h3 class="card-title">Engineering</h3>
-                    <p class="card-text">Focuses on fuel levels and technical health, often ignoring economic value and orbital context.</p>
-                </div>
-                <div class="card reveal">
-                    <div class="card-number">02</div>
-                    <h3 class="card-title">Compliance</h3>
-                    <p class="card-text">Tracks static rules (e.g., 25-year rule) without dynamic risk assessment or stochastic modeling.</p>
-                </div>
-                <div class="card reveal">
-                    <div class="card-number">03</div>
-                    <h3 class="card-title">Finance</h3>
-                    <p class="card-text">Models depreciation but lacks orbital context for risk-adjusted valuation and collision probability.</p>
-                </div>
-            </div>
-            
-            <div class="mt-8 p-6 border border-red-500/30 bg-red-500/5 reveal">
-                <p class="text-red-400 text-center font-mono text-sm tracking-wider uppercase">
-                    Critical Gap: Disconnected silos leading to fragmented, suboptimal disposal decisions
-                </p>
             </div>
         </div>
     </section>
 
     <!-- Solution Section -->
-    <section id="solution" class="section section-darker">
-        <div class="container">
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <div class="section-label">The Solution</div>
-                <h2 class="section-title font-display">The NAVIS Framework</h2>
-                <p class="section-text mx-auto">
-                    NAVIS operates as a deterministic five-layer decision architecture integrating telemetry, regulatory encoding, probabilistic disposal modeling, stochastic collision intensity estimation, and economic exposure optimization into a single auditable output.
-                </p>
+    <section id="solution" class="py-24 bg-[#080f1e] relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">The Solution</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 reveal-text">The NAVIS Framework</h3>
+                <p class="text-slate-400 reveal-text">NAVIS operates as a deterministic five-layer decision architecture integrating telemetry, regulatory encoding, probabilistic disposal modeling, stochastic collision intensity estimation, and economic exposure optimization into a single auditable output.</p>
             </div>
-            
-            <div class="space-y-4">
-                <div class="card reveal" style="border-left: 3px solid #3b82f6;">
-                    <div class="flex items-start gap-6">
-                        <div class="text-4xl font-bold text-white/10 font-display">05</div>
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold mb-2">Decision & Economic Exposure</h3>
-                            <p class="text-white/60">Quantifies the financial impact of disposal timing, balancing residual value against liability risk in a unified optimization model.</p>
-                        </div>
+            <div class="relative max-w-4xl mx-auto">
+                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-navy-500/0 via-navy-500/30 to-navy-500/0 md:-translate-x-1/2"></div>
+                <div class="space-y-12">
+                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
+                        <div class="md:w-1/2 md:text-right order-2 md:order-1"><div class="glass-panel p-6 rounded-xl border-l-4 border-navy-500 md:border-l-0 md:border-r-4 hover:bg-slate-800/50 transition-colors"><h4 class="text-xl font-bold text-white mb-2">Layer 5: Decision & Economic Exposure</h4><p class="text-slate-400 text-sm">Quantifies the financial impact of disposal timing, balancing residual value against liability risk.</p></div></div>
+                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-navy-500 flex items-center justify-center text-navy-400 font-bold text-xl z-10 shadow-[0_0_20px_rgba(0,102,255,0.3)] order-1 md:order-2">5</div>
+                        <div class="md:w-1/2 order-3"></div>
                     </div>
-                </div>
-                
-                <div class="card reveal" style="border-left: 3px solid #3b82f6;">
-                    <div class="flex items-start gap-6">
-                        <div class="text-4xl font-bold text-white/10 font-display">04</div>
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold mb-2">Stochastic Congestion & Event Modeling</h3>
-                            <p class="text-white/60">Estimates time-dependent collision event intensity using stochastic modeling, incorporating orbital density, exposure duration, and encounter rates to quantify systemic cascade risk.</p>
-                        </div>
+                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
+                        <div class="md:w-1/2 order-3 md:order-1"></div>
+                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">4</div>
+                        <div class="md:w-1/2 md:text-left order-2 md:order-3"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors"><h4 class="text-xl font-bold text-white mb-2">Layer 4: Stochastic Congestion & Event Modeling</h4><p class="text-slate-400 text-sm">Estimates time-dependent collision event intensity using stochastic modeling, incorporating orbital density, exposure duration, and encounter rates to quantify systemic cascade risk.</p></div></div>
                     </div>
-                </div>
-                
-                <div class="card reveal">
-                    <div class="flex items-start gap-6">
-                        <div class="text-4xl font-bold text-white/10 font-display">03</div>
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold mb-2">Disposal Success Probability</h3>
-                            <p class="text-white/60">Models reliability of post-mission disposal maneuvers based on historical data, satellite health, and propulsion system status.</p>
-                        </div>
+                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
+                        <div class="md:w-1/2 md:text-right order-2 md:order-1"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors md:border-l-0 md:border-r-4"><h4 class="text-xl font-bold text-white mb-2">Layer 3: Disposal Success Probability</h4><p class="text-slate-400 text-sm">Models reliability of post-mission disposal maneuvers based on historical data and satellite health.</p></div></div>
+                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">3</div>
+                        <div class="md:w-1/2 order-3"></div>
                     </div>
-                </div>
-                
-                <div class="card reveal">
-                    <div class="flex items-start gap-6">
-                        <div class="text-4xl font-bold text-white/10 font-display">02</div>
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold mb-2">Regulatory Compliance Gates</h3>
-                            <p class="text-white/60">Explicitly encodes evolving rules (e.g., 5-year vs 25-year) into the decision logic with automated compliance verification.</p>
-                        </div>
+                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
+                        <div class="md:w-1/2 order-3 md:order-1"></div>
+                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">2</div>
+                        <div class="md:w-1/2 md:text-left order-2 md:order-3"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors"><h4 class="text-xl font-bold text-white mb-2">Layer 2: Regulatory Compliance Gates</h4><p class="text-slate-400 text-sm">Explicitly encodes evolving rules (e.g., 5-year vs 25-year) into the decision logic.</p></div></div>
                     </div>
-                </div>
-                
-                <div class="card reveal">
-                    <div class="flex items-start gap-6">
-                        <div class="text-4xl font-bold text-white/10 font-display">01</div>
-                        <div class="flex-1">
-                            <h3 class="text-xl font-semibold mb-2">Satellite State Data</h3>
-                            <p class="text-white/60">Ingests telemetry, fuel reserves, and operational status from the satellite bus in real-time.</p>
-                        </div>
+                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
+                        <div class="md:w-1/2 md:text-right order-2 md:order-1"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors md:border-l-0 md:border-r-4"><h4 class="text-xl font-bold text-white mb-2">Layer 1: Satellite State Data</h4><p class="text-slate-400 text-sm">Ingests telemetry, fuel reserves, and operational status from the satellite bus.</p></div></div>
+                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">1</div>
+                        <div class="md:w-1/2 order-3"></div>
                     </div>
                 </div>
             </div>
@@ -785,60 +240,30 @@
     </section>
 
     <!-- Differentiation Section -->
-    <section id="differentiation" class="section section-dark">
-        <div class="container">
-            <div class="text-center mb-12 reveal">
-                <div class="section-label">Differentiation</div>
-                <h2 class="section-title font-display">NAVIS Is Not SSA. It Is Decision Infrastructure.</h2>
+    <section id="differentiation" class="py-24 relative overflow-hidden bg-[#050b14]">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#050b14] via-[#0a1120] to-[#050b14]"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Differentiation</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-white reveal-text">NAVIS Is Not SSA. It Is Decision Infrastructure.</h3>
             </div>
-            
-            <div class="comparison reveal">
-                <div class="comparison-col">
-                    <h3 class="comparison-title text-white/50">
-                        <span class="w-2 h-2 rounded-full bg-white/30 inline-block"></span>
-                        NAVIS does NOT
-                    </h3>
-                    <ul class="comparison-list">
-                        <li class="negative">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                            Detect conjunction alerts
-                        </li>
-                        <li class="negative">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                            Plan avoidance maneuvers
-                        </li>
-                        <li class="negative">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                            Replace tracking systems
-                        </li>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-slate-700 reveal-text">
+                    <h4 class="text-lg font-semibold text-slate-400 mb-6 flex items-center gap-2"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>NAVIS does NOT</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Detect conjunction alerts</span></li>
+                        <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Plan avoidance maneuvers</span></li>
+                        <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Replace tracking systems</span></li>
                     </ul>
                 </div>
-                <div class="comparison-col">
-                    <h3 class="comparison-title text-blue-400">
-                        <span class="w-2 h-2 rounded-full bg-blue-500 inline-block animate-pulse"></span>
-                        NAVIS DOES
-                    </h3>
-                    <ul class="comparison-list">
-                        <li class="positive">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 text-blue-500"><path d="M20 6L9 17l-5-5"/></svg>
-                            Decide <strong class="text-blue-400">when</strong> a satellite should be disposed
-                        </li>
-                        <li class="positive">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 text-blue-500"><path d="M20 6L9 17l-5-5"/></svg>
-                            Quantify expected economic loss
-                        </li>
-                        <li class="positive">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 text-blue-500"><path d="M20 6L9 17l-5-5"/></svg>
-                            Encode regulatory rules explicitly
-                        </li>
-                        <li class="positive">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 text-blue-500"><path d="M20 6L9 17l-5-5"/></svg>
-                            Produce explainable, auditable decisions
-                        </li>
-                        <li class="positive">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 text-blue-500"><path d="M20 6L9 17l-5-5"/></svg>
-                            Models stochastic collision intensity using event-based risk estimation
-                        </li>
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-navy-500 bg-navy-950/10 reveal-text">
+                    <h4 class="text-lg font-semibold text-navy-400 mb-6 flex items-center gap-2"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>NAVIS DOES</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Decide <strong>when</strong> a satellite should be disposed</span></li>
+                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Quantify expected economic loss</span></li>
+                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Encode regulatory rules explicitly</span></li>
+                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Produce explainable, auditable decisions</span></li>
+                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Models stochastic collision intensity using event-based risk estimation</span></li>
                     </ul>
                 </div>
             </div>
@@ -846,150 +271,90 @@
     </section>
 
     <!-- Value Proposition -->
-    <section class="section section-darker">
-        <div class="container">
-            <div class="text-center mb-12 reveal">
-                <div class="section-label">Value Proposition</div>
-                <h2 class="section-title font-display">Why NAVIS Matters</h2>
+    <section class="py-24 bg-[#080f1e]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Value Proposition</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-white reveal-text">Why NAVIS Matters</h3>
             </div>
-            
-            <div class="grid-4">
-                <div class="card text-center reveal">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-blue-500/10 rounded-lg flex items-center justify-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5">
-                            <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">For Operators</h3>
-                    <p class="card-text">Risk-adjusted lifetime decisions<br>Reduced liability exposure</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text">
+                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg></div>
+                    <h4 class="text-lg font-bold text-white mb-2">For Operators</h4>
+                    <ul class="text-sm text-slate-400 space-y-2"><li>• Risk-adjusted lifetime decisions</li><li>• Reduced liability exposure</li></ul>
                 </div>
-                
-                <div class="card text-center reveal">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-emerald-500/10 rounded-lg flex items-center justify-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">For Regulators</h3>
-                    <p class="card-text">Transparent compliance evidence<br>Standardized reporting</p>
+                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                    <h4 class="text-lg font-bold text-white mb-2">For Regulators</h4>
+                    <ul class="text-sm text-slate-400 space-y-2"><li>• Transparent compliance evidence</li><li>• Standardized reporting</li></ul>
                 </div>
-                
-                <div class="card text-center reveal">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-purple-500/10 rounded-lg flex items-center justify-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5">
-                            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">For Insurers</h3>
-                    <p class="card-text">Quantifiable disposal risk<br>Actuarial data inputs</p>
+                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
+                    <h4 class="text-lg font-bold text-white mb-2">For Insurers</h4>
+                    <ul class="text-sm text-slate-400 space-y-2"><li>• Quantifiable disposal risk</li><li>• Actuarial data inputs</li></ul>
                 </div>
-                
-                <div class="card text-center reveal">
-                    <div class="w-12 h-12 mx-auto mb-4 bg-amber-500/10 rounded-lg flex items-center justify-center">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5">
-                            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">For Investors</h3>
-                    <p class="card-text">Sustainability-aligned governance<br>ESG infrastructure</p>
+                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text" style="transition-delay: 300ms;">
+                    <div class="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg></div>
+                    <h4 class="text-lg font-bold text-white mb-2">For Investors</h4>
+                    <ul class="text-sm text-slate-400 space-y-2"><li>• Sustainability-aligned governance</li><li>• ESG infrastructure</li></ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Strategic Positioning -->
-    <section class="section section-dark relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-900/10 to-transparent pointer-events-none"></div>
-        <div class="container relative z-10">
-            <div class="text-center max-w-3xl mx-auto reveal">
-                <div class="section-label">Strategic Positioning</div>
-                <h2 class="section-title font-display mb-8">Governance-Grade Decision Intelligence</h2>
-                <p class="section-text mb-6">
-                    NAVIS is not an operational control system. It operates above flight dynamics software and SSA feeds as the governance decision layer.
-                </p>
-                <p class="text-lg text-white mb-12">
-                    By transforming orbital sustainability from guideline-based policy into quantifiable stochastic risk governance, NAVIS establishes a new infrastructure category: <span class="text-blue-400 font-semibold">End-of-Life Decision Intelligence</span>.
-                </p>
+    <section class="py-24 relative bg-[#050b14]">
+        <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Strategic Positioning</h2>
+            <h3 class="text-3xl md:text-5xl font-bold text-white mb-8 reveal-text">Governance-Grade Decision Intelligence</h3>
+            <div class="space-y-6 text-lg text-slate-400 leading-relaxed reveal-text">
+                <p>NAVIS is not an operational control system. It operates above flight dynamics software and SSA feeds as the governance decision layer.</p>
+                <p>By transforming orbital sustainability from guideline-based policy into quantifiable stochastic risk governance, NAVIS establishes a new infrastructure category: <span class="text-navy-400 font-semibold">End-of-Life Decision Intelligence</span>.</p>
             </div>
-            
-            <div class="stat-grid reveal">
-                <div class="text-center">
-                    <div class="stat-value font-display">Explainable</div>
-                    <div class="stat-label">AI Framework</div>
-                </div>
-                <div class="text-center">
-                    <div class="stat-value font-display">Decision</div>
-                    <div class="stat-label">Layer Architecture</div>
-                </div>
-                <div class="text-center">
-                    <div class="stat-value font-display">Sustainability</div>
-                    <div class="stat-label">Infrastructure</div>
-                </div>
+            <div class="mt-12 grid grid-cols-3 gap-8 border-t border-white/10 pt-12 reveal-text">
+                <div><div class="text-3xl font-bold text-white mb-2">Explainable</div><div class="text-sm text-slate-500">AI Framework</div></div>
+                <div><div class="text-3xl font-bold text-white mb-2">Decision</div><div class="text-sm text-slate-500">Layer Architecture</div></div>
+                <div><div class="text-3xl font-bold text-white mb-2">Sustainability</div><div class="text-sm text-slate-500">Infrastructure</div></div>
             </div>
         </div>
     </section>
 
     <!-- Research & Roadmap -->
-    <section id="roadmap" class="section section-darker">
-        <div class="container">
-            <div class="grid-2">
-                <div class="reveal">
-                    <div class="section-label">Scientific Foundations</div>
-                    <h2 class="section-title font-display mb-6">Built on Research</h2>
-                    <p class="section-text mb-8">
-                        NAVIS is grounded in rigorous academic and industry research across multiple disciplines.
-                    </p>
-                    <ul class="space-y-4">
-                        <li class="flex items-center gap-3 text-white/80">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                            Post-Mission Disposal reliability studies
-                        </li>
-                        <li class="flex items-center gap-3 text-white/80">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                            LEO congestion modeling
-                        </li>
-                        <li class="flex items-center gap-3 text-white/80">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                            Economic loss modeling frameworks
-                        </li>
-                        <li class="flex items-center gap-3 text-white/80">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                            Regulatory evolution (25-year vs 5-year)
-                        </li>
-                        <li class="flex items-center gap-3 text-white/80">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
-                            Stochastic collision intensity modeling (Poisson-based event processes)
-                        </li>
+    <section id="roadmap" class="py-24 bg-[#080f1e]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="reveal-text">
+                    <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3">Scientific Foundations</h2>
+                    <h3 class="text-3xl font-bold text-white mb-6">Built on Research</h3>
+                    <p class="text-slate-400 mb-8">NAVIS is grounded in rigorous academic and industry research across multiple disciplines.</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Post-Mission Disposal reliability studies</li>
+                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>LEO congestion modeling</li>
+                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Economic loss modeling frameworks</li>
+                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Regulatory evolution (25-year vs 5-year)</li>
+                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Stochastic collision intensity modeling (Poisson-based event processes)</li>
                     </ul>
-                    <button class="btn btn-secondary mt-8">
-                        Download Technical Brief
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                    </button>
+                    <button class="text-navy-400 hover:text-navy-300 font-medium flex items-center gap-2 transition-colors">Download Technical Brief<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></button>
                 </div>
-                
-                <div class="reveal">
-                    <div class="section-label">Development</div>
-                    <h2 class="section-title font-display mb-6">Roadmap</h2>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-date">Current</div>
-                            <h3 class="timeline-title">Research Prototype</h3>
-                            <p class="timeline-text">Core algorithm validation and data ingestion pipelines.</p>
+                <div class="reveal-text">
+                    <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3">Development</h2>
+                    <h3 class="text-3xl font-bold text-white mb-6">Roadmap</h3>
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 group-[.is-active]:bg-navy-500/20 group-[.is-active]:border-navy-500/50 text-slate-400 group-[.is-active]:text-navy-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">1</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Research Prototype</div><time class="font-caveat font-medium text-xs text-navy-500/80">Current</time></div><div class="text-slate-400 text-sm">Core algorithm validation and data ingestion pipelines.</div></div>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">Q3 2026</div>
-                            <h3 class="timeline-title">Pilot Integration</h3>
-                            <p class="timeline-text">Integration with select operator telemetry systems.</p>
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Pilot Integration</div><time class="font-caveat font-medium text-xs text-slate-500">Q3 2026</time></div><div class="text-slate-400 text-sm">Integration with select operator telemetry systems.</div></div>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">2027</div>
-                            <h3 class="timeline-title">Operator Deployment</h3>
-                            <p class="timeline-text">Full commercial availability for constellation operators.</p>
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">3</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Operator Deployment</div><time class="font-caveat font-medium text-xs text-slate-500">2027</time></div><div class="text-slate-400 text-sm">Full commercial availability for constellation operators.</div></div>
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-date">2028</div>
-                            <h3 class="timeline-title">Regulatory Collaboration</h3>
-                            <p class="timeline-text">Standardization of EoL reporting with international agencies.</p>
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">4</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Regulatory Collaboration</div><time class="font-caveat font-medium text-xs text-slate-500">2028</time></div><div class="text-slate-400 text-sm">Standardization of EoL reporting with international agencies.</div></div>
                         </div>
                     </div>
                 </div>
@@ -998,54 +363,58 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section section-dark relative">
-        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/10 to-transparent pointer-events-none"></div>
-        <div class="container relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
-                <div class="section-label">Contact</div>
-                <h2 class="section-title font-display">Shape the Sustainable Future of LEO</h2>
-                <p class="section-text mx-auto">
-                    Join the consortium defining the governance infrastructure for the next era of space operations.
-                </p>
+    <section id="contact" class="py-24 relative overflow-hidden bg-[#050b14]">
+        <div class="absolute inset-0 bg-gradient-to-t from-navy-950/20 to-transparent"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Contact</h2>
+                <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 reveal-text">Shape the Sustainable Future of Low Earth Orbit</h3>
+                <p class="text-slate-400 text-lg reveal-text">Join the consortium defining the governance infrastructure for the next era of space operations.</p>
             </div>
-            
-            <div class="contact-grid reveal">
-                <a href="mailto:contact@navis-space.com" class="contact-card">
-                    <div class="contact-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+
+            <!-- Contact Options Grid -->
+            <div class="grid md:grid-cols-3 gap-6 mb-16 reveal-text">
+                <!-- Email -->
+                <a href="mailto:contact@navis-space.com" class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group text-center">
+                    <div class="w-12 h-12 rounded-lg bg-navy-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-navy-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
-                    <h3 class="font-semibold mb-1">Email Us</h3>
-                    <p class="text-sm text-white/50">contact@navis-space.com</p>
+                    <h4 class="text-lg font-bold text-white mb-2">Email Us</h4>
+                    <p class="text-sm text-slate-400">contact@navis.com</p>
                 </a>
-                
-                <a href="https://linkedin.com/company/navis-space " target="_blank" class="contact-card">
-                    <div class="contact-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+
+                <!-- LinkedIn -->
+                <a href="https://linkedin.com/company/navis-space " target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group text-center">
+                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                         </svg>
                     </div>
-                    <h3 class="font-semibold mb-1">LinkedIn</h3>
-                    <p class="text-sm text-white/50">Follow our company page</p>
+                    <h4 class="text-lg font-bold text-white mb-2">LinkedIn</h4>
+                    <p class="text-sm text-slate-400">Follow our company page</p>
                 </a>
-                
-                <a href="https://calendly.com/navis-space/intro " target="_blank" class="contact-card">
-                    <div class="contact-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+
+                <!-- Schedule Call -->
+                <a href="https://calendly.com/navis-space/intro " target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group text-center">
+                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
                     </div>
-                    <h3 class="font-semibold mb-1">Schedule a Call</h3>
-                    <p class="text-sm text-white/50">Book a 30-min introduction</p>
+                    <h4 class="text-lg font-bold text-white mb-2">Schedule a Call</h4>
+                    <p class="text-sm text-slate-400">Book a 30-min introduction</p>
                 </a>
             </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8 reveal">
-                <a href="mailto:partner@navis-space.com" class="btn btn-primary">
+
+            <!-- Main CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text">
+                <a href="mailto:partner@navis-space.com?subject=Partnership Inquiry" class="w-full sm:w-auto px-8 py-4 bg-navy-500 hover:bg-navy-400 text-white font-bold rounded transition-all shadow-lg shadow-navy-500/20 text-center">
                     Partner with NAVIS
                 </a>
-                <a href="mailto:contact@navis-space.com" class="btn btn-secondary">
+                <a href="mailto:contact@navis-space.com?subject=Technical Brief Request" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-slate-600 hover:border-white text-white font-medium rounded transition-all text-center">
                     Request Technical Brief
                 </a>
             </div>
@@ -1053,64 +422,94 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="flex items-center gap-3">
-            <img src="navis_logo_icon.png" alt="NAVIS" class="h-6 w-auto brightness-0 invert opacity-50">
-            <span class="text-white/50 text-sm font-display tracking-widest">NAVIS</span>
-        </div>
-        
-        <div class="footer-links">
-            <a href="#problem" class="footer-link">Platform</a>
-            <a href="#solution" class="footer-link">Framework</a>
-            <a href="#differentiation" class="footer-link">Differentiation</a>
-            <a href="#roadmap" class="footer-link">Roadmap</a>
-        </div>
-        
-        <div class="flex items-center gap-6">
-            <a href="mailto:contact@navis-space.com" class="footer-link">Contact</a>
-            <a href="https://linkedin.com/company/navis-space " target="_blank" class="footer-link">LinkedIn</a>
-            <a href="https://twitter.com/navis_space " target="_blank" class="footer-link">X</a>
-        </div>
-        
-        <div class="w-full flex justify-between items-center pt-8 mt-8 border-t border-white/10 text-xs text-white/30">
-            <span>© 2026 NAVIS Aerospace Systems. All rights reserved.</span>
-            <div class="flex gap-6">
-                <a href="#" class="hover:text-white/60 transition-colors">Privacy Policy</a>
-                <a href="#" class="hover:text-white/60 transition-colors">Terms of Service</a>
+    <footer class="border-t border-white/5 bg-[#02040a] py-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="navis_logo_icon.png" alt="NAVIS" class="w-8 h-8 rounded">
+                        <span class="text-lg font-bold text-slate-300 font-['Space_Grotesk']">NAVIS</span>
+                    </div>
+                    <p class="text-slate-500 text-sm max-w-xs">NAVIS Aerospace Systems develops governance-grade decision infrastructure for sustainable orbital operations.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#problem" class="text-slate-500 hover:text-navy-400 transition-colors">The Problem</a></li>
+                        <li><a href="#solution" class="text-slate-500 hover:text-navy-400 transition-colors">Framework</a></li>
+                        <li><a href="#differentiation" class="text-slate-500 hover:text-navy-400 transition-colors">Differentiation</a></li>
+                        <li><a href="#roadmap" class="text-slate-500 hover:text-navy-400 transition-colors">Roadmap</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Connect</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>
+                            <a href="mailto:contact@navis-space.com" class="text-slate-500 hover:text-navy-400 transition-colors flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                Email
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://linkedin.com/company/navis-space " target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-navy-400 transition-colors flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/navis_space " target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-navy-400 transition-colors flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                X (Twitter)
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-slate-600 text-sm">© 2026 NAVIS Aerospace Systems. All rights reserved.</div>
+                <div class="flex gap-6 text-sm">
+                    <a href="#" class="text-slate-500 hover:text-navy-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-slate-500 hover:text-navy-400 transition-colors">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Navigation scroll effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) { navbar.classList.add('bg-[#050b14]/90', 'backdrop-blur-md', 'shadow-lg'); } 
+            else { navbar.classList.remove('bg-[#050b14]/90', 'backdrop-blur-md', 'shadow-lg'); }
         });
-        
-        // Reveal animations
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
         }, observerOptions);
+        document.querySelectorAll('.reveal-text').forEach(el => { observer.observe(el); });
         
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
+        // Subtle canvas animation overlay
+        const canvas = document.getElementById('orbital-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        class Particle {
+            constructor() { this.reset(); }
+            reset() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 1.5 + 0.5; this.speedX = (Math.random() - 0.5) * 0.2; this.speedY = (Math.random() - 0.5) * 0.2; this.opacity = Math.random() * 0.5 + 0.1; this.life = Math.random() * 100; }
+            update() { this.x += this.speedX; this.y += this.speedY; this.life--; if (this.life < 0 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) { this.reset(); } }
+            draw() { ctx.fillStyle = `rgba(148, 163, 184, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        for (let i = 0; i < 50; i++) { particles.push(new Particle()); }
+        function animate() { ctx.clearRect(0, 0, width, height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        animate();
     </script>
 </body>
 </html>
