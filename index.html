@@ -1,754 +1,1046 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAVIS | End-of-Life Governance for LEO</title>
-    <link rel="icon" type="image/png" href="navis_logo_icon.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        veronica: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            300: '#c4b5fd',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',  // Primary violet
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            800: '#5b21b6',
-                            900: '#4c1d95',
-                            950: '#2e1065',
-                        },
-                        rose: {
-                            400: '#fb7185',
-                            500: '#f43f5e',
-                            600: '#e11d48',
-                        },
-                        midnight: {
-                            900: '#0f0518',
-                            800: '#1a0b2e',
-                            700: '#261136',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <style>
-        :root { 
-            --color-bg: #0a0514; 
-            --color-primary: #1a0b2e; 
-            --color-accent: #8b5cf6; 
-            --color-text: #f5f3ff; 
-            --color-muted: #a78bfa; 
-        }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--color-bg); 
-            color: var(--color-text); 
-            overflow-x: hidden; 
-        }
-        h1, h2, h3, h4, h5, h6 { 
-            font-family: 'Space Grotesk', sans-serif; 
-            letter-spacing: -0.02em; 
-        }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-bg); }
-        ::-webkit-scrollbar-thumb { 
-            background: #4c1d95; 
-            border-radius: 4px; 
-        }
-        ::-webkit-scrollbar-thumb:hover { background: #6d28d9; }
-        
-        .text-gradient { 
-            background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #a78bfa 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
-        .text-gradient-rose {
-            background: linear-gradient(135deg, #fbbf24 0%, #f43f5e 50%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .glass-panel { 
-            background: rgba(26, 11, 46, 0.6); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(139, 92, 246, 0.1); 
-        }
-        .glass-panel:hover {
-            border-color: rgba(139, 92, 246, 0.25);
-            background: rgba(26, 11, 46, 0.7);
-        }
-        .reveal-text { 
-            opacity: 0; 
-            transform: translateY(24px); 
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
-        }
-        .reveal-text.active { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
-        
-        /* Hero Background Styling */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 0;
-            opacity: 0.5;
-            filter: hue-rotate(260deg) saturate(1.4);
-        }
-        
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, 
-                rgba(10, 5, 20, 0.4) 0%, 
-                rgba(10, 5, 20, 0.7) 50%, 
-                rgba(10, 5, 20, 0.98) 100%);
-            z-index: 1;
-        }
-        
-        .nav-logo {
-            height: 40px;
-            width: auto;
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
-        }
-        .nav-logo:hover {
-            transform: scale(1.05) rotate(-2deg);
-            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAVIS — Orbital Governance Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─── */
+:root {
+  --black:   #08080a;
+  --black2:  #0e0e11;
+  --black3:  #141417;
+  --white:   #f5f2ec;
+  --white2:  #ccc9c0;
+  --white3:  #888680;
+  --gold:    #c9a84c;
+  --gold2:   #e8c97a;
+  --gold3:   #f7e4a8;
+  --golddim: rgba(201,168,76,0.10);
+  --goldbdr: rgba(201,168,76,0.22);
+  --bdr:     rgba(255,255,255,0.07);
+  --bdr2:    rgba(255,255,255,0.12);
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --body:    'Barlow', sans-serif;
+  --cond:    'Barlow Condensed', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  cursor: default;
+}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+::selection { background: rgba(201,168,76,0.25); color: var(--white); }
 
-        /* Aurora Background Effect */
-        .aurora-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.4;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
-        }
+/* ─── PAGE ROUTER ─── */
+.page { display: none; }
+.page.active { display: block; }
 
-        /* Glow Effects */
-        .glow-veronica {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
-        }
-        .glow-rose {
-            box-shadow: 0 0 30px rgba(244, 63, 94, 0.2);
-        }
-        
-        /* Custom Button Styles */
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-        .btn-primary:hover {
-            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
-            transform: translateY(-2px);
-        }
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 60px;
+  transition: background 0.4s, border-color 0.4s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(8,8,10,0.92);
+  backdrop-filter: blur(20px);
+  border-color: var(--bdr);
+}
+.nav-logo {
+  display: flex; align-items: baseline; gap: 3px;
+  text-decoration: none; cursor: pointer;
+}
+.nav-logo-word {
+  font-family: var(--cond);
+  font-size: 22px; font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--white);
+}
+.nav-logo-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); margin-bottom: 2px; }
+.nav-center {
+  display: flex; gap: 44px; align-items: center;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-center a {
+  font-family: var(--cond); font-size: 12px; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--white3); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-center a:hover { color: var(--gold2); }
+.nav-cta-btn {
+  font-family: var(--cond); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 10px 24px;
+  border: 1px solid var(--goldbdr);
+  color: var(--gold2);
+  background: var(--golddim);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-cta-btn:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); color: var(--gold3); }
 
-        .btn-secondary {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            transition: all 0.3s ease;
-        }
-        .btn-secondary:hover {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
-        }
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 140px 60px 100px;
+  overflow: hidden;
+}
 
-        /* Timeline specific */
-        .timeline-line {
-            background: linear-gradient(to bottom, 
-                transparent 0%, 
-                rgba(139, 92, 246, 0.3) 10%, 
-                rgba(244, 63, 94, 0.3) 90%, 
-                transparent 100%);
-        }
-    </style>
+/* Fine grid lines */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+
+/* Radial vignette to fade grid at edges */
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, var(--black) 100%);
+  pointer-events: none;
+}
+
+.hero-inner { position: relative; z-index: 2; max-width: 900px; }
+
+.hero-overline {
+  font-family: var(--cond); font-size: 11px; font-weight: 400;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  opacity: 0; animation: fadeUp 0.8s 0.1s forwards;
+}
+.hero-overline::before, .hero-overline::after {
+  content: ''; display: block; width: 40px; height: 1px; background: var(--goldbdr);
+}
+
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(52px, 8vw, 104px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  margin-bottom: 12px;
+  opacity: 0; animation: fadeUp 0.9s 0.25s forwards;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold2);
+  font-weight: 300;
+}
+.hero-title-sub {
+  font-family: var(--display);
+  font-size: clamp(14px, 1.8vw, 20px);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--white3);
+  margin-bottom: 36px;
+  opacity: 0; animation: fadeUp 0.9s 0.35s forwards;
+}
+
+.hero-desc {
+  max-width: 580px; margin: 0 auto 48px;
+  font-size: 17px; font-weight: 300; line-height: 1.75;
+  color: var(--white2);
+  opacity: 0; animation: fadeUp 0.9s 0.45s forwards;
+}
+.hero-desc strong { color: var(--white); font-weight: 400; }
+
+.hero-actions {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  opacity: 0; animation: fadeUp 0.9s 0.55s forwards;
+}
+.btn-gold {
+  font-family: var(--cond); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 16px 36px;
+  background: var(--gold);
+  color: var(--black);
+  border: none; border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-gold:hover { background: var(--gold2); transform: translateY(-1px); }
+.btn-outline {
+  font-family: var(--cond); font-size: 12px; font-weight: 400;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 15px 30px;
+  background: transparent;
+  color: var(--white2);
+  border: 1px solid var(--bdr2);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn-outline:hover { border-color: var(--goldbdr); color: var(--gold2); }
+
+/* Thin gold rule under hero */
+.hero-rule {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 80px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  z-index: 2;
+  opacity: 0; animation: fadeIn 1s 1.2s forwards;
+}
+
+/* ─── STAT BAR ─── */
+.stat-bar {
+  border-top: 1px solid var(--bdr);
+  border-bottom: 1px solid var(--bdr);
+  display: flex; align-items: stretch;
+}
+.stat-item {
+  flex: 1;
+  padding: 36px 40px;
+  border-right: 1px solid var(--bdr);
+  transition: background 0.3s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(201,168,76,0.03); }
+.stat-num {
+  font-family: var(--display); font-size: 42px; font-weight: 300;
+  color: var(--gold2); line-height: 1; margin-bottom: 6px;
+}
+.stat-label {
+  font-family: var(--cond); font-size: 11px; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--white3); line-height: 1.5;
+}
+
+/* ─── SECTION COMMONS ─── */
+.section { padding: 110px 60px; }
+.section-tag {
+  font-family: var(--cond); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-tag::after { content: ''; display: block; width: 30px; height: 1px; background: var(--goldbdr); }
+.section-h {
+  font-family: var(--display); font-size: clamp(34px, 4vw, 56px);
+  font-weight: 300; line-height: 1.1; letter-spacing: -0.01em;
+  color: var(--white); margin-bottom: 20px;
+}
+.section-h em { font-style: italic; color: var(--gold2); }
+.section-p {
+  font-size: 16px; font-weight: 300; line-height: 1.8;
+  color: var(--white2); max-width: 520px;
+}
+.container { max-width: 1120px; margin: 0 auto; }
+
+/* ─── PROBLEM ─── */
+.problem-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+.silo-stack { display: flex; flex-direction: column; gap: 0; }
+.silo-item {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--bdr);
+  display: flex; gap: 28px; align-items: flex-start;
+}
+.silo-item:first-child { border-top: 1px solid var(--bdr); }
+.silo-num {
+  font-family: var(--display); font-size: 13px;
+  color: var(--gold); min-width: 24px; padding-top: 3px;
+  font-style: italic;
+}
+.silo-title {
+  font-family: var(--cond); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--white); margin-bottom: 6px;
+}
+.silo-desc { font-size: 14px; font-weight: 300; color: var(--white3); line-height: 1.7; }
+.silo-footer {
+  margin-top: 24px; padding: 16px 24px;
+  border: 1px solid rgba(201,168,76,0.15);
+  background: rgba(201,168,76,0.04);
+  border-radius: 2px;
+  font-family: var(--cond); font-size: 12px; font-weight: 400;
+  letter-spacing: 0.08em; color: var(--gold2); line-height: 1.6;
+}
+
+/* ─── FRAMEWORK ─── */
+.framework-section { background: var(--black2); border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr); }
+.framework-header { text-align: center; max-width: 640px; margin: 0 auto 72px; }
+.framework-header .section-tag { justify-content: center; }
+.framework-header .section-tag::after { display: none; }
+.framework-grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+.fw-col {
+  padding: 40px 28px;
+  border-right: 1px solid var(--bdr);
+  position: relative;
+  transition: background 0.3s;
+}
+.fw-col:last-child { border-right: none; }
+.fw-col:hover { background: rgba(201,168,76,0.03); }
+.fw-col.hero-col { background: rgba(201,168,76,0.04); }
+.fw-col.hero-col::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+}
+.fw-layer {
+  font-family: var(--cond); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px; display: block;
+}
+.fw-title {
+  font-family: var(--display); font-size: 17px; font-weight: 400;
+  color: var(--white); line-height: 1.3; margin-bottom: 12px;
+}
+.fw-desc { font-size: 13px; font-weight: 300; color: var(--white3); line-height: 1.7; }
+
+/* ─── DIFFERENTIATION ─── */
+.diff-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.diff-panel {
+  padding: 52px 48px;
+  background: var(--black2);
+}
+.diff-panel.left { border-right: 1px solid var(--bdr); }
+.diff-panel-tag {
+  font-family: var(--cond); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 36px; display: flex; align-items: center; gap: 10px;
+}
+.diff-panel-tag.no { color: var(--white3); }
+.diff-panel-tag.yes { color: var(--gold); }
+.diff-list { display: flex; flex-direction: column; gap: 0; }
+.diff-row {
+  display: flex; gap: 20px; align-items: flex-start;
+  padding: 20px 0; border-bottom: 1px solid var(--bdr);
+  font-size: 15px; font-weight: 300; color: var(--white2); line-height: 1.6;
+}
+.diff-row:last-child { border-bottom: none; }
+.diff-marker { font-family: var(--display); font-style: italic; font-size: 15px; min-width: 16px; padding-top: 2px; }
+.diff-marker.no { color: var(--white3); }
+.diff-marker.yes { color: var(--gold); }
+.diff-row strong { color: var(--white); font-weight: 400; }
+
+/* ─── AUDIENCE ─── */
+.audience-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--bdr); }
+.aud-col {
+  padding: 40px 32px;
+  border-right: 1px solid var(--bdr);
+  transition: background 0.25s;
+}
+.aud-col:last-child { border-right: none; }
+.aud-col:hover { background: rgba(201,168,76,0.04); }
+.aud-for {
+  font-family: var(--cond); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+}
+.aud-title {
+  font-family: var(--display); font-size: 24px; font-weight: 400;
+  color: var(--white); margin-bottom: 20px;
+  border-bottom: 1px solid var(--bdr); padding-bottom: 16px;
+}
+.aud-items { display: flex; flex-direction: column; gap: 10px; }
+.aud-item { font-size: 13px; font-weight: 300; color: var(--white2); line-height: 1.5; padding-left: 14px; position: relative; }
+.aud-item::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 11px; }
+
+/* ─── ROADMAP ─── */
+.roadmap-layout { display: grid; grid-template-columns: 5fr 4fr; gap: 100px; align-items: start; }
+.roadmap-list { display: flex; flex-direction: column; gap: 0; }
+.rm-step {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 24px; align-items: start;
+  padding: 32px 0; border-bottom: 1px solid var(--bdr);
+}
+.rm-step:last-child { border-bottom: none; }
+.rm-num {
+  font-family: var(--display); font-size: 13px; font-style: italic;
+  color: var(--white3); padding-top: 4px;
+}
+.rm-num.active { color: var(--gold); }
+.rm-title {
+  font-family: var(--display); font-size: 20px; font-weight: 400;
+  color: var(--white); margin-bottom: 4px;
+}
+.rm-title.active { color: var(--gold2); }
+.rm-when {
+  font-family: var(--cond); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+}
+.rm-when .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+.rm-when.future { color: var(--white3); }
+.rm-desc { font-size: 13px; font-weight: 300; color: var(--white3); line-height: 1.7; }
+.research-panel {
+  padding: 40px;
+  border: 1px solid var(--bdr);
+  background: var(--black2);
+}
+.research-panel-title {
+  font-family: var(--cond); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 28px;
+}
+.research-items { display: flex; flex-direction: column; gap: 0; }
+.ri { padding: 16px 0; border-bottom: 1px solid var(--bdr); display: flex; gap: 18px; }
+.ri:last-child { border-bottom: none; }
+.ri-n { font-family: var(--display); font-style: italic; font-size: 13px; color: var(--gold); min-width: 20px; padding-top: 2px; }
+.ri-text { font-size: 13px; font-weight: 300; color: var(--white2); line-height: 1.6; }
+
+/* ─── CTA STRIP ─── */
+.cta-strip {
+  padding: 100px 60px;
+  background: var(--black2);
+  border-top: 1px solid var(--bdr);
+  border-bottom: 1px solid var(--bdr);
+  text-align: center;
+}
+.cta-strip .section-h { margin-bottom: 14px; }
+.cta-strip .section-h em { font-style: italic; }
+.cta-strip-sub { font-size: 16px; font-weight: 300; color: var(--white3); margin-bottom: 48px; }
+.cta-contacts { display: flex; justify-content: center; gap: 2px; margin-bottom: 40px; flex-wrap: wrap; }
+.cta-contact-item {
+  padding: 24px 36px;
+  border: 1px solid var(--bdr); background: var(--black);
+  text-align: center;
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+  min-width: 180px;
+}
+.cta-contact-item:hover { border-color: var(--goldbdr); background: var(--golddim); }
+.cca-label { font-family: var(--cond); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold2); margin-bottom: 6px; }
+.cca-val { font-size: 13px; font-weight: 300; color: var(--white2); }
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 36px 60px;
+  border-top: 1px solid var(--bdr);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { font-family: var(--cond); font-size: 16px; font-weight: 600; letter-spacing: 0.18em; color: var(--white2); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { font-family: var(--cond); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white3); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--gold2); }
+.footer-note { font-family: var(--cond); font-size: 10px; letter-spacing: 0.08em; color: var(--white3); opacity: 0.5; }
+
+/* ─── DEMO PAGE ─── */
+#demo-page {
+  min-height: 100vh;
+  background: var(--black);
+  padding: 120px 60px 80px;
+}
+.demo-inner { max-width: 680px; margin: 0 auto; }
+.demo-back {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--cond); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--white3); cursor: pointer; border: none; background: none;
+  margin-bottom: 60px; transition: color 0.2s; padding: 0;
+}
+.demo-back:hover { color: var(--gold2); }
+.demo-back svg { transition: transform 0.2s; }
+.demo-back:hover svg { transform: translateX(-3px); }
+.demo-tag { font-family: var(--cond); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.demo-title { font-family: var(--display); font-size: clamp(38px, 5vw, 62px); font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 12px; }
+.demo-title em { font-style: italic; color: var(--gold2); }
+.demo-sub { font-size: 16px; font-weight: 300; color: var(--white2); margin-bottom: 52px; line-height: 1.7; }
+.demo-rule { width: 60px; height: 1px; background: var(--goldbdr); margin-bottom: 52px; }
+
+/* Form */
+.demo-form { display: flex; flex-direction: column; gap: 28px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-field { display: flex; flex-direction: column; gap: 8px; }
+.form-field.full { grid-column: 1 / -1; }
+.form-label {
+  font-family: var(--cond); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 6px;
+}
+.form-label span { color: var(--white3); font-size: 11px; letter-spacing: 0; }
+.form-input, .form-select, .form-textarea {
+  background: var(--black2);
+  border: 1px solid var(--bdr2);
+  border-radius: 2px;
+  color: var(--white);
+  font-family: var(--body);
+  font-size: 14px; font-weight: 300;
+  padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  -webkit-appearance: none;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--white3); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--goldbdr);
+}
+.form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888680' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+.form-select option { background: #0e0e11; color: var(--white); }
+.form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+.form-divider { height: 1px; background: var(--bdr); margin: 4px 0; }
+.form-note {
+  font-size: 12px; font-weight: 300; color: var(--white3); line-height: 1.7;
+  padding: 16px 20px; border-left: 2px solid var(--goldbdr);
+  background: rgba(201,168,76,0.03);
+}
+.form-submit {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.form-submit-note { font-size: 12px; font-weight: 300; color: var(--white3); }
+
+/* Success state */
+.demo-success {
+  display: none;
+  text-align: center; padding: 60px 0;
+}
+.success-mark {
+  width: 56px; height: 56px;
+  border: 1px solid var(--goldbdr);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  color: var(--gold);
+  font-size: 22px; font-family: var(--display); font-style: italic;
+}
+.success-title { font-family: var(--display); font-size: 36px; font-weight: 300; color: var(--white); margin-bottom: 12px; }
+.success-title em { font-style: italic; color: var(--gold2); }
+.success-sub { font-size: 15px; font-weight: 300; color: var(--white2); line-height: 1.7; max-width: 420px; margin: 0 auto 36px; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.scroll-reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
+}
+.scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-center { display: none; }
+  .section { padding: 72px 24px; }
+  .hero { padding: 120px 24px 80px; }
+  .problem-layout, .diff-layout, .roadmap-layout { grid-template-columns: 1fr; gap: 48px; }
+  .framework-grid { grid-template-columns: 1fr 1fr; }
+  .fw-col { border-right: none; border-bottom: 1px solid var(--bdr); }
+  .audience-grid { grid-template-columns: 1fr 1fr; }
+  .aud-col { border-right: none; border-bottom: 1px solid var(--bdr); }
+  .stat-bar { flex-wrap: wrap; }
+  .stat-item { flex: 1 1 200px; }
+  footer { flex-direction: column; text-align: center; padding: 32px 24px; }
+  .cta-strip { padding: 72px 24px; }
+  #demo-page { padding: 100px 24px 60px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
 </head>
-<body class="antialiased selection:bg-veronica-500 selection:text-white">
+<body>
 
-    <div class="aurora-bg"></div>
+<!-- ═══════════════════════════════════════════
+     NAV (shared)
+═══════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-logo" onclick="showPage('main')">
+    <span class="nav-logo-word">NAVIS</span>
+    <span class="nav-logo-dot"></span>
+  </div>
+  <div class="nav-center">
+    <a href="#" onclick="showPage('main');scrollTo('problem');return false;">The Problem</a>
+    <a href="#" onclick="showPage('main');scrollTo('framework');return false;">Framework</a>
+    <a href="#" onclick="showPage('main');scrollTo('differentiation');return false;">Differentiation</a>
+    <a href="#" onclick="showPage('main');scrollTo('roadmap');return false;">Roadmap</a>
+  </div>
+  <button class="nav-cta-btn" onclick="showPage('demo')">Request a Demo</button>
+</nav>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-500" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20 border-b border-white/5">
-                <div class="flex items-center gap-3">
-                    <img src="navis_logo_icon.png" alt="NAVIS" class="nav-logo">
-                    <span class="text-xl font-bold tracking-wider text-white font-display">NAVIS</span>
-                </div>
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#problem" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">The Problem</a>
-                    <a href="#solution" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">Framework</a>
-                    <a href="#differentiation" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">Differentiation</a>
-                    <a href="#roadmap" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">Roadmap</a>
-                </div>
-                <div class="flex items-center gap-4">
-                    <a href="mailto:contact@navis-space.com" class="hidden md:block text-sm text-veronica-200/80 hover:text-white transition-colors">Contact</a>
-                    <button class="btn-secondary text-white px-5 py-2 rounded-lg text-sm font-medium">
-                        Request Demo
-                    </button>
-                </div>
-            </div>
+<!-- ═══════════════════════════════════════════
+     MAIN PAGE
+═══════════════════════════════════════════ -->
+<div id="main-page" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-overline">Orbital Governance Intelligence</div>
+      <h1 class="hero-title">
+        When should a<br>satellite <em>leave</em> orbit?
+      </h1>
+      <div class="hero-title-sub">NAVIS answers that question.</div>
+      <p class="hero-desc">
+        A <strong>governance-grade decision engine</strong> that integrates compliance, collision risk, disposal reliability, and economic exposure into a single auditable recommendation.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-gold" onclick="showPage('demo')">
+          Request a Demo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <a href="mailto:contact@navis-space.com?subject=Technical Brief" class="btn-outline">Technical Brief</a>
+      </div>
+    </div>
+    <div class="hero-rule"></div>
+  </section>
+
+  <!-- STAT BAR -->
+  <div class="stat-bar">
+    <div class="stat-item scroll-reveal">
+      <div class="stat-num">5yr</div>
+      <div class="stat-label">New regulatory<br>disposal mandate</div>
+    </div>
+    <div class="stat-item scroll-reveal reveal-delay-1">
+      <div class="stat-num">~60%</div>
+      <div class="stat-label">Post-mission disposal<br>compliance rate today</div>
+    </div>
+    <div class="stat-item scroll-reveal reveal-delay-2">
+      <div class="stat-num">$50M+</div>
+      <div class="stat-label">Industry baseline<br>collision exposure</div>
+    </div>
+    <div class="stat-item scroll-reveal reveal-delay-3">
+      <div class="stat-num">10k+</div>
+      <div class="stat-label">Trackable objects<br>in Low Earth Orbit</div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="section" id="problem">
+    <div class="container">
+      <div class="problem-layout">
+        <div>
+          <div class="section-tag scroll-reveal">The Challenge</div>
+          <h2 class="section-h scroll-reveal">Orbital congestion is now a <em>governance</em> problem</h2>
+          <p class="section-p scroll-reveal" style="margin-bottom:20px;">Operators have conjunction alerts and tracking systems. What they lack is a structured, quantitative framework for determining <em>when</em> a satellite should exit orbit.</p>
+          <p class="section-p scroll-reveal">End-of-life decisions are made today across disconnected silos — with no unified model to arbitrate the trade-offs between engineering, compliance, and economic risk.</p>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <img src="navis_intelligence_hero.png" alt="NAVIS Intelligence" class="hero-bg">
-        <div class="hero-overlay"></div>
-        <canvas id="orbital-canvas" class="absolute inset-0 z-[2] opacity-40 pointer-events-none"></canvas>
-        
-        <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-veronica-950/50 border border-veronica-500/20 mb-8 reveal-text backdrop-blur-md">
-                <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse shadow-[0_0_10px_rgba(244,63,94,0.8)]"></span>
-                <span class="text-xs font-medium text-veronica-300 tracking-widest uppercase">Decision Intelligence for LEO</span>
+        <div class="scroll-reveal">
+          <div class="silo-stack">
+            <div class="silo-item">
+              <span class="silo-num">I</span>
+              <div>
+                <div class="silo-title">Engineering</div>
+                <div class="silo-desc">Monitors fuel and subsystem health — but ignores economic value and regulatory timing constraints.</div>
+              </div>
             </div>
-            
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight reveal-text drop-shadow-2xl" style="transition-delay: 100ms;">
-                Orbital Sustainability<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-veronica-400 via-rose-400 to-veronica-600">Decision Infrastructure</span>
-            </h1>
-            
-            <p class="text-lg md:text-xl text-veronica-100/80 max-w-2xl mx-auto mb-10 leading-relaxed reveal-text drop-shadow-lg" style="transition-delay: 200ms;">
-                NAVIS is the governance-grade intelligence layer that determines when a satellite should exit orbit — balancing regulatory mandates, stochastic collision risk, disposal reliability, and economic exposure in one structured decision engine.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text" style="transition-delay: 300ms;">
-                <a href="mailto:demo@navis-space.com?subject=Demo Request" class="btn-primary px-8 py-4 text-white font-semibold rounded-lg shadow-lg">
-                    <span class="relative z-10 flex items-center gap-2">
-                        Request Demo
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                    </span>
-                </a>
-                <a href="#contact" class="btn-secondary px-8 py-4 text-white font-medium rounded-lg">
-                    Read White Paper
-                </a>
+            <div class="silo-item">
+              <span class="silo-num">II</span>
+              <div>
+                <div class="silo-title">Compliance</div>
+                <div class="silo-desc">Tracks static rules (the 25-year rule, now 5-year) without dynamic stochastic risk assessment.</div>
+              </div>
             </div>
+            <div class="silo-item">
+              <span class="silo-num">III</span>
+              <div>
+                <div class="silo-title">Finance</div>
+                <div class="silo-desc">Models asset depreciation but lacks orbital context for risk-adjusted exposure quantification.</div>
+              </div>
+            </div>
+          </div>
+          <div class="silo-footer">
+            Result: disconnected silos. No unified model. Suboptimal disposal timing and compounding liability risk.
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-            <svg class="w-6 h-6 text-veronica-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
+  <!-- FRAMEWORK -->
+  <section class="section framework-section" id="framework">
+    <div class="container">
+      <div class="framework-header scroll-reveal">
+        <div class="section-tag" style="justify-content:center;">The Framework</div>
+        <h2 class="section-h" style="text-align:center;">Five layers.<br>One <em>auditable</em> output.</h2>
+        <p class="section-p" style="margin:0 auto; text-align:center; max-width:500px;">A deterministic decision architecture. Each layer contributes a quantified signal to the final recommendation.</p>
+      </div>
+      <div class="framework-grid scroll-reveal">
+        <div class="fw-col">
+          <span class="fw-layer">Layer 01</span>
+          <div class="fw-title">Satellite State Data</div>
+          <div class="fw-desc">Telemetry, fuel reserves, battery health, mission age, and orbital parameters from the satellite bus.</div>
         </div>
-    </section>
-
-    <!-- Problem Section -->
-    <section id="problem" class="py-24 relative bg-[#0a0514]">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">The Challenge</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 reveal-text leading-tight">Orbital Congestion Is No Longer a Tracking Problem. <span class="text-veronica-400">It Is a Governance Problem.</span></h3>
-                    <div class="space-y-6 text-veronica-100/70 reveal-text leading-relaxed">
-                        <p>Low Earth Orbit is scaling rapidly. Constellations are increasing orbital density, regulatory scrutiny is tightening, and insurers are reducing exposure to space risk.</p>
-                        <p>Operators have conjunction alerts and tracking systems — but no structured framework that determines the optimal disposal timing of a satellite.</p>
-                        <p>Today, end-of-life decisions are fragmented across engineering, compliance, and finance — without a unified quantitative model.</p>
-                    </div>
-                </div>
-                
-                <div class="relative reveal-text">
-                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden glow-veronica">
-                        <div class="absolute top-0 right-0 w-40 h-40 bg-veronica-600/20 rounded-full blur-3xl"></div>
-                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-rose-500/10 rounded-full blur-3xl"></div>
-                        <div class="space-y-6 relative z-10">
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-veronica-950/50 border border-veronica-500/20 flex items-center justify-center text-veronica-400 shrink-0">
-                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                                </div>
-                                <div><h4 class="text-white font-semibold mb-1">Engineering</h4><p class="text-sm text-veronica-200/50">Focuses on fuel levels and technical health, often ignoring economic value.</p></div>
-                            </div>
-                            <div class="w-full h-px bg-gradient-to-r from-transparent via-veronica-500/20 to-transparent"></div>
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-veronica-950/50 border border-veronica-500/20 flex items-center justify-center text-rose-400 shrink-0">
-                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                                </div>
-                                <div><h4 class="text-white font-semibold mb-1">Compliance</h4><p class="text-sm text-veronica-200/50">Tracks static rules (e.g., 25-year rule) without dynamic risk assessment.</p></div>
-                            </div>
-                            <div class="w-full h-px bg-gradient-to-r from-transparent via-veronica-500/20 to-transparent"></div>
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-veronica-950/50 border border-veronica-500/20 flex items-center justify-center text-amber-400 shrink-0">
-                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                </div>
-                                <div><h4 class="text-white font-semibold mb-1">Finance</h4><p class="text-sm text-veronica-200/50">Models depreciation but lacks orbital context for risk-adjusted valuation.</p></div>
-                            </div>
-                        </div>
-                        <div class="mt-8 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl backdrop-blur-sm">
-                            <p class="text-sm text-rose-200 text-center font-medium">Result: Disconnected silos leading to fragmented, suboptimal disposal decisions.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="fw-col">
+          <span class="fw-layer">Layer 02</span>
+          <div class="fw-title">Regulatory Compliance Gates</div>
+          <div class="fw-desc">IADC thresholds and evolving mandates (5-year rule) encoded as live decision logic, not static checklists.</div>
         </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="solution" class="py-24 bg-[#0d0618] relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-veronica-950/10 to-transparent"></div>
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3 reveal-text">The Solution</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 reveal-text">The NAVIS Framework</h3>
-                <p class="text-veronica-100/60 text-lg reveal-text leading-relaxed">NAVIS operates as a deterministic five-layer decision architecture integrating telemetry, regulatory encoding, probabilistic disposal modeling, stochastic collision intensity estimation, and economic exposure optimization into a single auditable output.</p>
-            </div>
-            
-            <div class="relative max-w-4xl mx-auto">
-                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px timeline-line md:-translate-x-1/2"></div>
-                <div class="space-y-16">
-                    <!-- Layer 5 -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 md:text-right order-2 md:order-1">
-                            <div class="glass-panel p-6 rounded-2xl border-r-4 border-veronica-500 hover:border-rose-400 transition-all duration-500">
-                                <h4 class="text-xl font-bold text-white mb-3">Layer 5: Decision & Economic Exposure</h4>
-                                <p class="text-veronica-200/60 text-sm leading-relaxed">Quantifies the financial impact of disposal timing, balancing residual value against liability risk.</p>
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-veronica-500 to-rose-500 flex items-center justify-center text-white font-bold text-xl z-10 shadow-[0_0_30px_rgba(139,92,246,0.5)] order-1 md:order-2 group-hover:scale-110 transition-transform duration-300">5</div>
-                        <div class="md:w-1/2 order-3"></div>
-                    </div>
-
-                    <!-- Layer 4 -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 order-3 md:order-1"></div>
-                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">4</div>
-                        <div class="md:w-1/2 md:text-left order-2 md:order-3">
-                            <div class="glass-panel p-6 rounded-2xl border-l-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
-                                <h4 class="text-xl font-bold text-white mb-3">Layer 4: Stochastic Congestion</h4>
-                                <p class="text-veronica-200/60 text-sm leading-relaxed">Estimates time-dependent collision event intensity using stochastic modeling, incorporating orbital density, exposure duration, and encounter rates.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Layer 3 -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 md:text-right order-2 md:order-1">
-                            <div class="glass-panel p-6 rounded-2xl border-r-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
-                                <h4 class="text-xl font-bold text-white mb-3">Layer 3: Disposal Success Probability</h4>
-                                <p class="text-veronica-200/60 text-sm leading-relaxed">Models reliability of post-mission disposal maneuvers based on historical data and satellite health.</p>
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">3</div>
-                        <div class="md:w-1/2 order-3"></div>
-                    </div>
-
-                    <!-- Layer 2 -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 order-3 md:order-1"></div>
-                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">2</div>
-                        <div class="md:w-1/2 md:text-left order-2 md:order-3">
-                            <div class="glass-panel p-6 rounded-2xl border-l-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
-                                <h4 class="text-xl font-bold text-white mb-3">Layer 2: Regulatory Compliance Gates</h4>
-                                <p class="text-veronica-200/60 text-sm leading-relaxed">Explicitly encodes evolving rules (e.g., 5-year vs 25-year) into the decision logic.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Layer 1 -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 md:text-right order-2 md:order-1">
-                            <div class="glass-panel p-6 rounded-2xl border-r-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
-                                <h4 class="text-xl font-bold text-white mb-3">Layer 1: Satellite State Data</h4>
-                                <p class="text-veronica-200/60 text-sm leading-relaxed">Ingests telemetry, fuel reserves, and operational status from the satellite bus.</p>
-                            </div>
-                        </div>
-                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">1</div>
-                        <div class="md:w-1/2 order-3"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="fw-col">
+          <span class="fw-layer">Layer 03</span>
+          <div class="fw-title">Disposal Success Probability</div>
+          <div class="fw-desc">Reliability modelling of post-mission disposal maneuvers from health signals and orbital decay trends.</div>
         </div>
-    </section>
-
-    <!-- Differentiation Section -->
-    <section id="differentiation" class="py-24 relative overflow-hidden bg-[#0a0514]">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#0a0514] via-veronica-950/5 to-[#0a0514]"></div>
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">Differentiation</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-white reveal-text">NAVIS Is Not SSA. <span class="text-veronica-400">It Is Decision Infrastructure.</span></h3>
-            </div>
-            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-slate-700/50 reveal-text hover:border-slate-600 transition-colors">
-                    <h4 class="text-lg font-semibold text-slate-500 mb-6 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                        NAVIS does NOT
-                    </h4>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Detect conjunction alerts</span></li>
-                        <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Plan avoidance maneuvers</span></li>
-                        <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Replace tracking systems</span></li>
-                    </ul>
-                </div>
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-veronica-500 bg-gradient-to-b from-veronica-950/20 to-transparent reveal-text glow-veronica">
-                    <h4 class="text-lg font-semibold text-veronica-400 mb-6 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                        NAVIS DOES
-                    </h4>
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Decide <strong>when</strong> a satellite should be disposed</span></li>
-                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Quantify expected economic loss</span></li>
-                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Encode regulatory rules explicitly</span></li>
-                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Produce explainable, auditable decisions</span></li>
-                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span><span>Models stochastic collision intensity</span></li>
-                    </ul>
-                </div>
-            </div>
+        <div class="fw-col">
+          <span class="fw-layer">Layer 04</span>
+          <div class="fw-title">Stochastic Collision Risk</div>
+          <div class="fw-desc">Poisson encounter modelling across altitude shells, exposure duration, and orbital density — quantifying systemic cascade risk.</div>
         </div>
-    </section>
-
-    <!-- Value Proposition -->
-    <section class="py-24 bg-[#0d0618] relative">
-        <div class="absolute inset-0 bg-gradient-to-r from-veronica-950/10 via-transparent to-rose-950/10"></div>
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3 reveal-text">Value Proposition</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-white reveal-text">Why NAVIS Matters</h3>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30">
-                    <div class="w-12 h-12 rounded-xl bg-veronica-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-6 h-6 text-veronica-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-2">For Operators</h4>
-                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Risk-adjusted lifetime decisions</li><li>• Reduced liability exposure</li></ul>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30" style="transition-delay: 100ms;">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-2">For Regulators</h4>
-                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Transparent compliance evidence</li><li>• Standardized reporting</li></ul>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30" style="transition-delay: 200ms;">
-                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-2">For Insurers</h4>
-                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Quantifiable disposal risk</li><li>• Actuarial data inputs</li></ul>
-                </div>
-                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30" style="transition-delay: 300ms;">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-2">For Investors</h4>
-                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Sustainability-aligned governance</li><li>• ESG infrastructure</li></ul>
-                </div>
-            </div>
+        <div class="fw-col hero-col">
+          <span class="fw-layer">Layer 05</span>
+          <div class="fw-title">Decision &amp; Economic Exposure</div>
+          <div class="fw-desc">All signals synthesised into a scored, explainable recommendation with audit trail, insurance classification, and operator actions.</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Strategic Positioning -->
-    <section class="py-24 relative bg-[#0a0514] overflow-hidden">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-veronica-600/10 rounded-full blur-3xl"></div>
-        <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
-            <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">Strategic Positioning</h2>
-            <h3 class="text-3xl md:text-6xl font-bold text-white mb-8 reveal-text leading-tight">Governance-Grade<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-veronica-400 to-rose-400">Decision Intelligence</span></h3>
-            <div class="space-y-6 text-lg text-veronica-100/70 leading-relaxed reveal-text">
-                <p>NAVIS is not an operational control system. It operates above flight dynamics software and SSA feeds as the governance decision layer.</p>
-                <p>By transforming orbital sustainability from guideline-based policy into quantifiable stochastic risk governance, NAVIS establishes a new infrastructure category: <span class="text-veronica-400 font-semibold">End-of-Life Decision Intelligence</span>.</p>
-            </div>
-            <div class="mt-12 grid grid-cols-3 gap-8 border-t border-veronica-500/20 pt-12 reveal-text">
-                <div class="group cursor-default">
-                    <div class="text-3xl font-bold text-white mb-2 group-hover:text-veronica-400 transition-colors">Explainable</div>
-                    <div class="text-sm text-veronica-200/50">AI Framework</div>
-                </div>
-                <div class="group cursor-default">
-                    <div class="text-3xl font-bold text-white mb-2 group-hover:text-rose-400 transition-colors">Decision</div>
-                    <div class="text-sm text-veronica-200/50">Layer Architecture</div>
-                </div>
-                <div class="group cursor-default">
-                    <div class="text-3xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">Sustainability</div>
-                    <div class="text-sm text-veronica-200/50">Infrastructure</div>
-                </div>
-            </div>
+  <!-- DIFFERENTIATION -->
+  <section class="section" id="differentiation">
+    <div class="container">
+      <div class="section-tag scroll-reveal">Differentiation</div>
+      <h2 class="section-h scroll-reveal" style="max-width:600px; margin-bottom:48px;">NAVIS is not SSA.<br>It is <em>decision infrastructure.</em></h2>
+      <div class="diff-layout scroll-reveal">
+        <div class="diff-panel left">
+          <div class="diff-panel-tag no">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            NAVIS does not
+          </div>
+          <div class="diff-list">
+            <div class="diff-row"><span class="diff-marker no">—</span><span>Detect conjunction alerts or compute close-approach geometry</span></div>
+            <div class="diff-row"><span class="diff-marker no">—</span><span>Plan avoidance maneuvers or command the spacecraft</span></div>
+            <div class="diff-row"><span class="diff-marker no">—</span><span>Compete with or replace existing SSA tracking systems</span></div>
+            <div class="diff-row"><span class="diff-marker no">—</span><span>Require proprietary sensor infrastructure to operate</span></div>
+          </div>
         </div>
-    </section>
-
-    <!-- Research & Roadmap -->
-    <section id="roadmap" class="py-24 bg-[#0d0618] relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-16">
-                <div class="reveal-text">
-                    <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3">Scientific Foundations</h2>
-                    <h3 class="text-3xl font-bold text-white mb-6">Built on Research</h3>
-                    <p class="text-veronica-100/60 mb-8 leading-relaxed">NAVIS is grounded in rigorous academic and industry research across multiple disciplines.</p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Post-Mission Disposal reliability studies</li>
-                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>LEO congestion modeling</li>
-                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Economic loss modeling frameworks</li>
-                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Regulatory evolution (25-year vs 5-year)</li>
-                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Stochastic collision intensity modeling</li>
-                    </ul>
-                    <button class="text-veronica-400 hover:text-rose-400 font-medium flex items-center gap-2 transition-colors group">
-                        Download Technical Brief
-                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                    </button>
-                </div>
-                <div class="reveal-text">
-                    <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3">Development</h2>
-                    <h3 class="text-3xl font-bold text-white mb-6">Roadmap</h3>
-                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-veronica-500/30 before:to-transparent">
-                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-veronica-500 bg-veronica-500/20 text-veronica-300 shadow-[0_0_15px_rgba(139,92,246,0.3)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">1</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-veronica-500/20 bg-veronica-950/20 backdrop-blur-sm">
-                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-white">Research Prototype</div><time class="text-xs text-veronica-400 font-medium">Current</time></div>
-                                <div class="text-veronica-200/50 text-sm">Core algorithm validation and data ingestion pipelines.</div>
-                            </div>
-                        </div>
-                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-veronica-500/30 bg-veronica-950 text-veronica-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-white/[0.02]">
-                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Pilot Integration</div><time class="text-xs text-veronica-200/50">Q3 2026</time></div>
-                                <div class="text-veronica-200/40 text-sm">Integration with select operator telemetry systems.</div>
-                            </div>
-                        </div>
-                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-veronica-500/30 bg-veronica-950 text-veronica-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">3</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-white/[0.02]">
-                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Operator Deployment</div><time class="text-xs text-veronica-200/50">2027</time></div>
-                                <div class="text-veronica-200/40 text-sm">Full commercial availability for constellation operators.</div>
-                            </div>
-                        </div>
-                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-veronica-500/30 bg-veronica-950 text-veronica-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">4</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-white/[0.02]">
-                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Regulatory Collaboration</div><time class="text-xs text-veronica-200/50">2028</time></div>
-                                <div class="text-veronica-200/40 text-sm">Standardization of EoL reporting with international agencies.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="diff-panel">
+          <div class="diff-panel-tag yes">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12l5 5L20 7"/></svg>
+            NAVIS does
+          </div>
+          <div class="diff-list">
+            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Determine when</strong> a satellite should be disposed, with a scored and explainable rationale</span></div>
+            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Quantify expected economic loss</strong> from collision exposure and disposal failure probability</span></div>
+            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Encode regulatory rules</strong> as live decision constraints, not static policy documents</span></div>
+            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Produce auditable governance outputs</strong> formatted for regulators, insurers, and operators</span></div>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 relative overflow-hidden bg-[#0a0514]">
-        <div class="absolute inset-0 bg-gradient-to-t from-veronica-950/30 to-transparent"></div>
-        <div class="max-w-4xl mx-auto px-6 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">Contact</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 reveal-text">Shape the Sustainable Future of Low Earth Orbit</h3>
-                <p class="text-veronica-100/60 text-lg reveal-text">Join the consortium defining the governance infrastructure for the next era of space operations.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 mb-16 reveal-text">
-                <a href="mailto:contact@navis-space.com" class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group text-center border border-veronica-500/10 hover:border-veronica-500/30">
-                    <div class="w-12 h-12 rounded-xl bg-veronica-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-veronica-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-1">Email Us</h4>
-                    <p class="text-sm text-veronica-200/50">contact@navis.com</p>
-                </a>
-
-                <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group text-center border border-veronica-500/10 hover:border-veronica-500/30">
-                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-1">LinkedIn</h4>
-                    <p class="text-sm text-veronica-200/50">Follow our company page</p>
-                </a>
-
-                <a href="https://calendly.com/navis-space/intro" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group text-center border border-veronica-500/10 hover:border-veronica-500/30">
-                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    </div>
-                    <h4 class="text-lg font-bold text-white mb-1">Schedule a Call</h4>
-                    <p class="text-sm text-veronica-200/50">Book a 30-min introduction</p>
-                </a>
-            </div>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text">
-                <a href="mailto:partner@navis-space.com?subject=Partnership Inquiry" class="btn-primary w-full sm:w-auto px-8 py-4 text-white font-bold rounded-lg text-center">
-                    Partner with NAVIS
-                </a>
-                <a href="mailto:contact@navis-space.com?subject=Technical Brief Request" class="btn-secondary w-full sm:w-auto px-8 py-4 text-white font-medium rounded-lg text-center">
-                    Request Technical Brief
-                </a>
-            </div>
+      <!-- Audience -->
+      <div class="audience-grid scroll-reveal" style="margin-top:2px;">
+        <div class="aud-col">
+          <div class="aud-for">For</div>
+          <div class="aud-title">Operators</div>
+          <div class="aud-items">
+            <div class="aud-item">Risk-adjusted lifetime decisions</div>
+            <div class="aud-item">Reduced liability exposure</div>
+            <div class="aud-item">Audit-ready decision trail</div>
+          </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-veronica-500/10 bg-[#05030a] py-12">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div class="col-span-2">
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="navis_logo_icon.png" alt="NAVIS" class="w-8 h-8 rounded filter drop-shadow-[0_0_10px_rgba(139,92,246,0.3)]">
-                        <span class="text-lg font-bold text-slate-300 font-display">NAVIS</span>
-                    </div>
-                    <p class="text-slate-500 text-sm max-w-xs">NAVIS Aerospace Systems develops governance-grade decision infrastructure for sustainable orbital operations.</p>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Platform</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#problem" class="text-slate-500 hover:text-veronica-400 transition-colors">The Problem</a></li>
-                        <li><a href="#solution" class="text-slate-500 hover:text-veronica-400 transition-colors">Framework</a></li>
-                        <li><a href="#differentiation" class="text-slate-500 hover:text-veronica-400 transition-colors">Differentiation</a></li>
-                        <li><a href="#roadmap" class="text-slate-500 hover:text-veronica-400 transition-colors">Roadmap</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-white font-semibold mb-4">Connect</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li>
-                            <a href="mailto:contact@navis-space.com" class="text-slate-500 hover:text-veronica-400 transition-colors flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                                Email
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-veronica-400 transition-colors flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                                LinkedIn
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/navis_space" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-veronica-400 transition-colors flex items-center gap-2">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                X (Twitter)
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-veronica-500/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-slate-600 text-sm">© 2026 NAVIS Aerospace Systems. All rights reserved.</div>
-                <div class="flex gap-6 text-sm">
-                    <a href="#" class="text-slate-500 hover:text-veronica-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-slate-500 hover:text-veronica-400 transition-colors">Terms of Service</a>
-                </div>
-            </div>
+        <div class="aud-col">
+          <div class="aud-for">For</div>
+          <div class="aud-title">Regulators</div>
+          <div class="aud-items">
+            <div class="aud-item">Transparent compliance evidence</div>
+            <div class="aud-item">Standardised reporting format</div>
+            <div class="aud-item">Machine-readable audit logs</div>
+          </div>
         </div>
-    </footer>
+        <div class="aud-col">
+          <div class="aud-for">For</div>
+          <div class="aud-title">Insurers</div>
+          <div class="aud-items">
+            <div class="aud-item">Quantified disposal risk bands</div>
+            <div class="aud-item">Actuarial-grade data inputs</div>
+            <div class="aud-item">Expected loss per satellite</div>
+          </div>
+        </div>
+        <div class="aud-col">
+          <div class="aud-for">For</div>
+          <div class="aud-title">Investors</div>
+          <div class="aud-items">
+            <div class="aud-item">Sustainability infrastructure</div>
+            <div class="aud-item">ESG-aligned governance tooling</div>
+            <div class="aud-item">Regulatory tailwind exposure</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) { 
-                navbar.classList.add('bg-[#0a0514]/90', 'backdrop-blur-xl', 'shadow-lg', 'shadow-veronica-950/20'); 
-            } else { 
-                navbar.classList.remove('bg-[#0a0514]/90', 'backdrop-blur-xl', 'shadow-lg', 'shadow-veronica-950/20'); 
-            }
-        });
-        
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { 
-                if (entry.isIntersecting) { 
-                    entry.target.classList.add('active'); 
-                    observer.unobserve(entry.target); 
-                } 
-            });
-        }, observerOptions);
-        document.querySelectorAll('.reveal-text').forEach(el => { observer.observe(el); });
-        
-        // Enhanced canvas animation with Veronica colors
-        const canvas = document.getElementById('orbital-canvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        
-        function resize() { 
-            width = canvas.width = window.innerWidth; 
-            height = canvas.height = window.innerHeight; 
-        }
-        window.addEventListener('resize', resize);
-        resize();
-        
-        class Particle {
-            constructor() { 
-                this.reset(); 
-            }
-            reset() { 
-                this.x = Math.random() * width; 
-                this.y = Math.random() * height; 
-                this.size = Math.random() * 2 + 0.5; 
-                this.speedX = (Math.random() - 0.5) * 0.3; 
-                this.speedY = (Math.random() - 0.5) * 0.3; 
-                this.opacity = Math.random() * 0.6 + 0.2; 
-                this.life = Math.random() * 150;
-                this.hue = Math.random() > 0.5 ? 260 : 340; // Violet or Rose
-            }
-            update() { 
-                this.x += this.speedX; 
-                this.y += this.speedY; 
-                this.life--; 
-                if (this.life < 0 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) { 
-                    this.reset(); 
-                } 
-            }
-            draw() { 
-                const color = this.hue === 260 ? '139, 92, 246' : '244, 63, 94';
-                ctx.fillStyle = `rgba(${color}, ${this.opacity})`; 
-                ctx.beginPath(); 
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
-                ctx.fill(); 
-            }
-        }
-        
-        for (let i = 0; i < 60; i++) { 
-            particles.push(new Particle()); 
-        }
-        
-        function animate() { 
-            ctx.clearRect(0, 0, width, height); 
-            particles.forEach(p => { 
-                p.update(); 
-                p.draw(); 
-            }); 
-            requestAnimationFrame(animate); 
-        }
-        animate();
-    </script>
+  <!-- ROADMAP -->
+  <section class="section" id="roadmap" style="background:var(--black2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);">
+    <div class="container">
+      <div class="roadmap-layout">
+        <div>
+          <div class="section-tag scroll-reveal">Development Roadmap</div>
+          <h2 class="section-h scroll-reveal">What comes <em>next</em></h2>
+          <div class="roadmap-list scroll-reveal">
+            <div class="rm-step">
+              <div class="rm-num active">I</div>
+              <div>
+                <div class="rm-title active">Research Prototype</div>
+                <div class="rm-when"><span class="live-dot"></span>Current — 2026</div>
+                <div class="rm-desc">Core algorithm validation, five-layer pipeline, real satellite integration via SpaceTrack (ISS, Sentinel-6A). Working governance outputs.</div>
+              </div>
+            </div>
+            <div class="rm-step">
+              <div class="rm-num">II</div>
+              <div>
+                <div class="rm-title">Pilot Integration</div>
+                <div class="rm-when future">Q3 2026</div>
+                <div class="rm-desc">Integration with select mid-tier operator telemetry systems. Compliance rule library expansion for multiple jurisdictions.</div>
+              </div>
+            </div>
+            <div class="rm-step">
+              <div class="rm-num">III</div>
+              <div>
+                <div class="rm-title">Operator Deployment</div>
+                <div class="rm-when future">2027</div>
+                <div class="rm-desc">Commercial availability for constellation operators with 10–300 satellites in LEO. API-first architecture.</div>
+              </div>
+            </div>
+            <div class="rm-step">
+              <div class="rm-num">IV</div>
+              <div>
+                <div class="rm-title">Regulatory Standardisation</div>
+                <div class="rm-when future">2028</div>
+                <div class="rm-desc">Collaboration with international agencies on standardised EoL reporting. Cross-operator coordination layer.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-reveal">
+          <div class="research-panel">
+            <div class="research-panel-title">Scientific Foundations</div>
+            <div class="research-items">
+              <div class="ri"><span class="ri-n">i</span><span class="ri-text">Post-Mission Disposal reliability studies and failure mode analysis</span></div>
+              <div class="ri"><span class="ri-n">ii</span><span class="ri-text">LEO congestion modelling and Kessler cascade dynamics</span></div>
+              <div class="ri"><span class="ri-n">iii</span><span class="ri-text">Economic loss frameworks for orbital collision events</span></div>
+              <div class="ri"><span class="ri-n">iv</span><span class="ri-text">Regulatory evolution: IADC guidelines, FCC 5-year mandate</span></div>
+              <div class="ri"><span class="ri-n">v</span><span class="ri-text">Stochastic collision intensity via Poisson event processes</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA STRIP -->
+  <section class="cta-strip" id="contact">
+    <div class="container">
+      <div class="section-tag scroll-reveal" style="justify-content:center; margin-bottom:20px;">Contact</div>
+      <h2 class="section-h scroll-reveal" style="margin-bottom:14px;">Ready to govern your <em>orbital assets</em>?</h2>
+      <p class="cta-strip-sub scroll-reveal">We work with operators, regulators, and insurers.<br>If you operate in LEO, we want to hear from you.</p>
+      <div class="cta-contacts scroll-reveal">
+        <a href="mailto:contact@navis-space.com" class="cta-contact-item">
+          <div class="cca-label">Email</div>
+          <div class="cca-val">contact@navis-space.com</div>
+        </a>
+        <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener" class="cta-contact-item">
+          <div class="cca-label">LinkedIn</div>
+          <div class="cca-val">navis-space</div>
+        </a>
+        <a href="https://calendly.com/navis-space/intro" target="_blank" rel="noopener" class="cta-contact-item">
+          <div class="cca-label">Schedule a Call</div>
+          <div class="cca-val">30-min introduction</div>
+        </a>
+      </div>
+      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;" class="scroll-reveal">
+        <button class="btn-gold" onclick="showPage('demo')">
+          Request a Demo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <a href="mailto:contact@navis-space.com?subject=Technical Brief" class="btn-outline">Download Technical Brief</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NAVIS</div>
+    <div class="footer-links">
+      <a href="#" onclick="scrollTo('problem');return false;">Problem</a>
+      <a href="#" onclick="scrollTo('framework');return false;">Framework</a>
+      <a href="#" onclick="scrollTo('differentiation');return false;">Differentiation</a>
+      <a href="#" onclick="scrollTo('roadmap');return false;">Roadmap</a>
+    </div>
+    <div class="footer-note">© 2026 NAVIS · All outputs are recommendations only · Author: Kavya Murali Parthasarathy</div>
+  </footer>
+
+</div><!-- /main-page -->
+
+
+<!-- ═══════════════════════════════════════════
+     DEMO PAGE
+═══════════════════════════════════════════ -->
+<div id="demo-page" class="page">
+  <div id="demo-form-wrap">
+    <div class="demo-inner">
+      <button class="demo-back" onclick="showPage('main')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to NAVIS
+      </button>
+      <div class="demo-tag">Request a Demo</div>
+      <h1 class="demo-title">See NAVIS<br><em>in action.</em></h1>
+      <p class="demo-sub">Tell us about your operation. We will prepare a tailored demonstration of NAVIS applied to your satellite fleet and orbital context.</p>
+      <div class="demo-rule"></div>
+
+      <form class="demo-form" onsubmit="submitDemo(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">First Name <span>*</span></label>
+            <input class="form-input" type="text" placeholder="Kavya" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Last Name <span>*</span></label>
+            <input class="form-input" type="text" placeholder="Parthasarathy" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Work Email <span>*</span></label>
+            <input class="form-input" type="email" placeholder="you@organisation.com" required>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Organisation <span>*</span></label>
+            <input class="form-input" type="text" placeholder="Aerospace Corp" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Your Role <span>*</span></label>
+            <select class="form-select" required>
+              <option value="" disabled selected>Select your role</option>
+              <option>Satellite Operator</option>
+              <option>Mission Manager</option>
+              <option>Systems Engineer</option>
+              <option>Compliance / Legal</option>
+              <option>Regulator</option>
+              <option>Insurer / Underwriter</option>
+              <option>Investor</option>
+              <option>Researcher / Academic</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Fleet Size</label>
+            <select class="form-select">
+              <option value="" disabled selected>Number of satellites</option>
+              <option>1–10</option>
+              <option>10–50</option>
+              <option>50–150</option>
+              <option>150–300</option>
+              <option>300+</option>
+              <option>Not applicable</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Orbital Regime</label>
+          <select class="form-select">
+            <option value="" disabled selected>Where are your satellites?</option>
+            <option>LEO (200–2,000 km)</option>
+            <option>MEO (2,000–35,786 km)</option>
+            <option>GEO (≈35,786 km)</option>
+            <option>Multiple regimes</option>
+            <option>Planning stage — not yet launched</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">What brings you to NAVIS?</label>
+          <textarea class="form-textarea" placeholder="Tell us about your current EoL decision process, compliance challenges, or what you would like to see in a demonstration…"></textarea>
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-note">
+          NAVIS is a decision intelligence layer — all outputs are recommendations only. Final operational authority remains with the satellite operator. Your information will be used solely to prepare your demonstration.
+        </div>
+        <div class="form-submit">
+          <span class="form-submit-note">We respond within one business day.</span>
+          <button type="submit" class="btn-gold">
+            Submit Request
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="demo-success" id="demo-success">
+    <div class="demo-inner" style="text-align:center; padding-top:40px;">
+      <button class="demo-back" onclick="showPage('main')" style="margin:0 auto 60px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to NAVIS
+      </button>
+      <div class="success-mark">✓</div>
+      <h2 class="success-title">Request <em>received.</em></h2>
+      <p class="success-sub">Thank you. We will review your details and reach out within one business day to arrange your NAVIS demonstration.</p>
+      <button class="btn-gold" onclick="showPage('main')">
+        Return to NAVIS
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</div><!-- /demo-page -->
+
+
+<script>
+/* ─── PAGE ROUTING ─── */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id + '-page').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (id === 'demo') {
+    document.getElementById('demo-form-wrap').style.display = 'block';
+    document.getElementById('demo-success').style.display = 'none';
+  }
+}
+
+function scrollTo(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 60);
+}
+
+/* ─── NAV SCROLL ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ─── SCROLL REVEAL ─── */
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('revealed'); ro.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.scroll-reveal').forEach(el => ro.observe(el));
+
+/* ─── DEMO FORM ─── */
+function submitDemo(e) {
+  e.preventDefault();
+  document.getElementById('demo-form-wrap').style.display = 'none';
+  const s = document.getElementById('demo-success');
+  s.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
