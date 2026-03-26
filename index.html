@@ -4,47 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAVIS | End-of-Life Governance for LEO</title>
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="navis_logo_icon.png">
-    <script src="https://cdn.tailwindcss.com "></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            400: '#4d94ff',
-                            500: '#0066FF',
-                            600: '#0052cc',
-                            700: '#003d99',
+                        veronica: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',  // Primary violet
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                            950: '#2e1065',
+                        },
+                        rose: {
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                        },
+                        midnight: {
+                            900: '#0f0518',
+                            800: '#1a0b2e',
+                            700: '#261136',
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300 ;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js "></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root { 
-            --color-bg: #050b14; 
-            --color-primary: #0f172a; 
-            --color-accent: #0066FF; 
-            --color-text: #e2e8f0; 
-            --color-muted: #94a3b8; 
+            --color-bg: #0a0514; 
+            --color-primary: #1a0b2e; 
+            --color-accent: #8b5cf6; 
+            --color-text: #f5f3ff; 
+            --color-muted: #a78bfa; 
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--color-bg); color: var(--color-text); overflow-x: hidden; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--color-bg); 
+            color: var(--color-text); 
+            overflow-x: hidden; 
+        }
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Space Grotesk', sans-serif; 
+            letter-spacing: -0.02em; 
+        }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--color-bg); }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        .text-gradient { background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glass-panel { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .reveal-text { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-text.active { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar-thumb { 
+            background: #4c1d95; 
+            border-radius: 4px; 
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #6d28d9; }
         
-        /* Hero Background Image Styling */
+        .text-gradient { 
+            background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #a78bfa 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .text-gradient-rose {
+            background: linear-gradient(135deg, #fbbf24 0%, #f43f5e 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-panel { 
+            background: rgba(26, 11, 46, 0.6); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(139, 92, 246, 0.1); 
+        }
+        .glass-panel:hover {
+            border-color: rgba(139, 92, 246, 0.25);
+            background: rgba(26, 11, 46, 0.7);
+        }
+        .reveal-text { 
+            opacity: 0; 
+            transform: translateY(24px); 
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .reveal-text.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        
+        /* Hero Background Styling */
         .hero-bg {
             position: absolute;
             top: 0;
@@ -54,51 +111,125 @@
             object-fit: cover;
             object-position: center;
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.5;
+            filter: hue-rotate(260deg) saturate(1.4);
         }
         
-        /* Gradient overlay for better text readability */
         .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(5, 11, 20, 0.3) 0%, rgba(5, 11, 20, 0.7) 50%, rgba(5, 11, 20, 0.95) 100%);
+            background: linear-gradient(to bottom, 
+                rgba(10, 5, 20, 0.4) 0%, 
+                rgba(10, 5, 20, 0.7) 50%, 
+                rgba(10, 5, 20, 0.98) 100%);
             z-index: 1;
         }
         
-        /* Logo styling */
         .nav-logo {
             height: 40px;
             width: auto;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
         }
         .nav-logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(-2deg);
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5));
+        }
+
+        /* Aurora Background Effect */
+        .aurora-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
+        }
+
+        /* Glow Effects */
+        .glow-veronica {
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+        .glow-rose {
+            box-shadow: 0 0 30px rgba(244, 63, 94, 0.2);
+        }
+        
+        /* Custom Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Timeline specific */
+        .timeline-line {
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(139, 92, 246, 0.3) 10%, 
+                rgba(244, 63, 94, 0.3) 90%, 
+                transparent 100%);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-navy-500 selection:text-white">
+<body class="antialiased selection:bg-veronica-500 selection:text-white">
 
-    <!-- Navigation with Logo -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+    <div class="aurora-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-500" id="navbar">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex items-center justify-between h-20 border-b border-white/5">
                 <div class="flex items-center gap-3">
-                    <!-- NAVIS Logo Icon -->
                     <img src="navis_logo_icon.png" alt="NAVIS" class="nav-logo">
-                    <span class="text-xl font-bold tracking-wider text-white font-['Space_Grotesk']">NAVIS</span>
+                    <span class="text-xl font-bold tracking-wider text-white font-display">NAVIS</span>
                 </div>
                 <div class="hidden md:flex items-center gap-8">
-                    <a href="#problem" class="text-sm text-slate-400 hover:text-white transition-colors">The Problem</a>
-                    <a href="#solution" class="text-sm text-slate-400 hover:text-white transition-colors">Framework</a>
-                    <a href="#differentiation" class="text-sm text-slate-400 hover:text-white transition-colors">Differentiation</a>
-                    <a href="#roadmap" class="text-sm text-slate-400 hover:text-white transition-colors">Roadmap</a>
+                    <a href="#problem" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">The Problem</a>
+                    <a href="#solution" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">Framework</a>
+                    <a href="#differentiation" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">Differentiation</a>
+                    <a href="#roadmap" class="text-sm text-veronica-200/70 hover:text-white transition-colors duration-300">Roadmap</a>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="mailto:contact@navis-space.com" class="hidden md:block text-sm text-slate-300 hover:text-white transition-colors">Contact</a>
-                    <button class="bg-white/5 hover:bg-white/10 text-white px-5 py-2 rounded text-sm font-medium border border-white/10 transition-all hover:border-navy-500/30">
+                    <a href="mailto:contact@navis-space.com" class="hidden md:block text-sm text-veronica-200/80 hover:text-white transition-colors">Contact</a>
+                    <button class="btn-secondary text-white px-5 py-2 rounded-lg text-sm font-medium">
                         Request Demo
                     </button>
                 </div>
@@ -106,58 +237,55 @@
         </div>
     </nav>
 
-    <!-- Hero Section with Background Image -->
+    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Background Image -->
         <img src="navis_intelligence_hero.png" alt="NAVIS Intelligence" class="hero-bg">
-        
-        <!-- Gradient Overlay for text readability -->
         <div class="hero-overlay"></div>
-        
-        <!-- Animated Canvas Overlay (subtle effect) -->
-        <canvas id="orbital-canvas" class="absolute inset-0 z-[2] opacity-30 pointer-events-none"></canvas>
+        <canvas id="orbital-canvas" class="absolute inset-0 z-[2] opacity-40 pointer-events-none"></canvas>
         
         <div class="relative z-20 max-w-5xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-navy-700/30 border border-navy-500/20 mb-8 reveal-text backdrop-blur-sm">
-                <span class="w-2 h-2 rounded-full bg-navy-400 animate-pulse"></span>
-                <span class="text-xs font-medium text-navy-400 tracking-wide uppercase">Decision Intelligence for LEO</span>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-veronica-950/50 border border-veronica-500/20 mb-8 reveal-text backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse shadow-[0_0_10px_rgba(244,63,94,0.8)]"></span>
+                <span class="text-xs font-medium text-veronica-300 tracking-widest uppercase">Decision Intelligence for LEO</span>
             </div>
             
-            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight reveal-text drop-shadow-lg" style="transition-delay: 100ms;">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight reveal-text drop-shadow-2xl" style="transition-delay: 100ms;">
                 Orbital Sustainability<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-navy-400 to-blue-600">Decision Infrastructure</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-veronica-400 via-rose-400 to-veronica-600">Decision Infrastructure</span>
             </h1>
             
-            <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed reveal-text drop-shadow-md" style="transition-delay: 200ms;">
+            <p class="text-lg md:text-xl text-veronica-100/80 max-w-2xl mx-auto mb-10 leading-relaxed reveal-text drop-shadow-lg" style="transition-delay: 200ms;">
                 NAVIS is the governance-grade intelligence layer that determines when a satellite should exit orbit — balancing regulatory mandates, stochastic collision risk, disposal reliability, and economic exposure in one structured decision engine.
             </p>
             
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text" style="transition-delay: 300ms;">
-                <a href="mailto:demo@navis-space.com?subject=Demo Request" class="group relative px-8 py-4 bg-navy-500 hover:bg-navy-400 text-white font-semibold rounded transition-all overflow-hidden shadow-lg shadow-navy-500/20">
-                    <span class="relative z-10">Request Demo</span>
-                    <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <a href="mailto:demo@navis-space.com?subject=Demo Request" class="btn-primary px-8 py-4 text-white font-semibold rounded-lg shadow-lg">
+                    <span class="relative z-10 flex items-center gap-2">
+                        Request Demo
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </span>
                 </a>
-                <a href="#contact" class="px-8 py-4 bg-slate-900/50 backdrop-blur-sm border border-slate-600 hover:border-white text-white font-medium rounded transition-all hover:bg-slate-800/50">
+                <a href="#contact" class="btn-secondary px-8 py-4 text-white font-medium rounded-lg">
                     Read White Paper
                 </a>
             </div>
         </div>
 
         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce">
-            <svg class="w-6 h-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="w-6 h-6 text-veronica-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
         </div>
     </section>
 
     <!-- Problem Section -->
-    <section id="problem" class="py-24 relative bg-[#050b14]">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <section id="problem" class="py-24 relative bg-[#0a0514]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <div class="grid md:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">The Challenge</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 reveal-text">Orbital Congestion Is No Longer a Tracking Problem. It Is a Governance Problem.</h3>
-                    <div class="space-y-6 text-slate-400 reveal-text">
+                    <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">The Challenge</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 reveal-text leading-tight">Orbital Congestion Is No Longer a Tracking Problem. <span class="text-veronica-400">It Is a Governance Problem.</span></h3>
+                    <div class="space-y-6 text-veronica-100/70 reveal-text leading-relaxed">
                         <p>Low Earth Orbit is scaling rapidly. Constellations are increasing orbital density, regulatory scrutiny is tightening, and insurers are reducing exposure to space risk.</p>
                         <p>Operators have conjunction alerts and tracking systems — but no structured framework that determines the optimal disposal timing of a satellite.</p>
                         <p>Today, end-of-life decisions are fragmented across engineering, compliance, and finance — without a unified quantitative model.</p>
@@ -165,32 +293,33 @@
                 </div>
                 
                 <div class="relative reveal-text">
-                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-navy-500/10 rounded-full blur-3xl"></div>
+                    <div class="glass-panel rounded-2xl p-8 relative overflow-hidden glow-veronica">
+                        <div class="absolute top-0 right-0 w-40 h-40 bg-veronica-600/20 rounded-full blur-3xl"></div>
+                        <div class="absolute bottom-0 left-0 w-32 h-32 bg-rose-500/10 rounded-full blur-3xl"></div>
                         <div class="space-y-6 relative z-10">
                             <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-navy-400 shrink-0">
+                                <div class="w-12 h-12 rounded-xl bg-veronica-950/50 border border-veronica-500/20 flex items-center justify-center text-veronica-400 shrink-0">
                                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                                 </div>
-                                <div><h4 class="text-white font-semibold mb-1">Engineering</h4><p class="text-sm text-slate-500">Focuses on fuel levels and technical health, often ignoring economic value.</p></div>
+                                <div><h4 class="text-white font-semibold mb-1">Engineering</h4><p class="text-sm text-veronica-200/50">Focuses on fuel levels and technical health, often ignoring economic value.</p></div>
                             </div>
-                            <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+                            <div class="w-full h-px bg-gradient-to-r from-transparent via-veronica-500/20 to-transparent"></div>
                             <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-blue-400 shrink-0">
+                                <div class="w-12 h-12 rounded-xl bg-veronica-950/50 border border-veronica-500/20 flex items-center justify-center text-rose-400 shrink-0">
                                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                                 </div>
-                                <div><h4 class="text-white font-semibold mb-1">Compliance</h4><p class="text-sm text-slate-500">Tracks static rules (e.g., 25-year rule) without dynamic risk assessment.</p></div>
+                                <div><h4 class="text-white font-semibold mb-1">Compliance</h4><p class="text-sm text-veronica-200/50">Tracks static rules (e.g., 25-year rule) without dynamic risk assessment.</p></div>
                             </div>
-                            <div class="w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent"></div>
+                            <div class="w-full h-px bg-gradient-to-r from-transparent via-veronica-500/20 to-transparent"></div>
                             <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded bg-slate-800 border border-slate-700 flex items-center justify-center text-indigo-400 shrink-0">
+                                <div class="w-12 h-12 rounded-xl bg-veronica-950/50 border border-veronica-500/20 flex items-center justify-center text-amber-400 shrink-0">
                                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 </div>
-                                <div><h4 class="text-white font-semibold mb-1">Finance</h4><p class="text-sm text-slate-500">Models depreciation but lacks orbital context for risk-adjusted valuation.</p></div>
+                                <div><h4 class="text-white font-semibold mb-1">Finance</h4><p class="text-sm text-veronica-200/50">Models depreciation but lacks orbital context for risk-adjusted valuation.</p></div>
                             </div>
                         </div>
-                        <div class="mt-8 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-                            <p class="text-sm text-red-200 text-center font-medium">Result: Disconnected silos leading to fragmented, suboptimal disposal decisions.</p>
+                        <div class="mt-8 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl backdrop-blur-sm">
+                            <p class="text-sm text-rose-200 text-center font-medium">Result: Disconnected silos leading to fragmented, suboptimal disposal decisions.</p>
                         </div>
                     </div>
                 </div>
@@ -199,39 +328,75 @@
     </section>
 
     <!-- Solution Section -->
-    <section id="solution" class="py-24 bg-[#080f1e] relative">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">The Solution</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 reveal-text">The NAVIS Framework</h3>
-                <p class="text-slate-400 reveal-text">NAVIS operates as a deterministic five-layer decision architecture integrating telemetry, regulatory encoding, probabilistic disposal modeling, stochastic collision intensity estimation, and economic exposure optimization into a single auditable output.</p>
+    <section id="solution" class="py-24 bg-[#0d0618] relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-veronica-950/10 to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3 reveal-text">The Solution</h2>
+                <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 reveal-text">The NAVIS Framework</h3>
+                <p class="text-veronica-100/60 text-lg reveal-text leading-relaxed">NAVIS operates as a deterministic five-layer decision architecture integrating telemetry, regulatory encoding, probabilistic disposal modeling, stochastic collision intensity estimation, and economic exposure optimization into a single auditable output.</p>
             </div>
+            
             <div class="relative max-w-4xl mx-auto">
-                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-navy-500/0 via-navy-500/30 to-navy-500/0 md:-translate-x-1/2"></div>
-                <div class="space-y-12">
+                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px timeline-line md:-translate-x-1/2"></div>
+                <div class="space-y-16">
+                    <!-- Layer 5 -->
                     <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 md:text-right order-2 md:order-1"><div class="glass-panel p-6 rounded-xl border-l-4 border-navy-500 md:border-l-0 md:border-r-4 hover:bg-slate-800/50 transition-colors"><h4 class="text-xl font-bold text-white mb-2">Layer 5: Decision & Economic Exposure</h4><p class="text-slate-400 text-sm">Quantifies the financial impact of disposal timing, balancing residual value against liability risk.</p></div></div>
-                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-navy-500 flex items-center justify-center text-navy-400 font-bold text-xl z-10 shadow-[0_0_20px_rgba(0,102,255,0.3)] order-1 md:order-2">5</div>
+                        <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                            <div class="glass-panel p-6 rounded-2xl border-r-4 border-veronica-500 hover:border-rose-400 transition-all duration-500">
+                                <h4 class="text-xl font-bold text-white mb-3">Layer 5: Decision & Economic Exposure</h4>
+                                <p class="text-veronica-200/60 text-sm leading-relaxed">Quantifies the financial impact of disposal timing, balancing residual value against liability risk.</p>
+                            </div>
+                        </div>
+                        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-veronica-500 to-rose-500 flex items-center justify-center text-white font-bold text-xl z-10 shadow-[0_0_30px_rgba(139,92,246,0.5)] order-1 md:order-2 group-hover:scale-110 transition-transform duration-300">5</div>
                         <div class="md:w-1/2 order-3"></div>
                     </div>
+
+                    <!-- Layer 4 -->
                     <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
                         <div class="md:w-1/2 order-3 md:order-1"></div>
-                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">4</div>
-                        <div class="md:w-1/2 md:text-left order-2 md:order-3"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors"><h4 class="text-xl font-bold text-white mb-2">Layer 4: Stochastic Congestion & Event Modeling</h4><p class="text-slate-400 text-sm">Estimates time-dependent collision event intensity using stochastic modeling, incorporating orbital density, exposure duration, and encounter rates to quantify systemic cascade risk.</p></div></div>
+                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">4</div>
+                        <div class="md:w-1/2 md:text-left order-2 md:order-3">
+                            <div class="glass-panel p-6 rounded-2xl border-l-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
+                                <h4 class="text-xl font-bold text-white mb-3">Layer 4: Stochastic Congestion</h4>
+                                <p class="text-veronica-200/60 text-sm leading-relaxed">Estimates time-dependent collision event intensity using stochastic modeling, incorporating orbital density, exposure duration, and encounter rates.</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Layer 3 -->
                     <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 md:text-right order-2 md:order-1"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors md:border-l-0 md:border-r-4"><h4 class="text-xl font-bold text-white mb-2">Layer 3: Disposal Success Probability</h4><p class="text-slate-400 text-sm">Models reliability of post-mission disposal maneuvers based on historical data and satellite health.</p></div></div>
-                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">3</div>
+                        <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                            <div class="glass-panel p-6 rounded-2xl border-r-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
+                                <h4 class="text-xl font-bold text-white mb-3">Layer 3: Disposal Success Probability</h4>
+                                <p class="text-veronica-200/60 text-sm leading-relaxed">Models reliability of post-mission disposal maneuvers based on historical data and satellite health.</p>
+                            </div>
+                        </div>
+                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">3</div>
                         <div class="md:w-1/2 order-3"></div>
                     </div>
+
+                    <!-- Layer 2 -->
                     <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
                         <div class="md:w-1/2 order-3 md:order-1"></div>
-                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">2</div>
-                        <div class="md:w-1/2 md:text-left order-2 md:order-3"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors"><h4 class="text-xl font-bold text-white mb-2">Layer 2: Regulatory Compliance Gates</h4><p class="text-slate-400 text-sm">Explicitly encodes evolving rules (e.g., 5-year vs 25-year) into the decision logic.</p></div></div>
+                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">2</div>
+                        <div class="md:w-1/2 md:text-left order-2 md:order-3">
+                            <div class="glass-panel p-6 rounded-2xl border-l-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
+                                <h4 class="text-xl font-bold text-white mb-3">Layer 2: Regulatory Compliance Gates</h4>
+                                <p class="text-veronica-200/60 text-sm leading-relaxed">Explicitly encodes evolving rules (e.g., 5-year vs 25-year) into the decision logic.</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Layer 1 -->
                     <div class="relative flex flex-col md:flex-row items-center gap-8 reveal-text group">
-                        <div class="md:w-1/2 md:text-right order-2 md:order-1"><div class="glass-panel p-6 rounded-xl border-l-4 border-slate-600 group-hover:border-navy-400/50 transition-colors md:border-l-0 md:border-r-4"><h4 class="text-xl font-bold text-white mb-2">Layer 1: Satellite State Data</h4><p class="text-slate-400 text-sm">Ingests telemetry, fuel reserves, and operational status from the satellite bus.</p></div></div>
-                        <div class="w-16 h-16 rounded-full bg-[#080f1e] border-2 border-slate-600 group-hover:border-navy-500/50 flex items-center justify-center text-slate-300 font-bold text-xl z-10 transition-colors order-1 md:order-2">1</div>
+                        <div class="md:w-1/2 md:text-right order-2 md:order-1">
+                            <div class="glass-panel p-6 rounded-2xl border-r-4 border-veronica-500/50 group-hover:border-veronica-400 transition-all duration-500">
+                                <h4 class="text-xl font-bold text-white mb-3">Layer 1: Satellite State Data</h4>
+                                <p class="text-veronica-200/60 text-sm leading-relaxed">Ingests telemetry, fuel reserves, and operational status from the satellite bus.</p>
+                            </div>
+                        </div>
+                        <div class="w-16 h-16 rounded-full bg-veronica-950 border-2 border-veronica-500/50 group-hover:border-veronica-400 group-hover:bg-veronica-900/50 flex items-center justify-center text-veronica-300 font-bold text-xl z-10 transition-all duration-300 order-1 md:order-2">1</div>
                         <div class="md:w-1/2 order-3"></div>
                     </div>
                 </div>
@@ -240,30 +405,36 @@
     </section>
 
     <!-- Differentiation Section -->
-    <section id="differentiation" class="py-24 relative overflow-hidden bg-[#050b14]">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#050b14] via-[#0a1120] to-[#050b14]"></div>
+    <section id="differentiation" class="py-24 relative overflow-hidden bg-[#0a0514]">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0a0514] via-veronica-950/5 to-[#0a0514]"></div>
         <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Differentiation</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-white reveal-text">NAVIS Is Not SSA. It Is Decision Infrastructure.</h3>
+                <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">Differentiation</h2>
+                <h3 class="text-3xl md:text-5xl font-bold text-white reveal-text">NAVIS Is Not SSA. <span class="text-veronica-400">It Is Decision Infrastructure.</span></h3>
             </div>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-slate-700 reveal-text">
-                    <h4 class="text-lg font-semibold text-slate-400 mb-6 flex items-center gap-2"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>NAVIS does NOT</h4>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-slate-700/50 reveal-text hover:border-slate-600 transition-colors">
+                    <h4 class="text-lg font-semibold text-slate-500 mb-6 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        NAVIS does NOT
+                    </h4>
                     <ul class="space-y-4">
                         <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Detect conjunction alerts</span></li>
                         <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Plan avoidance maneuvers</span></li>
                         <li class="flex items-start gap-3 text-slate-500"><span class="w-1.5 h-1.5 rounded-full bg-slate-600 mt-2"></span><span>Replace tracking systems</span></li>
                     </ul>
                 </div>
-                <div class="glass-panel p-8 rounded-2xl border-t-4 border-navy-500 bg-navy-950/10 reveal-text">
-                    <h4 class="text-lg font-semibold text-navy-400 mb-6 flex items-center gap-2"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>NAVIS DOES</h4>
+                <div class="glass-panel p-8 rounded-2xl border-t-4 border-veronica-500 bg-gradient-to-b from-veronica-950/20 to-transparent reveal-text glow-veronica">
+                    <h4 class="text-lg font-semibold text-veronica-400 mb-6 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                        NAVIS DOES
+                    </h4>
                     <ul class="space-y-4">
-                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Decide <strong>when</strong> a satellite should be disposed</span></li>
-                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Quantify expected economic loss</span></li>
-                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Encode regulatory rules explicitly</span></li>
-                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Produce explainable, auditable decisions</span></li>
-                        <li class="flex items-start gap-3 text-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-navy-400 mt-2 shadow-[0_0_8px_rgba(0,102,255,0.8)]"></span><span>Models stochastic collision intensity using event-based risk estimation</span></li>
+                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Decide <strong>when</strong> a satellite should be disposed</span></li>
+                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Quantify expected economic loss</span></li>
+                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Encode regulatory rules explicitly</span></li>
+                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-veronica-400 mt-2 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></span><span>Produce explainable, auditable decisions</span></li>
+                        <li class="flex items-start gap-3 text-veronica-100"><span class="w-1.5 h-1.5 rounded-full bg-rose-400 mt-2 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></span><span>Models stochastic collision intensity</span></li>
                     </ul>
                 </div>
             </div>
@@ -271,90 +442,124 @@
     </section>
 
     <!-- Value Proposition -->
-    <section class="py-24 bg-[#080f1e]">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <section class="py-24 bg-[#0d0618] relative">
+        <div class="absolute inset-0 bg-gradient-to-r from-veronica-950/10 via-transparent to-rose-950/10"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Value Proposition</h2>
+                <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3 reveal-text">Value Proposition</h2>
                 <h3 class="text-3xl md:text-4xl font-bold text-white reveal-text">Why NAVIS Matters</h3>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text">
-                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg></div>
+                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30">
+                    <div class="w-12 h-12 rounded-xl bg-veronica-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-veronica-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                    </div>
                     <h4 class="text-lg font-bold text-white mb-2">For Operators</h4>
-                    <ul class="text-sm text-slate-400 space-y-2"><li>• Risk-adjusted lifetime decisions</li><li>• Reduced liability exposure</li></ul>
+                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Risk-adjusted lifetime decisions</li><li>• Reduced liability exposure</li></ul>
                 </div>
-                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text" style="transition-delay: 100ms;">
-                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30" style="transition-delay: 100ms;">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
                     <h4 class="text-lg font-bold text-white mb-2">For Regulators</h4>
-                    <ul class="text-sm text-slate-400 space-y-2"><li>• Transparent compliance evidence</li><li>• Standardized reporting</li></ul>
+                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Transparent compliance evidence</li><li>• Standardized reporting</li></ul>
                 </div>
-                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text" style="transition-delay: 200ms;">
-                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div>
+                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30" style="transition-delay: 200ms;">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    </div>
                     <h4 class="text-lg font-bold text-white mb-2">For Insurers</h4>
-                    <ul class="text-sm text-slate-400 space-y-2"><li>• Quantifiable disposal risk</li><li>• Actuarial data inputs</li></ul>
+                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Quantifiable disposal risk</li><li>• Actuarial data inputs</li></ul>
                 </div>
-                <div class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group reveal-text" style="transition-delay: 300ms;">
-                    <div class="w-12 h-12 rounded-lg bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg></div>
+                <div class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group reveal-text border border-veronica-500/10 hover:border-veronica-500/30" style="transition-delay: 300ms;">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                    </div>
                     <h4 class="text-lg font-bold text-white mb-2">For Investors</h4>
-                    <ul class="text-sm text-slate-400 space-y-2"><li>• Sustainability-aligned governance</li><li>• ESG infrastructure</li></ul>
+                    <ul class="text-sm text-veronica-200/50 space-y-2"><li>• Sustainability-aligned governance</li><li>• ESG infrastructure</li></ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Strategic Positioning -->
-    <section class="py-24 relative bg-[#050b14]">
-        <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center">
-            <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Strategic Positioning</h2>
-            <h3 class="text-3xl md:text-5xl font-bold text-white mb-8 reveal-text">Governance-Grade Decision Intelligence</h3>
-            <div class="space-y-6 text-lg text-slate-400 leading-relaxed reveal-text">
+    <section class="py-24 relative bg-[#0a0514] overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-veronica-600/10 rounded-full blur-3xl"></div>
+        <div class="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">Strategic Positioning</h2>
+            <h3 class="text-3xl md:text-6xl font-bold text-white mb-8 reveal-text leading-tight">Governance-Grade<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-veronica-400 to-rose-400">Decision Intelligence</span></h3>
+            <div class="space-y-6 text-lg text-veronica-100/70 leading-relaxed reveal-text">
                 <p>NAVIS is not an operational control system. It operates above flight dynamics software and SSA feeds as the governance decision layer.</p>
-                <p>By transforming orbital sustainability from guideline-based policy into quantifiable stochastic risk governance, NAVIS establishes a new infrastructure category: <span class="text-navy-400 font-semibold">End-of-Life Decision Intelligence</span>.</p>
+                <p>By transforming orbital sustainability from guideline-based policy into quantifiable stochastic risk governance, NAVIS establishes a new infrastructure category: <span class="text-veronica-400 font-semibold">End-of-Life Decision Intelligence</span>.</p>
             </div>
-            <div class="mt-12 grid grid-cols-3 gap-8 border-t border-white/10 pt-12 reveal-text">
-                <div><div class="text-3xl font-bold text-white mb-2">Explainable</div><div class="text-sm text-slate-500">AI Framework</div></div>
-                <div><div class="text-3xl font-bold text-white mb-2">Decision</div><div class="text-sm text-slate-500">Layer Architecture</div></div>
-                <div><div class="text-3xl font-bold text-white mb-2">Sustainability</div><div class="text-sm text-slate-500">Infrastructure</div></div>
+            <div class="mt-12 grid grid-cols-3 gap-8 border-t border-veronica-500/20 pt-12 reveal-text">
+                <div class="group cursor-default">
+                    <div class="text-3xl font-bold text-white mb-2 group-hover:text-veronica-400 transition-colors">Explainable</div>
+                    <div class="text-sm text-veronica-200/50">AI Framework</div>
+                </div>
+                <div class="group cursor-default">
+                    <div class="text-3xl font-bold text-white mb-2 group-hover:text-rose-400 transition-colors">Decision</div>
+                    <div class="text-sm text-veronica-200/50">Layer Architecture</div>
+                </div>
+                <div class="group cursor-default">
+                    <div class="text-3xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">Sustainability</div>
+                    <div class="text-sm text-veronica-200/50">Infrastructure</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Research & Roadmap -->
-    <section id="roadmap" class="py-24 bg-[#080f1e]">
+    <section id="roadmap" class="py-24 bg-[#0d0618] relative">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-16">
                 <div class="reveal-text">
-                    <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3">Scientific Foundations</h2>
+                    <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3">Scientific Foundations</h2>
                     <h3 class="text-3xl font-bold text-white mb-6">Built on Research</h3>
-                    <p class="text-slate-400 mb-8">NAVIS is grounded in rigorous academic and industry research across multiple disciplines.</p>
+                    <p class="text-veronica-100/60 mb-8 leading-relaxed">NAVIS is grounded in rigorous academic and industry research across multiple disciplines.</p>
                     <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Post-Mission Disposal reliability studies</li>
-                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>LEO congestion modeling</li>
-                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Economic loss modeling frameworks</li>
-                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Regulatory evolution (25-year vs 5-year)</li>
-                        <li class="flex items-center gap-3 text-slate-300"><svg class="w-5 h-5 text-navy-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Stochastic collision intensity modeling (Poisson-based event processes)</li>
+                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Post-Mission Disposal reliability studies</li>
+                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>LEO congestion modeling</li>
+                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Economic loss modeling frameworks</li>
+                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-veronica-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Regulatory evolution (25-year vs 5-year)</li>
+                        <li class="flex items-center gap-3 text-veronica-100/80"><svg class="w-5 h-5 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>Stochastic collision intensity modeling</li>
                     </ul>
-                    <button class="text-navy-400 hover:text-navy-300 font-medium flex items-center gap-2 transition-colors">Download Technical Brief<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg></button>
+                    <button class="text-veronica-400 hover:text-rose-400 font-medium flex items-center gap-2 transition-colors group">
+                        Download Technical Brief
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </button>
                 </div>
                 <div class="reveal-text">
-                    <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3">Development</h2>
+                    <h2 class="text-sm font-semibold text-veronica-400 tracking-wider uppercase mb-3">Development</h2>
                     <h3 class="text-3xl font-bold text-white mb-6">Roadmap</h3>
-                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-700 before:to-transparent">
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-veronica-500/30 before:to-transparent">
                         <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 group-[.is-active]:bg-navy-500/20 group-[.is-active]:border-navy-500/50 text-slate-400 group-[.is-active]:text-navy-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">1</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Research Prototype</div><time class="font-caveat font-medium text-xs text-navy-500/80">Current</time></div><div class="text-slate-400 text-sm">Core algorithm validation and data ingestion pipelines.</div></div>
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border-2 border-veronica-500 bg-veronica-500/20 text-veronica-300 shadow-[0_0_15px_rgba(139,92,246,0.3)] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">1</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-veronica-500/20 bg-veronica-950/20 backdrop-blur-sm">
+                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-white">Research Prototype</div><time class="text-xs text-veronica-400 font-medium">Current</time></div>
+                                <div class="text-veronica-200/50 text-sm">Core algorithm validation and data ingestion pipelines.</div>
+                            </div>
                         </div>
                         <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Pilot Integration</div><time class="font-caveat font-medium text-xs text-slate-500">Q3 2026</time></div><div class="text-slate-400 text-sm">Integration with select operator telemetry systems.</div></div>
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-veronica-500/30 bg-veronica-950 text-veronica-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Pilot Integration</div><time class="text-xs text-veronica-200/50">Q3 2026</time></div>
+                                <div class="text-veronica-200/40 text-sm">Integration with select operator telemetry systems.</div>
+                            </div>
                         </div>
                         <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">3</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Operator Deployment</div><time class="font-caveat font-medium text-xs text-slate-500">2027</time></div><div class="text-slate-400 text-sm">Full commercial availability for constellation operators.</div></div>
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-veronica-500/30 bg-veronica-950 text-veronica-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">3</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Operator Deployment</div><time class="text-xs text-veronica-200/50">2027</time></div>
+                                <div class="text-veronica-200/40 text-sm">Full commercial availability for constellation operators.</div>
+                            </div>
                         </div>
                         <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-slate-900 text-slate-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">4</div>
-                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded border border-white/5 bg-white/[0.02]"><div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Regulatory Collaboration</div><time class="font-caveat font-medium text-xs text-slate-500">2028</time></div><div class="text-slate-400 text-sm">Standardization of EoL reporting with international agencies.</div></div>
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-veronica-500/30 bg-veronica-950 text-veronica-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">4</div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                                <div class="flex items-center justify-between space-x-2 mb-1"><div class="font-bold text-slate-200">Regulatory Collaboration</div><time class="text-xs text-veronica-200/50">2028</time></div>
+                                <div class="text-veronica-200/40 text-sm">Standardization of EoL reporting with international agencies.</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -363,58 +568,46 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 relative overflow-hidden bg-[#050b14]">
-        <div class="absolute inset-0 bg-gradient-to-t from-navy-950/20 to-transparent"></div>
-        
+    <section id="contact" class="py-24 relative overflow-hidden bg-[#0a0514]">
+        <div class="absolute inset-0 bg-gradient-to-t from-veronica-950/30 to-transparent"></div>
         <div class="max-w-4xl mx-auto px-6 relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-sm font-semibold text-navy-400 tracking-wider uppercase mb-3 reveal-text">Contact</h2>
+                <h2 class="text-sm font-semibold text-rose-400 tracking-wider uppercase mb-3 reveal-text">Contact</h2>
                 <h3 class="text-3xl md:text-5xl font-bold text-white mb-6 reveal-text">Shape the Sustainable Future of Low Earth Orbit</h3>
-                <p class="text-slate-400 text-lg reveal-text">Join the consortium defining the governance infrastructure for the next era of space operations.</p>
+                <p class="text-veronica-100/60 text-lg reveal-text">Join the consortium defining the governance infrastructure for the next era of space operations.</p>
             </div>
 
-            <!-- Contact Options Grid -->
             <div class="grid md:grid-cols-3 gap-6 mb-16 reveal-text">
-                <!-- Email -->
-                <a href="mailto:contact@navis-space.com" class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group text-center">
-                    <div class="w-12 h-12 rounded-lg bg-navy-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-navy-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
+                <a href="mailto:contact@navis-space.com" class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group text-center border border-veronica-500/10 hover:border-veronica-500/30">
+                    <div class="w-12 h-12 rounded-xl bg-veronica-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-veronica-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     </div>
-                    <h4 class="text-lg font-bold text-white mb-2">Email Us</h4>
-                    <p class="text-sm text-slate-400">contact@navis.com</p>
+                    <h4 class="text-lg font-bold text-white mb-1">Email Us</h4>
+                    <p class="text-sm text-veronica-200/50">contact@navis.com</p>
                 </a>
 
-                <!-- LinkedIn -->
-                <a href="https://linkedin.com/company/navis-space " target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group text-center">
-                    <div class="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
+                <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group text-center border border-veronica-500/10 hover:border-veronica-500/30">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </div>
-                    <h4 class="text-lg font-bold text-white mb-2">LinkedIn</h4>
-                    <p class="text-sm text-slate-400">Follow our company page</p>
+                    <h4 class="text-lg font-bold text-white mb-1">LinkedIn</h4>
+                    <p class="text-sm text-veronica-200/50">Follow our company page</p>
                 </a>
 
-                <!-- Schedule Call -->
-                <a href="https://calendly.com/navis-space/intro " target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-xl hover:bg-slate-800/50 transition-all duration-300 group text-center">
-                    <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
+                <a href="https://calendly.com/navis-space/intro" target="_blank" rel="noopener noreferrer" class="glass-panel p-6 rounded-2xl hover:bg-veronica-950/30 transition-all duration-300 group text-center border border-veronica-500/10 hover:border-veronica-500/30">
+                    <div class="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                     </div>
-                    <h4 class="text-lg font-bold text-white mb-2">Schedule a Call</h4>
-                    <p class="text-sm text-slate-400">Book a 30-min introduction</p>
+                    <h4 class="text-lg font-bold text-white mb-1">Schedule a Call</h4>
+                    <p class="text-sm text-veronica-200/50">Book a 30-min introduction</p>
                 </a>
             </div>
 
-            <!-- Main CTA Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal-text">
-                <a href="mailto:partner@navis-space.com?subject=Partnership Inquiry" class="w-full sm:w-auto px-8 py-4 bg-navy-500 hover:bg-navy-400 text-white font-bold rounded transition-all shadow-lg shadow-navy-500/20 text-center">
+                <a href="mailto:partner@navis-space.com?subject=Partnership Inquiry" class="btn-primary w-full sm:w-auto px-8 py-4 text-white font-bold rounded-lg text-center">
                     Partner with NAVIS
                 </a>
-                <a href="mailto:contact@navis-space.com?subject=Technical Brief Request" class="w-full sm:w-auto px-8 py-4 bg-transparent border border-slate-600 hover:border-white text-white font-medium rounded transition-all text-center">
+                <a href="mailto:contact@navis-space.com?subject=Technical Brief Request" class="btn-secondary w-full sm:w-auto px-8 py-4 text-white font-medium rounded-lg text-center">
                     Request Technical Brief
                 </a>
             </div>
@@ -422,47 +615,44 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-white/5 bg-[#02040a] py-12">
+    <footer class="border-t border-veronica-500/10 bg-[#05030a] py-12">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <!-- Brand -->
                 <div class="col-span-2">
                     <div class="flex items-center gap-2 mb-4">
-                        <img src="navis_logo_icon.png" alt="NAVIS" class="w-8 h-8 rounded">
-                        <span class="text-lg font-bold text-slate-300 font-['Space_Grotesk']">NAVIS</span>
+                        <img src="navis_logo_icon.png" alt="NAVIS" class="w-8 h-8 rounded filter drop-shadow-[0_0_10px_rgba(139,92,246,0.3)]">
+                        <span class="text-lg font-bold text-slate-300 font-display">NAVIS</span>
                     </div>
                     <p class="text-slate-500 text-sm max-w-xs">NAVIS Aerospace Systems develops governance-grade decision infrastructure for sustainable orbital operations.</p>
                 </div>
 
-                <!-- Quick Links -->
                 <div>
                     <h4 class="text-white font-semibold mb-4">Platform</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#problem" class="text-slate-500 hover:text-navy-400 transition-colors">The Problem</a></li>
-                        <li><a href="#solution" class="text-slate-500 hover:text-navy-400 transition-colors">Framework</a></li>
-                        <li><a href="#differentiation" class="text-slate-500 hover:text-navy-400 transition-colors">Differentiation</a></li>
-                        <li><a href="#roadmap" class="text-slate-500 hover:text-navy-400 transition-colors">Roadmap</a></li>
+                        <li><a href="#problem" class="text-slate-500 hover:text-veronica-400 transition-colors">The Problem</a></li>
+                        <li><a href="#solution" class="text-slate-500 hover:text-veronica-400 transition-colors">Framework</a></li>
+                        <li><a href="#differentiation" class="text-slate-500 hover:text-veronica-400 transition-colors">Differentiation</a></li>
+                        <li><a href="#roadmap" class="text-slate-500 hover:text-veronica-400 transition-colors">Roadmap</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact -->
                 <div>
                     <h4 class="text-white font-semibold mb-4">Connect</h4>
                     <ul class="space-y-2 text-sm">
                         <li>
-                            <a href="mailto:contact@navis-space.com" class="text-slate-500 hover:text-navy-400 transition-colors flex items-center gap-2">
+                            <a href="mailto:contact@navis-space.com" class="text-slate-500 hover:text-veronica-400 transition-colors flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                                 Email
                             </a>
                         </li>
                         <li>
-                            <a href="https://linkedin.com/company/navis-space " target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-navy-400 transition-colors flex items-center gap-2">
+                            <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-veronica-400 transition-colors flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                                 LinkedIn
                             </a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/navis_space " target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-navy-400 transition-colors flex items-center gap-2">
+                            <a href="https://twitter.com/navis_space" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-veronica-400 transition-colors flex items-center gap-2">
                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                                 X (Twitter)
                             </a>
@@ -471,11 +661,11 @@
                 </div>
             </div>
 
-            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="border-t border-veronica-500/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-slate-600 text-sm">© 2026 NAVIS Aerospace Systems. All rights reserved.</div>
                 <div class="flex gap-6 text-sm">
-                    <a href="#" class="text-slate-500 hover:text-navy-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-slate-500 hover:text-navy-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="text-slate-500 hover:text-veronica-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-slate-500 hover:text-veronica-400 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -484,31 +674,80 @@
     <script>
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) { navbar.classList.add('bg-[#050b14]/90', 'backdrop-blur-md', 'shadow-lg'); } 
-            else { navbar.classList.remove('bg-[#050b14]/90', 'backdrop-blur-md', 'shadow-lg'); }
+            if (window.scrollY > 50) { 
+                navbar.classList.add('bg-[#0a0514]/90', 'backdrop-blur-xl', 'shadow-lg', 'shadow-veronica-950/20'); 
+            } else { 
+                navbar.classList.remove('bg-[#0a0514]/90', 'backdrop-blur-xl', 'shadow-lg', 'shadow-veronica-950/20'); 
+            }
         });
+        
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('active'); observer.unobserve(entry.target); } });
+            entries.forEach(entry => { 
+                if (entry.isIntersecting) { 
+                    entry.target.classList.add('active'); 
+                    observer.unobserve(entry.target); 
+                } 
+            });
         }, observerOptions);
         document.querySelectorAll('.reveal-text').forEach(el => { observer.observe(el); });
         
-        // Subtle canvas animation overlay
+        // Enhanced canvas animation with Veronica colors
         const canvas = document.getElementById('orbital-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
-        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        
+        function resize() { 
+            width = canvas.width = window.innerWidth; 
+            height = canvas.height = window.innerHeight; 
+        }
         window.addEventListener('resize', resize);
         resize();
+        
         class Particle {
-            constructor() { this.reset(); }
-            reset() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 1.5 + 0.5; this.speedX = (Math.random() - 0.5) * 0.2; this.speedY = (Math.random() - 0.5) * 0.2; this.opacity = Math.random() * 0.5 + 0.1; this.life = Math.random() * 100; }
-            update() { this.x += this.speedX; this.y += this.speedY; this.life--; if (this.life < 0 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) { this.reset(); } }
-            draw() { ctx.fillStyle = `rgba(148, 163, 184, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+            constructor() { 
+                this.reset(); 
+            }
+            reset() { 
+                this.x = Math.random() * width; 
+                this.y = Math.random() * height; 
+                this.size = Math.random() * 2 + 0.5; 
+                this.speedX = (Math.random() - 0.5) * 0.3; 
+                this.speedY = (Math.random() - 0.5) * 0.3; 
+                this.opacity = Math.random() * 0.6 + 0.2; 
+                this.life = Math.random() * 150;
+                this.hue = Math.random() > 0.5 ? 260 : 340; // Violet or Rose
+            }
+            update() { 
+                this.x += this.speedX; 
+                this.y += this.speedY; 
+                this.life--; 
+                if (this.life < 0 || this.x < 0 || this.x > width || this.y < 0 || this.y > height) { 
+                    this.reset(); 
+                } 
+            }
+            draw() { 
+                const color = this.hue === 260 ? '139, 92, 246' : '244, 63, 94';
+                ctx.fillStyle = `rgba(${color}, ${this.opacity})`; 
+                ctx.beginPath(); 
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); 
+                ctx.fill(); 
+            }
         }
-        for (let i = 0; i < 50; i++) { particles.push(new Particle()); }
-        function animate() { ctx.clearRect(0, 0, width, height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        
+        for (let i = 0; i < 60; i++) { 
+            particles.push(new Particle()); 
+        }
+        
+        function animate() { 
+            ctx.clearRect(0, 0, width, height); 
+            particles.forEach(p => { 
+                p.update(); 
+                p.draw(); 
+            }); 
+            requestAnimationFrame(animate); 
+        }
         animate();
     </script>
 </body>
