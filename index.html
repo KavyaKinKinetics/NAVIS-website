@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ─── TOKENS ─── */
 :root {
   --black:   #08080a;
   --black2:  #0e0e11;
@@ -21,932 +20,746 @@
   --golddim: rgba(201,168,76,0.10);
   --goldbdr: rgba(201,168,76,0.22);
   --bdr:     rgba(255,255,255,0.07);
-  --bdr2:    rgba(255,255,255,0.12);
+  --bdr2:    rgba(255,255,255,0.13);
   --display: 'Cormorant Garamond', Georgia, serif;
   --body:    'Barlow', sans-serif;
   --cond:    'Barlow Condensed', sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 18px; }
 body {
   font-family: var(--body);
   background: var(--black);
   color: var(--white);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  cursor: default;
 }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 ::selection { background: rgba(201,168,76,0.25); color: var(--white); }
 
-/* ─── PAGE ROUTER ─── */
 .page { display: none; }
 .page.active { display: block; }
 
 /* ─── NAV ─── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 72px;
+  height: 76px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 60px;
-  transition: background 0.4s, border-color 0.4s;
+  padding: 0 64px;
   border-bottom: 1px solid transparent;
+  transition: background 0.4s, border-color 0.4s;
 }
 nav.scrolled {
-  background: rgba(8,8,10,0.92);
+  background: rgba(8,8,10,0.93);
   backdrop-filter: blur(20px);
   border-color: var(--bdr);
 }
 .nav-logo {
-  display: flex; align-items: baseline; gap: 3px;
-  text-decoration: none; cursor: pointer;
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; text-decoration: none;
 }
 .nav-logo-word {
-  font-family: var(--cond);
-  font-size: 22px; font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--white);
+  font-family: var(--cond); font-size: 24px; font-weight: 600;
+  letter-spacing: 0.2em; color: var(--white);
 }
-.nav-logo-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); margin-bottom: 2px; }
+.nav-logo-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
 .nav-center {
-  display: flex; gap: 44px; align-items: center;
+  display: flex; gap: 48px; align-items: center;
   position: absolute; left: 50%; transform: translateX(-50%);
 }
 .nav-center a {
-  font-family: var(--cond); font-size: 12px; font-weight: 400;
+  font-family: var(--cond); font-size: 13px; font-weight: 400;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--white3); text-decoration: none;
-  transition: color 0.2s;
+  color: var(--white3); text-decoration: none; transition: color 0.2s;
 }
 .nav-center a:hover { color: var(--gold2); }
 .nav-cta-btn {
-  font-family: var(--cond); font-size: 11px; font-weight: 500;
+  font-family: var(--cond); font-size: 12px; font-weight: 500;
   letter-spacing: 0.14em; text-transform: uppercase;
-  padding: 10px 24px;
-  border: 1px solid var(--goldbdr);
-  color: var(--gold2);
-  background: var(--golddim);
-  border-radius: 2px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  white-space: nowrap;
+  padding: 11px 26px;
+  border: 1px solid var(--goldbdr); color: var(--gold2);
+  background: var(--golddim); border-radius: 2px;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 .nav-cta-btn:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); color: var(--gold3); }
 
 /* ─── HERO ─── */
 .hero {
-  position: relative;
-  min-height: 100vh;
+  position: relative; min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  text-align: center;
-  padding: 140px 60px 100px;
-  overflow: hidden;
+  text-align: center; padding: 150px 64px 110px; overflow: hidden;
 }
-
-/* Fine grid lines */
 .hero::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
   background-size: 80px 80px;
-  pointer-events: none;
 }
-
-/* Radial vignette to fade grid at edges */
 .hero::after {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 30%, var(--black) 100%);
-  pointer-events: none;
+  background: radial-gradient(ellipse 70% 65% at 50% 50%, transparent 25%, var(--black) 100%);
 }
-
-.hero-inner { position: relative; z-index: 2; max-width: 900px; }
-
+.hero-inner { position: relative; z-index: 2; max-width: 980px; }
 .hero-overline {
-  font-family: var(--cond); font-size: 11px; font-weight: 400;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 32px;
-  display: flex; align-items: center; justify-content: center; gap: 14px;
+  font-family: var(--cond); font-size: 12px; font-weight: 400;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 36px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
   opacity: 0; animation: fadeUp 0.8s 0.1s forwards;
 }
 .hero-overline::before, .hero-overline::after {
-  content: ''; display: block; width: 40px; height: 1px; background: var(--goldbdr);
+  content: ''; display: block; width: 44px; height: 1px; background: var(--goldbdr);
 }
-
 .hero-title {
   font-family: var(--display);
-  font-size: clamp(52px, 8vw, 104px);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.01em;
-  color: var(--white);
-  margin-bottom: 12px;
+  font-size: clamp(56px, 8.5vw, 112px);
+  font-weight: 300; line-height: 0.95; letter-spacing: -0.01em;
+  color: var(--white); margin-bottom: 14px;
   opacity: 0; animation: fadeUp 0.9s 0.25s forwards;
 }
-.hero-title em {
-  font-style: italic;
-  color: var(--gold2);
-  font-weight: 300;
-}
+.hero-title em { font-style: italic; color: var(--gold2); font-weight: 300; }
 .hero-title-sub {
-  font-family: var(--display);
-  font-size: clamp(14px, 1.8vw, 20px);
-  font-weight: 300;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--white3);
-  margin-bottom: 36px;
+  font-family: var(--display); font-size: clamp(16px, 2vw, 22px);
+  font-weight: 300; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--white3); margin-bottom: 40px;
   opacity: 0; animation: fadeUp 0.9s 0.35s forwards;
 }
-
 .hero-desc {
-  max-width: 580px; margin: 0 auto 48px;
-  font-size: 17px; font-weight: 300; line-height: 1.75;
-  color: var(--white2);
+  max-width: 620px; margin: 0 auto 52px;
+  font-size: 19px; font-weight: 300; line-height: 1.75; color: var(--white2);
   opacity: 0; animation: fadeUp 0.9s 0.45s forwards;
 }
 .hero-desc strong { color: var(--white); font-weight: 400; }
-
 .hero-actions {
   display: flex; align-items: center; justify-content: center; gap: 16px;
   opacity: 0; animation: fadeUp 0.9s 0.55s forwards;
 }
 .btn-gold {
-  font-family: var(--cond); font-size: 12px; font-weight: 500;
+  font-family: var(--cond); font-size: 13px; font-weight: 500;
   letter-spacing: 0.16em; text-transform: uppercase;
-  padding: 16px 36px;
-  background: var(--gold);
-  color: var(--black);
-  border: none; border-radius: 2px;
-  cursor: pointer;
+  padding: 17px 38px; background: var(--gold); color: var(--black);
+  border: none; border-radius: 2px; cursor: pointer;
   transition: background 0.2s, transform 0.15s;
   display: inline-flex; align-items: center; gap: 10px;
 }
 .btn-gold:hover { background: var(--gold2); transform: translateY(-1px); }
 .btn-outline {
-  font-family: var(--cond); font-size: 12px; font-weight: 400;
+  font-family: var(--cond); font-size: 13px; font-weight: 400;
   letter-spacing: 0.16em; text-transform: uppercase;
-  padding: 15px 30px;
-  background: transparent;
-  color: var(--white2);
-  border: 1px solid var(--bdr2);
-  border-radius: 2px;
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
-  text-decoration: none; display: inline-flex; align-items: center;
+  padding: 16px 32px; background: transparent; color: var(--white2);
+  border: 1px solid var(--bdr2); border-radius: 2px;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
 }
 .btn-outline:hover { border-color: var(--goldbdr); color: var(--gold2); }
-
-/* Thin gold rule under hero */
 .hero-rule {
   position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 1px; height: 80px;
+  width: 1px; height: 90px;
   background: linear-gradient(to bottom, var(--gold), transparent);
-  z-index: 2;
-  opacity: 0; animation: fadeIn 1s 1.2s forwards;
+  z-index: 2; opacity: 0; animation: fadeIn 1s 1.2s forwards;
 }
 
 /* ─── STAT BAR ─── */
-.stat-bar {
-  border-top: 1px solid var(--bdr);
-  border-bottom: 1px solid var(--bdr);
-  display: flex; align-items: stretch;
-}
+.stat-bar { border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr); display: flex; }
 .stat-item {
-  flex: 1;
-  padding: 36px 40px;
+  flex: 1; padding: 40px 44px;
   border-right: 1px solid var(--bdr);
   transition: background 0.3s;
 }
 .stat-item:last-child { border-right: none; }
 .stat-item:hover { background: rgba(201,168,76,0.03); }
 .stat-num {
-  font-family: var(--display); font-size: 42px; font-weight: 300;
-  color: var(--gold2); line-height: 1; margin-bottom: 6px;
+  font-family: var(--display); font-size: 48px; font-weight: 300;
+  color: var(--gold2); line-height: 1; margin-bottom: 8px;
 }
 .stat-label {
-  font-family: var(--cond); font-size: 11px; font-weight: 400;
+  font-family: var(--cond); font-size: 12px; font-weight: 400;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--white3); line-height: 1.5;
+  color: var(--white3); line-height: 1.6;
 }
 
-/* ─── SECTION COMMONS ─── */
-.section { padding: 110px 60px; }
+/* ─── SECTIONS ─── */
+.section { padding: 120px 64px; }
 .section-tag {
-  font-family: var(--cond); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-  display: flex; align-items: center; gap: 12px;
+  font-family: var(--cond); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 14px;
 }
-.section-tag::after { content: ''; display: block; width: 30px; height: 1px; background: var(--goldbdr); }
+.section-tag::after { content: ''; display: block; width: 32px; height: 1px; background: var(--goldbdr); }
 .section-h {
-  font-family: var(--display); font-size: clamp(34px, 4vw, 56px);
+  font-family: var(--display);
+  font-size: clamp(36px, 4.5vw, 60px);
   font-weight: 300; line-height: 1.1; letter-spacing: -0.01em;
-  color: var(--white); margin-bottom: 20px;
+  color: var(--white); margin-bottom: 22px;
 }
 .section-h em { font-style: italic; color: var(--gold2); }
 .section-p {
-  font-size: 16px; font-weight: 300; line-height: 1.8;
-  color: var(--white2); max-width: 520px;
+  font-size: 17px; font-weight: 300; line-height: 1.85;
+  color: var(--white2); max-width: 540px;
 }
-.container { max-width: 1120px; margin: 0 auto; }
+.container { max-width: 1140px; margin: 0 auto; }
 
 /* ─── PROBLEM ─── */
 .problem-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
-.silo-stack { display: flex; flex-direction: column; gap: 0; }
+.silo-stack { display: flex; flex-direction: column; }
 .silo-item {
-  padding: 28px 0;
-  border-bottom: 1px solid var(--bdr);
+  padding: 30px 0; border-bottom: 1px solid var(--bdr);
   display: flex; gap: 28px; align-items: flex-start;
 }
 .silo-item:first-child { border-top: 1px solid var(--bdr); }
 .silo-num {
-  font-family: var(--display); font-size: 13px;
+  font-family: var(--display); font-size: 14px; font-style: italic;
   color: var(--gold); min-width: 24px; padding-top: 3px;
-  font-style: italic;
 }
 .silo-title {
-  font-family: var(--cond); font-size: 13px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 6px;
+  font-family: var(--cond); font-size: 14px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); margin-bottom: 7px;
 }
-.silo-desc { font-size: 14px; font-weight: 300; color: var(--white3); line-height: 1.7; }
+.silo-desc { font-size: 15px; font-weight: 300; color: var(--white3); line-height: 1.75; }
 .silo-footer {
-  margin-top: 24px; padding: 16px 24px;
+  margin-top: 26px; padding: 18px 26px;
   border: 1px solid rgba(201,168,76,0.15);
-  background: rgba(201,168,76,0.04);
-  border-radius: 2px;
-  font-family: var(--cond); font-size: 12px; font-weight: 400;
-  letter-spacing: 0.08em; color: var(--gold2); line-height: 1.6;
+  background: rgba(201,168,76,0.04); border-radius: 2px;
+  font-family: var(--cond); font-size: 13px; font-weight: 400;
+  letter-spacing: 0.06em; color: var(--gold2); line-height: 1.65;
 }
 
-/* ─── FRAMEWORK ─── */
-.framework-section { background: var(--black2); border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr); }
-.framework-header { text-align: center; max-width: 640px; margin: 0 auto 72px; }
+/* ─── FRAMEWORK (6 LAYERS) ─── */
+.framework-section {
+  background: var(--black2);
+  border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr);
+}
+.framework-header { text-align: center; max-width: 660px; margin: 0 auto 80px; }
 .framework-header .section-tag { justify-content: center; }
 .framework-header .section-tag::after { display: none; }
-.framework-grid { display: grid; grid-template-columns: repeat(5, 1fr); }
+
+/* 6-column grid — last (governance) gets full width below, or we do 3+3 */
+.fw-grid-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--bdr); border: 1px solid var(--bdr); border-bottom: none; }
+.fw-grid-bot { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--bdr); border: 1px solid var(--bdr); }
 .fw-col {
-  padding: 40px 28px;
-  border-right: 1px solid var(--bdr);
-  position: relative;
-  transition: background 0.3s;
+  background: var(--black); padding: 42px 30px;
+  position: relative; transition: background 0.3s;
 }
-.fw-col:last-child { border-right: none; }
-.fw-col:hover { background: rgba(201,168,76,0.03); }
-.fw-col.hero-col { background: rgba(201,168,76,0.04); }
-.fw-col.hero-col::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+.fw-col:hover { background: rgba(201,168,76,0.025); }
+.fw-col.accent { background: rgba(201,168,76,0.05); }
+.fw-col.accent::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, var(--gold), var(--gold2));
 }
 .fw-layer {
-  font-family: var(--cond); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 16px; display: block;
+  font-family: var(--cond); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 18px; display: block;
 }
 .fw-title {
-  font-family: var(--display); font-size: 17px; font-weight: 400;
-  color: var(--white); line-height: 1.3; margin-bottom: 12px;
+  font-family: var(--display); font-size: 20px; font-weight: 400;
+  color: var(--white); line-height: 1.25; margin-bottom: 12px;
 }
-.fw-desc { font-size: 13px; font-weight: 300; color: var(--white3); line-height: 1.7; }
+.fw-desc { font-size: 14px; font-weight: 300; color: var(--white3); line-height: 1.75; }
+
+/* ─── SCIENCE SECTION ─── */
+.science-section { background: var(--black); border-bottom: 1px solid var(--bdr); }
+.science-header { max-width: 660px; margin-bottom: 72px; }
+.science-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.sci-panel {
+  background: var(--black2); padding: 48px 44px;
+  border: 1px solid var(--bdr); transition: border-color 0.3s;
+}
+.sci-panel:hover { border-color: var(--goldbdr); }
+.sci-panel-num {
+  font-family: var(--display); font-size: 13px; font-style: italic;
+  color: var(--gold); margin-bottom: 20px; display: block;
+}
+.sci-panel-title {
+  font-family: var(--display); font-size: 28px; font-weight: 400;
+  color: var(--white); line-height: 1.2; margin-bottom: 16px;
+}
+.sci-panel-title em { font-style: italic; color: var(--gold2); }
+.sci-panel-desc { font-size: 16px; font-weight: 300; color: var(--white2); line-height: 1.8; margin-bottom: 24px; }
+.sci-formula {
+  font-family: var(--cond); font-size: 15px; font-weight: 400;
+  letter-spacing: 0.04em; color: var(--gold3);
+  padding: 16px 20px;
+  background: rgba(201,168,76,0.06);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 2px 2px 0;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.sci-formula em { font-style: italic; color: var(--gold2); }
+.sci-explain { font-size: 14px; font-weight: 300; color: var(--white3); line-height: 1.8; }
+.sci-explain span { color: var(--gold2); }
+
+/* Full-width science row */
+.sci-full {
+  grid-column: 1 / -1;
+  background: var(--black2); padding: 48px 44px;
+  border: 1px solid var(--bdr);
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px;
+  transition: border-color 0.3s;
+}
+.sci-full:hover { border-color: var(--goldbdr); }
+.sci-col-title {
+  font-family: var(--cond); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px;
+}
+.sci-col-body { font-size: 15px; font-weight: 300; color: var(--white2); line-height: 1.8; }
+.sci-col-body em { font-style: italic; color: var(--gold2); }
 
 /* ─── DIFFERENTIATION ─── */
-.diff-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
-.diff-panel {
-  padding: 52px 48px;
-  background: var(--black2);
-}
+.diff-layout { display: grid; grid-template-columns: 1fr 1fr; }
+.diff-panel { padding: 56px 52px; background: var(--black2); }
 .diff-panel.left { border-right: 1px solid var(--bdr); }
 .diff-panel-tag {
-  font-family: var(--cond); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-  margin-bottom: 36px; display: flex; align-items: center; gap: 10px;
+  font-family: var(--cond); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 40px; display: flex; align-items: center; gap: 10px;
 }
 .diff-panel-tag.no { color: var(--white3); }
 .diff-panel-tag.yes { color: var(--gold); }
-.diff-list { display: flex; flex-direction: column; gap: 0; }
+.diff-list { display: flex; flex-direction: column; }
 .diff-row {
-  display: flex; gap: 20px; align-items: flex-start;
-  padding: 20px 0; border-bottom: 1px solid var(--bdr);
-  font-size: 15px; font-weight: 300; color: var(--white2); line-height: 1.6;
+  display: flex; gap: 22px; align-items: flex-start;
+  padding: 22px 0; border-bottom: 1px solid var(--bdr);
+  font-size: 16px; font-weight: 300; color: var(--white2); line-height: 1.7;
 }
 .diff-row:last-child { border-bottom: none; }
-.diff-marker { font-family: var(--display); font-style: italic; font-size: 15px; min-width: 16px; padding-top: 2px; }
+.diff-marker {
+  font-family: var(--display); font-style: italic; font-size: 16px;
+  min-width: 16px; padding-top: 2px;
+}
 .diff-marker.no { color: var(--white3); }
 .diff-marker.yes { color: var(--gold); }
 .diff-row strong { color: var(--white); font-weight: 400; }
 
 /* ─── AUDIENCE ─── */
-.audience-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--bdr); }
-.aud-col {
-  padding: 40px 32px;
-  border-right: 1px solid var(--bdr);
-  transition: background 0.25s;
-}
+.audience-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--bdr); margin-top: 2px; }
+.aud-col { padding: 44px 34px; border-right: 1px solid var(--bdr); transition: background 0.25s; }
 .aud-col:last-child { border-right: none; }
 .aud-col:hover { background: rgba(201,168,76,0.04); }
-.aud-for {
-  font-family: var(--cond); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 10px;
-}
-.aud-title {
-  font-family: var(--display); font-size: 24px; font-weight: 400;
-  color: var(--white); margin-bottom: 20px;
-  border-bottom: 1px solid var(--bdr); padding-bottom: 16px;
-}
-.aud-items { display: flex; flex-direction: column; gap: 10px; }
-.aud-item { font-size: 13px; font-weight: 300; color: var(--white2); line-height: 1.5; padding-left: 14px; position: relative; }
-.aud-item::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 11px; }
+.aud-for { font-family: var(--cond); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.aud-title { font-family: var(--display); font-size: 28px; font-weight: 400; color: var(--white); margin-bottom: 22px; border-bottom: 1px solid var(--bdr); padding-bottom: 18px; }
+.aud-items { display: flex; flex-direction: column; gap: 11px; }
+.aud-item { font-size: 14px; font-weight: 300; color: var(--white2); line-height: 1.6; padding-left: 16px; position: relative; }
+.aud-item::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-size: 12px; }
 
 /* ─── ROADMAP ─── */
 .roadmap-layout { display: grid; grid-template-columns: 5fr 4fr; gap: 100px; align-items: start; }
-.roadmap-list { display: flex; flex-direction: column; gap: 0; }
-.rm-step {
-  display: grid; grid-template-columns: 48px 1fr;
-  gap: 24px; align-items: start;
-  padding: 32px 0; border-bottom: 1px solid var(--bdr);
-}
+.roadmap-list { display: flex; flex-direction: column; }
+.rm-step { display: grid; grid-template-columns: 52px 1fr; gap: 26px; padding: 36px 0; border-bottom: 1px solid var(--bdr); }
 .rm-step:last-child { border-bottom: none; }
-.rm-num {
-  font-family: var(--display); font-size: 13px; font-style: italic;
-  color: var(--white3); padding-top: 4px;
-}
+.rm-num { font-family: var(--display); font-size: 14px; font-style: italic; color: var(--white3); padding-top: 4px; }
 .rm-num.active { color: var(--gold); }
-.rm-title {
-  font-family: var(--display); font-size: 20px; font-weight: 400;
-  color: var(--white); margin-bottom: 4px;
-}
+.rm-title { font-family: var(--display); font-size: 22px; font-weight: 400; color: var(--white); margin-bottom: 6px; }
 .rm-title.active { color: var(--gold2); }
-.rm-when {
-  font-family: var(--cond); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
-}
-.rm-when .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+.rm-when { font-family: var(--cond); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
 .rm-when.future { color: var(--white3); }
-.rm-desc { font-size: 13px; font-weight: 300; color: var(--white3); line-height: 1.7; }
-.research-panel {
-  padding: 40px;
-  border: 1px solid var(--bdr);
-  background: var(--black2);
-}
-.research-panel-title {
-  font-family: var(--cond); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 28px;
-}
-.research-items { display: flex; flex-direction: column; gap: 0; }
-.ri { padding: 16px 0; border-bottom: 1px solid var(--bdr); display: flex; gap: 18px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse 2s infinite; }
+.rm-desc { font-size: 15px; font-weight: 300; color: var(--white3); line-height: 1.75; }
+.research-panel { padding: 44px; border: 1px solid var(--bdr); background: var(--black2); }
+.research-panel-title { font-family: var(--cond); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 30px; }
+.ri { padding: 18px 0; border-bottom: 1px solid var(--bdr); display: flex; gap: 20px; }
 .ri:last-child { border-bottom: none; }
-.ri-n { font-family: var(--display); font-style: italic; font-size: 13px; color: var(--gold); min-width: 20px; padding-top: 2px; }
-.ri-text { font-size: 13px; font-weight: 300; color: var(--white2); line-height: 1.6; }
+.ri-n { font-family: var(--display); font-style: italic; font-size: 14px; color: var(--gold); min-width: 22px; padding-top: 2px; }
+.ri-text { font-size: 15px; font-weight: 300; color: var(--white2); line-height: 1.7; }
 
-/* ─── CTA STRIP ─── */
+/* ─── CTA ─── */
 .cta-strip {
-  padding: 100px 60px;
-  background: var(--black2);
-  border-top: 1px solid var(--bdr);
-  border-bottom: 1px solid var(--bdr);
+  padding: 110px 64px; background: var(--black2);
+  border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr);
   text-align: center;
 }
-.cta-strip .section-h { margin-bottom: 14px; }
-.cta-strip .section-h em { font-style: italic; }
-.cta-strip-sub { font-size: 16px; font-weight: 300; color: var(--white3); margin-bottom: 48px; }
-.cta-contacts { display: flex; justify-content: center; gap: 2px; margin-bottom: 40px; flex-wrap: wrap; }
+.cta-contacts { display: flex; justify-content: center; gap: 2px; margin: 0 0 44px; flex-wrap: wrap; }
 .cta-contact-item {
-  padding: 24px 36px;
-  border: 1px solid var(--bdr); background: var(--black);
-  text-align: center;
-  text-decoration: none;
+  padding: 26px 40px; border: 1px solid var(--bdr); background: var(--black);
+  text-align: center; text-decoration: none; min-width: 190px;
   transition: border-color 0.2s, background 0.2s;
-  min-width: 180px;
 }
 .cta-contact-item:hover { border-color: var(--goldbdr); background: var(--golddim); }
-.cca-label { font-family: var(--cond); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold2); margin-bottom: 6px; }
-.cca-val { font-size: 13px; font-weight: 300; color: var(--white2); }
+.cca-label { font-family: var(--cond); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold2); margin-bottom: 7px; }
+.cca-val { font-size: 14px; font-weight: 300; color: var(--white2); }
 
 /* ─── FOOTER ─── */
 footer {
-  padding: 36px 60px;
+  padding: 40px 64px;
   border-top: 1px solid var(--bdr);
   display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
 }
-.footer-logo { font-family: var(--cond); font-size: 16px; font-weight: 600; letter-spacing: 0.18em; color: var(--white2); }
-.footer-links { display: flex; gap: 28px; }
-.footer-links a { font-family: var(--cond); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white3); text-decoration: none; transition: color 0.2s; }
+.footer-logo { font-family: var(--cond); font-size: 17px; font-weight: 600; letter-spacing: 0.2em; color: var(--white2); }
+.footer-links { display: flex; gap: 32px; }
+.footer-links a { font-family: var(--cond); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white3); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--gold2); }
-.footer-note { font-family: var(--cond); font-size: 10px; letter-spacing: 0.08em; color: var(--white3); opacity: 0.5; }
+.footer-note { font-family: var(--cond); font-size: 11px; letter-spacing: 0.06em; color: var(--white3); opacity: 0.5; }
 
 /* ─── DEMO PAGE ─── */
-#demo-page {
-  min-height: 100vh;
-  background: var(--black);
-  padding: 120px 60px 80px;
-}
-.demo-inner { max-width: 680px; margin: 0 auto; }
+#demo-page { min-height: 100vh; background: var(--black); padding: 130px 64px 90px; }
+.demo-inner { max-width: 700px; margin: 0 auto; }
 .demo-back {
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--cond); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  font-family: var(--cond); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--white3); cursor: pointer; border: none; background: none;
-  margin-bottom: 60px; transition: color 0.2s; padding: 0;
+  margin-bottom: 64px; transition: color 0.2s; padding: 0;
 }
 .demo-back:hover { color: var(--gold2); }
-.demo-back svg { transition: transform 0.2s; }
 .demo-back:hover svg { transform: translateX(-3px); }
-.demo-tag { font-family: var(--cond); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-.demo-title { font-family: var(--display); font-size: clamp(38px, 5vw, 62px); font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 12px; }
+.demo-back svg { transition: transform 0.2s; }
+.demo-tag { font-family: var(--cond); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+.demo-title { font-family: var(--display); font-size: clamp(40px, 5.5vw, 68px); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 14px; }
 .demo-title em { font-style: italic; color: var(--gold2); }
-.demo-sub { font-size: 16px; font-weight: 300; color: var(--white2); margin-bottom: 52px; line-height: 1.7; }
-.demo-rule { width: 60px; height: 1px; background: var(--goldbdr); margin-bottom: 52px; }
+.demo-sub { font-size: 17px; font-weight: 300; color: var(--white2); margin-bottom: 56px; line-height: 1.8; }
+.demo-rule { width: 64px; height: 1px; background: var(--goldbdr); margin-bottom: 56px; }
 
-/* Form */
-.demo-form { display: flex; flex-direction: column; gap: 28px; }
+.demo-form { display: flex; flex-direction: column; gap: 30px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.form-field { display: flex; flex-direction: column; gap: 8px; }
+.form-field { display: flex; flex-direction: column; gap: 9px; }
 .form-field.full { grid-column: 1 / -1; }
 .form-label {
-  font-family: var(--cond); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  font-family: var(--cond); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--gold); display: flex; align-items: center; gap: 6px;
 }
-.form-label span { color: var(--white3); font-size: 11px; letter-spacing: 0; }
+.form-label span { color: var(--white3); font-size: 12px; letter-spacing: 0; }
 .form-input, .form-select, .form-textarea {
-  background: var(--black2);
-  border: 1px solid var(--bdr2);
-  border-radius: 2px;
-  color: var(--white);
-  font-family: var(--body);
-  font-size: 14px; font-weight: 300;
-  padding: 13px 16px;
-  outline: none;
-  transition: border-color 0.2s;
-  width: 100%;
+  background: var(--black2); border: 1px solid var(--bdr2);
+  border-radius: 2px; color: var(--white);
+  font-family: var(--body); font-size: 15px; font-weight: 300;
+  padding: 14px 18px; outline: none; transition: border-color 0.2s; width: 100%;
   -webkit-appearance: none;
 }
 .form-input::placeholder, .form-textarea::placeholder { color: var(--white3); }
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-  border-color: var(--goldbdr);
-}
-.form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888680' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--goldbdr); }
+.form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888680' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 18px center; padding-right: 44px; }
 .form-select option { background: #0e0e11; color: var(--white); }
-.form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
-
+.form-textarea { resize: vertical; min-height: 110px; line-height: 1.65; }
 .form-divider { height: 1px; background: var(--bdr); margin: 4px 0; }
-.form-note {
-  font-size: 12px; font-weight: 300; color: var(--white3); line-height: 1.7;
-  padding: 16px 20px; border-left: 2px solid var(--goldbdr);
-  background: rgba(201,168,76,0.03);
-}
-.form-submit {
-  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
-}
-.form-submit-note { font-size: 12px; font-weight: 300; color: var(--white3); }
-
-/* Success state */
-.demo-success {
-  display: none;
-  text-align: center; padding: 60px 0;
-}
+.form-note { font-size: 13px; font-weight: 300; color: var(--white3); line-height: 1.75; padding: 18px 22px; border-left: 2px solid var(--goldbdr); background: rgba(201,168,76,0.03); }
+.form-submit { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.form-submit-note { font-size: 13px; font-weight: 300; color: var(--white3); }
+.demo-success { display: none; text-align: center; padding: 80px 0; }
 .success-mark {
-  width: 56px; height: 56px;
-  border: 1px solid var(--goldbdr);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 28px;
-  color: var(--gold);
-  font-size: 22px; font-family: var(--display); font-style: italic;
+  width: 60px; height: 60px; border: 1px solid var(--goldbdr); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 32px;
+  color: var(--gold); font-size: 24px; font-family: var(--display); font-style: italic;
 }
-.success-title { font-family: var(--display); font-size: 36px; font-weight: 300; color: var(--white); margin-bottom: 12px; }
+.success-title { font-family: var(--display); font-size: 42px; font-weight: 300; color: var(--white); margin-bottom: 14px; }
 .success-title em { font-style: italic; color: var(--gold2); }
-.success-sub { font-size: 15px; font-weight: 300; color: var(--white2); line-height: 1.7; max-width: 420px; margin: 0 auto 36px; }
+.success-sub { font-size: 16px; font-weight: 300; color: var(--white2); line-height: 1.8; max-width: 440px; margin: 0 auto 40px; }
 
 /* ─── ANIMATIONS ─── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-.scroll-reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1);
-}
-.scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.scroll-reveal { opacity:0; transform:translateY(20px); transition:opacity 0.75s cubic-bezier(0.16,1,0.3,1),transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+.scroll-reveal.revealed { opacity:1; transform:translateY(0); }
+.d1{transition-delay:0.1s} .d2{transition-delay:0.2s} .d3{transition-delay:0.3s} .d4{transition-delay:0.4s}
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 960px) {
-  nav { padding: 0 24px; }
-  .nav-center { display: none; }
-  .section { padding: 72px 24px; }
-  .hero { padding: 120px 24px 80px; }
-  .problem-layout, .diff-layout, .roadmap-layout { grid-template-columns: 1fr; gap: 48px; }
-  .framework-grid { grid-template-columns: 1fr 1fr; }
-  .fw-col { border-right: none; border-bottom: 1px solid var(--bdr); }
-  .audience-grid { grid-template-columns: 1fr 1fr; }
-  .aud-col { border-right: none; border-bottom: 1px solid var(--bdr); }
-  .stat-bar { flex-wrap: wrap; }
-  .stat-item { flex: 1 1 200px; }
-  footer { flex-direction: column; text-align: center; padding: 32px 24px; }
-  .cta-strip { padding: 72px 24px; }
-  #demo-page { padding: 100px 24px 60px; }
-  .form-row { grid-template-columns: 1fr; }
+@media(max-width:1000px){
+  nav{padding:0 28px} .nav-center{display:none}
+  .section{padding:80px 28px} .hero{padding:130px 28px 90px}
+  .problem-layout,.diff-layout,.roadmap-layout,.science-grid{grid-template-columns:1fr;gap:48px}
+  .fw-grid-top,.fw-grid-bot{grid-template-columns:1fr 1fr}
+  .audience-grid{grid-template-columns:1fr 1fr}
+  .aud-col{border-right:none;border-bottom:1px solid var(--bdr)}
+  .stat-bar{flex-wrap:wrap}
+  .stat-item{flex:1 1 200px}
+  .sci-full{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:32px 28px}
+  .cta-strip{padding:80px 28px}
+  #demo-page{padding:110px 28px 70px}
+  .form-row{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     NAV (shared)
-═══════════════════════════════════════════ -->
+<!-- NAV -->
 <nav id="nav">
   <div class="nav-logo" onclick="showPage('main')">
     <span class="nav-logo-word">NAVIS</span>
     <span class="nav-logo-dot"></span>
   </div>
   <div class="nav-center">
-    <a href="#" onclick="showPage('main');scrollTo('problem');return false;">The Problem</a>
-    <a href="#" onclick="showPage('main');scrollTo('framework');return false;">Framework</a>
-    <a href="#" onclick="showPage('main');scrollTo('differentiation');return false;">Differentiation</a>
-    <a href="#" onclick="showPage('main');scrollTo('roadmap');return false;">Roadmap</a>
+    <a href="#" onclick="goTo('problem');return false;">The Problem</a>
+    <a href="#" onclick="goTo('framework');return false;">Framework</a>
+    <a href="#" onclick="goTo('differentiation');return false;">Differentiation</a>
+    <a href="#" onclick="goTo('roadmap');return false;">Roadmap</a>
+    <a href="#" onclick="goTo('contact');return false;">Contact</a>
   </div>
   <button class="nav-cta-btn" onclick="showPage('demo')">Request a Demo</button>
 </nav>
 
-<!-- ═══════════════════════════════════════════
-     MAIN PAGE
-═══════════════════════════════════════════ -->
+<!-- ══════════════ MAIN PAGE ══════════════ -->
 <div id="main-page" class="page active">
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-overline">Orbital Governance Intelligence</div>
-      <h1 class="hero-title">
-        When should a<br>satellite <em>leave</em> orbit?
-      </h1>
-      <div class="hero-title-sub">NAVIS answers that question.</div>
-      <p class="hero-desc">
-        A <strong>governance-grade decision engine</strong> that integrates compliance, collision risk, disposal reliability, and economic exposure into a single auditable recommendation.
-      </p>
-      <div class="hero-actions">
-        <button class="btn-gold" onclick="showPage('demo')">
-          Request a Demo
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <a href="mailto:contact@navis-space.com?subject=Technical Brief" class="btn-outline">Technical Brief</a>
-      </div>
-    </div>
-    <div class="hero-rule"></div>
-  </section>
-
-  <!-- STAT BAR -->
-  <div class="stat-bar">
-    <div class="stat-item scroll-reveal">
-      <div class="stat-num">5yr</div>
-      <div class="stat-label">New regulatory<br>disposal mandate</div>
-    </div>
-    <div class="stat-item scroll-reveal reveal-delay-1">
-      <div class="stat-num">~60%</div>
-      <div class="stat-label">Post-mission disposal<br>compliance rate today</div>
-    </div>
-    <div class="stat-item scroll-reveal reveal-delay-2">
-      <div class="stat-num">$50M+</div>
-      <div class="stat-label">Industry baseline<br>collision exposure</div>
-    </div>
-    <div class="stat-item scroll-reveal reveal-delay-3">
-      <div class="stat-num">10k+</div>
-      <div class="stat-label">Trackable objects<br>in Low Earth Orbit</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-overline">Orbital Governance Intelligence</div>
+    <h1 class="hero-title">When should a<br>satellite <em>leave</em> orbit?</h1>
+    <div class="hero-title-sub">NAVIS answers that question.</div>
+    <p class="hero-desc">
+      A <strong>governance-grade decision engine</strong> that integrates compliance, collision risk, disposal reliability, and economic exposure into a single auditable recommendation.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-gold" onclick="showPage('demo')">
+        Request a Demo
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <a href="mailto:contact@navis-space.com?subject=Technical Brief" class="btn-outline">Technical Brief</a>
     </div>
   </div>
+  <div class="hero-rule"></div>
+</section>
 
-  <!-- PROBLEM -->
-  <section class="section" id="problem">
-    <div class="container">
-      <div class="problem-layout">
-        <div>
-          <div class="section-tag scroll-reveal">The Challenge</div>
-          <h2 class="section-h scroll-reveal">Orbital congestion is now a <em>governance</em> problem</h2>
-          <p class="section-p scroll-reveal" style="margin-bottom:20px;">Operators have conjunction alerts and tracking systems. What they lack is a structured, quantitative framework for determining <em>when</em> a satellite should exit orbit.</p>
-          <p class="section-p scroll-reveal">End-of-life decisions are made today across disconnected silos — with no unified model to arbitrate the trade-offs between engineering, compliance, and economic risk.</p>
-        </div>
-        <div class="scroll-reveal">
-          <div class="silo-stack">
-            <div class="silo-item">
-              <span class="silo-num">I</span>
-              <div>
-                <div class="silo-title">Engineering</div>
-                <div class="silo-desc">Monitors fuel and subsystem health — but ignores economic value and regulatory timing constraints.</div>
-              </div>
-            </div>
-            <div class="silo-item">
-              <span class="silo-num">II</span>
-              <div>
-                <div class="silo-title">Compliance</div>
-                <div class="silo-desc">Tracks static rules (the 25-year rule, now 5-year) without dynamic stochastic risk assessment.</div>
-              </div>
-            </div>
-            <div class="silo-item">
-              <span class="silo-num">III</span>
-              <div>
-                <div class="silo-title">Finance</div>
-                <div class="silo-desc">Models asset depreciation but lacks orbital context for risk-adjusted exposure quantification.</div>
-              </div>
-            </div>
+<!-- STAT BAR -->
+<div class="stat-bar">
+  <div class="stat-item scroll-reveal"><div class="stat-num">5yr</div><div class="stat-label">New regulatory<br>disposal mandate</div></div>
+  <div class="stat-item scroll-reveal d1"><div class="stat-num">~60%</div><div class="stat-label">PMD compliance<br>rate today</div></div>
+  <div class="stat-item scroll-reveal d2"><div class="stat-num">$50M+</div><div class="stat-label">Industry baseline<br>collision exposure</div></div>
+  <div class="stat-item scroll-reveal d3"><div class="stat-num">10k+</div><div class="stat-label">Trackable objects<br>in Low Earth Orbit</div></div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="container">
+    <div class="problem-layout">
+      <div>
+        <div class="section-tag scroll-reveal">The Challenge</div>
+        <h2 class="section-h scroll-reveal">Orbital congestion is now a <em>governance</em> problem</h2>
+        <p class="section-p scroll-reveal" style="margin-bottom:22px;">Operators have conjunction alerts and tracking systems. What they lack is a structured, quantitative framework for determining <em>when</em> a satellite should exit orbit.</p>
+        <p class="section-p scroll-reveal">End-of-life decisions are made today across disconnected silos — with no unified model to arbitrate the trade-offs between engineering, compliance, and economic risk.</p>
+      </div>
+      <div class="scroll-reveal">
+        <div class="silo-stack">
+          <div class="silo-item">
+            <span class="silo-num">I</span>
+            <div><div class="silo-title">Engineering</div><div class="silo-desc">Monitors fuel and subsystem health — but ignores economic value and regulatory timing constraints entirely.</div></div>
           </div>
-          <div class="silo-footer">
-            Result: disconnected silos. No unified model. Suboptimal disposal timing and compounding liability risk.
+          <div class="silo-item">
+            <span class="silo-num">II</span>
+            <div><div class="silo-title">Compliance</div><div class="silo-desc">Tracks static rules (the 25-year rule, now 5-year) without dynamic stochastic risk assessment.</div></div>
+          </div>
+          <div class="silo-item">
+            <span class="silo-num">III</span>
+            <div><div class="silo-title">Finance</div><div class="silo-desc">Models asset depreciation but lacks orbital context for risk-adjusted exposure quantification.</div></div>
+          </div>
+        </div>
+        <div class="silo-footer">Result: disconnected silos. No unified model. Suboptimal disposal timing and compounding liability risk.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAMEWORK — 6 LAYERS -->
+<section class="section framework-section" id="framework">
+  <div class="container">
+    <div class="framework-header scroll-reveal">
+      <div class="section-tag" style="justify-content:center;">The Framework</div>
+      <h2 class="section-h" style="text-align:center;">Six layers.<br>One <em>auditable</em> output.</h2>
+      <p class="section-p" style="margin:0 auto;text-align:center;max-width:520px;">A deterministic decision architecture. Each layer contributes a quantified signal to the final governance recommendation.</p>
+    </div>
+
+    <!-- Top row: layers 1–3 -->
+    <div class="fw-grid-top scroll-reveal">
+      <div class="fw-col">
+        <span class="fw-layer">Layer 01</span>
+        <div class="fw-title">Satellite State Data</div>
+        <div class="fw-desc">Telemetry, fuel reserves, battery health, mission age, CAM count, and orbital parameters from the satellite bus. The raw signal layer.</div>
+      </div>
+      <div class="fw-col">
+        <span class="fw-layer">Layer 02</span>
+        <div class="fw-title">Regulatory Compliance Gates</div>
+        <div class="fw-desc">IADC thresholds and evolving mandates (5-year rule, FCC standards) encoded as live decision logic — not static policy documents.</div>
+      </div>
+      <div class="fw-col">
+        <span class="fw-layer">Layer 03</span>
+        <div class="fw-title">Disposal Success Probability</div>
+        <div class="fw-desc">Reliability modelling of post-mission disposal maneuvers. Forecasts degradation using fuel levels, battery state, and orbital decay trends.</div>
+      </div>
+    </div>
+
+    <!-- Bottom row: layers 4–6 -->
+    <div class="fw-grid-bot scroll-reveal d1">
+      <div class="fw-col">
+        <span class="fw-layer">Layer 04</span>
+        <div class="fw-title">Collision Risk Quantification</div>
+        <div class="fw-desc">Estimates the probability of a debris collision event based on orbital altitude, object density in the surrounding shell, exposure duration, and secondary fragmentation risk.</div>
+      </div>
+      <div class="fw-col">
+        <span class="fw-layer">Layer 05</span>
+        <div class="fw-title">Decision &amp; Economic Exposure</div>
+        <div class="fw-desc">All signals synthesised into a risk score. Quantifies expected collision loss, disposal failure cost, and asset exposure to produce a scored, explainable recommendation.</div>
+      </div>
+      <div class="fw-col accent">
+        <span class="fw-layer">Layer 06</span>
+        <div class="fw-title">Governance &amp; Audit Trail</div>
+        <div class="fw-desc">Every decision is logged, timestamped, and structured for three audiences: <em>regulators</em> (compliance evidence), <em>insurers</em> (premium classification), and <em>operators</em> (action plan).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATION -->
+<section class="section" id="differentiation">
+  <div class="container">
+    <div class="section-tag scroll-reveal">Differentiation</div>
+    <h2 class="section-h scroll-reveal" style="max-width:600px;margin-bottom:48px;">NAVIS is not SSA.<br>It is <em>decision infrastructure.</em></h2>
+    <div class="diff-layout scroll-reveal" style="border:1px solid var(--bdr);">
+      <div class="diff-panel left">
+        <div class="diff-panel-tag no">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          NAVIS does not
+        </div>
+        <div class="diff-list">
+          <div class="diff-row"><span class="diff-marker no">—</span><span>Detect conjunction alerts or compute close-approach geometry</span></div>
+          <div class="diff-row"><span class="diff-marker no">—</span><span>Plan avoidance maneuvers or command the spacecraft</span></div>
+          <div class="diff-row"><span class="diff-marker no">—</span><span>Compete with or replace existing SSA tracking systems</span></div>
+          <div class="diff-row"><span class="diff-marker no">—</span><span>Require proprietary sensor infrastructure to operate</span></div>
+        </div>
+      </div>
+      <div class="diff-panel">
+        <div class="diff-panel-tag yes">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12l5 5L20 7"/></svg>
+          NAVIS does
+        </div>
+        <div class="diff-list">
+          <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Determine when</strong> a satellite should be disposed, with a scored and explainable rationale</span></div>
+          <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Quantify expected economic loss</strong> from collision exposure and disposal failure probability</span></div>
+          <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Encode regulatory rules</strong> as live decision constraints, not static policy documents</span></div>
+          <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Produce auditable governance outputs</strong> structured for regulators, insurers, and operators</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="audience-grid scroll-reveal">
+      <div class="aud-col"><div class="aud-for">For</div><div class="aud-title">Operators</div><div class="aud-items"><div class="aud-item">Risk-adjusted lifetime decisions</div><div class="aud-item">Reduced liability exposure</div><div class="aud-item">Audit-ready decision trail</div></div></div>
+      <div class="aud-col"><div class="aud-for">For</div><div class="aud-title">Regulators</div><div class="aud-items"><div class="aud-item">Transparent compliance evidence</div><div class="aud-item">Standardised reporting format</div><div class="aud-item">Machine-readable audit logs</div></div></div>
+      <div class="aud-col"><div class="aud-for">For</div><div class="aud-title">Insurers</div><div class="aud-items"><div class="aud-item">Quantified disposal risk bands</div><div class="aud-item">Actuarial-grade data inputs</div><div class="aud-item">Expected loss per satellite</div></div></div>
+      <div class="aud-col"><div class="aud-for">For</div><div class="aud-title">Investors</div><div class="aud-items"><div class="aud-item">Sustainability infrastructure</div><div class="aud-item">ESG-aligned governance tooling</div><div class="aud-item">Regulatory tailwind exposure</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap" style="background:var(--black2);border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);">
+  <div class="container">
+    <div class="roadmap-layout">
+      <div>
+        <div class="section-tag scroll-reveal">Development Roadmap</div>
+        <h2 class="section-h scroll-reveal">What comes <em>next</em></h2>
+        <div class="roadmap-list scroll-reveal">
+          <div class="rm-step">
+            <div class="rm-num active">I</div>
+            <div><div class="rm-title active">Research Prototype</div><div class="rm-when"><span class="live-dot"></span>Current — 2026</div><div class="rm-desc">Six-layer pipeline operational. Validated on ISS and Sentinel-6A via SpaceTrack. Governance outputs (audit log, insurer report, operator report) fully integrated.</div></div>
+          </div>
+          <div class="rm-step">
+            <div class="rm-num">II</div>
+            <div><div class="rm-title">Pilot Integration</div><div class="rm-when future">Q3 2026</div><div class="rm-desc">Integration with select mid-tier operator telemetry. Multi-jurisdiction compliance rule library. Live dashboard deployment.</div></div>
+          </div>
+          <div class="rm-step">
+            <div class="rm-num">III</div>
+            <div><div class="rm-title">Operator Deployment</div><div class="rm-when future">2027</div><div class="rm-desc">Commercial availability for constellation operators (10–300 satellites). API-first architecture for direct telemetry ingestion.</div></div>
+          </div>
+          <div class="rm-step">
+            <div class="rm-num">IV</div>
+            <div><div class="rm-title">Regulatory Standardisation</div><div class="rm-when future">2028</div><div class="rm-desc">Collaboration with international agencies on standardised EoL reporting. Cross-operator coordination layer and data-sharing ecosystem.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-reveal">
+        <div class="research-panel">
+          <div class="research-panel-title">Scientific Foundations</div>
+          <div class="research-items">
+            <div class="ri"><span class="ri-n">i</span><span class="ri-text">Post-Mission Disposal reliability studies and failure mode analysis</span></div>
+            <div class="ri"><span class="ri-n">ii</span><span class="ri-text">LEO congestion modelling and Kessler cascade dynamics</span></div>
+            <div class="ri"><span class="ri-n">iii</span><span class="ri-text">Economic loss frameworks for orbital collision events (ESA Clean Space)</span></div>
+            <div class="ri"><span class="ri-n">iv</span><span class="ri-text">Regulatory evolution: IADC 2002 guidelines, FCC 5-year mandate 2022</span></div>
+            <div class="ri"><span class="ri-n">v</span><span class="ri-text">Stochastic collision intensity via Poisson encounter processes</span></div>
+            <div class="ri"><span class="ri-n">vi</span><span class="ri-text">Governance-grade explainability for autonomous decision systems</span></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FRAMEWORK -->
-  <section class="section framework-section" id="framework">
-    <div class="container">
-      <div class="framework-header scroll-reveal">
-        <div class="section-tag" style="justify-content:center;">The Framework</div>
-        <h2 class="section-h" style="text-align:center;">Five layers.<br>One <em>auditable</em> output.</h2>
-        <p class="section-p" style="margin:0 auto; text-align:center; max-width:500px;">A deterministic decision architecture. Each layer contributes a quantified signal to the final recommendation.</p>
-      </div>
-      <div class="framework-grid scroll-reveal">
-        <div class="fw-col">
-          <span class="fw-layer">Layer 01</span>
-          <div class="fw-title">Satellite State Data</div>
-          <div class="fw-desc">Telemetry, fuel reserves, battery health, mission age, and orbital parameters from the satellite bus.</div>
-        </div>
-        <div class="fw-col">
-          <span class="fw-layer">Layer 02</span>
-          <div class="fw-title">Regulatory Compliance Gates</div>
-          <div class="fw-desc">IADC thresholds and evolving mandates (5-year rule) encoded as live decision logic, not static checklists.</div>
-        </div>
-        <div class="fw-col">
-          <span class="fw-layer">Layer 03</span>
-          <div class="fw-title">Disposal Success Probability</div>
-          <div class="fw-desc">Reliability modelling of post-mission disposal maneuvers from health signals and orbital decay trends.</div>
-        </div>
-        <div class="fw-col">
-          <span class="fw-layer">Layer 04</span>
-          <div class="fw-title">Stochastic Collision Risk</div>
-          <div class="fw-desc">Poisson encounter modelling across altitude shells, exposure duration, and orbital density — quantifying systemic cascade risk.</div>
-        </div>
-        <div class="fw-col hero-col">
-          <span class="fw-layer">Layer 05</span>
-          <div class="fw-title">Decision &amp; Economic Exposure</div>
-          <div class="fw-desc">All signals synthesised into a scored, explainable recommendation with audit trail, insurance classification, and operator actions.</div>
-        </div>
-      </div>
+<!-- CTA -->
+<section class="cta-strip" id="contact">
+  <div class="container">
+    <div class="section-tag scroll-reveal" style="justify-content:center;margin-bottom:22px;">Contact</div>
+    <h2 class="section-h scroll-reveal" style="margin-bottom:16px;">Ready to govern your <em>orbital assets?</em></h2>
+    <p style="font-size:17px;font-weight:300;color:var(--white3);margin-bottom:52px;" class="scroll-reveal">We work with operators, regulators, and insurers. If you operate in LEO, we want to hear from you.</p>
+    <div class="cta-contacts scroll-reveal">
+      <a href="mailto:contact@navis-space.com" class="cta-contact-item"><div class="cca-label">Email</div><div class="cca-val">contact@navis-space.com</div></a>
+      <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener" class="cta-contact-item"><div class="cca-label">LinkedIn</div><div class="cca-val">navis-space</div></a>
+      <a href="https://calendly.com/navis-space/intro" target="_blank" rel="noopener" class="cta-contact-item"><div class="cca-label">Schedule a Call</div><div class="cca-val">30-min introduction</div></a>
     </div>
-  </section>
-
-  <!-- DIFFERENTIATION -->
-  <section class="section" id="differentiation">
-    <div class="container">
-      <div class="section-tag scroll-reveal">Differentiation</div>
-      <h2 class="section-h scroll-reveal" style="max-width:600px; margin-bottom:48px;">NAVIS is not SSA.<br>It is <em>decision infrastructure.</em></h2>
-      <div class="diff-layout scroll-reveal">
-        <div class="diff-panel left">
-          <div class="diff-panel-tag no">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-            NAVIS does not
-          </div>
-          <div class="diff-list">
-            <div class="diff-row"><span class="diff-marker no">—</span><span>Detect conjunction alerts or compute close-approach geometry</span></div>
-            <div class="diff-row"><span class="diff-marker no">—</span><span>Plan avoidance maneuvers or command the spacecraft</span></div>
-            <div class="diff-row"><span class="diff-marker no">—</span><span>Compete with or replace existing SSA tracking systems</span></div>
-            <div class="diff-row"><span class="diff-marker no">—</span><span>Require proprietary sensor infrastructure to operate</span></div>
-          </div>
-        </div>
-        <div class="diff-panel">
-          <div class="diff-panel-tag yes">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12l5 5L20 7"/></svg>
-            NAVIS does
-          </div>
-          <div class="diff-list">
-            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Determine when</strong> a satellite should be disposed, with a scored and explainable rationale</span></div>
-            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Quantify expected economic loss</strong> from collision exposure and disposal failure probability</span></div>
-            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Encode regulatory rules</strong> as live decision constraints, not static policy documents</span></div>
-            <div class="diff-row"><span class="diff-marker yes">—</span><span><strong>Produce auditable governance outputs</strong> formatted for regulators, insurers, and operators</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Audience -->
-      <div class="audience-grid scroll-reveal" style="margin-top:2px;">
-        <div class="aud-col">
-          <div class="aud-for">For</div>
-          <div class="aud-title">Operators</div>
-          <div class="aud-items">
-            <div class="aud-item">Risk-adjusted lifetime decisions</div>
-            <div class="aud-item">Reduced liability exposure</div>
-            <div class="aud-item">Audit-ready decision trail</div>
-          </div>
-        </div>
-        <div class="aud-col">
-          <div class="aud-for">For</div>
-          <div class="aud-title">Regulators</div>
-          <div class="aud-items">
-            <div class="aud-item">Transparent compliance evidence</div>
-            <div class="aud-item">Standardised reporting format</div>
-            <div class="aud-item">Machine-readable audit logs</div>
-          </div>
-        </div>
-        <div class="aud-col">
-          <div class="aud-for">For</div>
-          <div class="aud-title">Insurers</div>
-          <div class="aud-items">
-            <div class="aud-item">Quantified disposal risk bands</div>
-            <div class="aud-item">Actuarial-grade data inputs</div>
-            <div class="aud-item">Expected loss per satellite</div>
-          </div>
-        </div>
-        <div class="aud-col">
-          <div class="aud-for">For</div>
-          <div class="aud-title">Investors</div>
-          <div class="aud-items">
-            <div class="aud-item">Sustainability infrastructure</div>
-            <div class="aud-item">ESG-aligned governance tooling</div>
-            <div class="aud-item">Regulatory tailwind exposure</div>
-          </div>
-        </div>
-      </div>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;" class="scroll-reveal">
+      <button class="btn-gold" onclick="showPage('demo')">Request a Demo <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      <a href="mailto:contact@navis-space.com?subject=Technical Brief" class="btn-outline">Download Technical Brief</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ROADMAP -->
-  <section class="section" id="roadmap" style="background:var(--black2); border-top:1px solid var(--bdr); border-bottom:1px solid var(--bdr);">
-    <div class="container">
-      <div class="roadmap-layout">
-        <div>
-          <div class="section-tag scroll-reveal">Development Roadmap</div>
-          <h2 class="section-h scroll-reveal">What comes <em>next</em></h2>
-          <div class="roadmap-list scroll-reveal">
-            <div class="rm-step">
-              <div class="rm-num active">I</div>
-              <div>
-                <div class="rm-title active">Research Prototype</div>
-                <div class="rm-when"><span class="live-dot"></span>Current — 2026</div>
-                <div class="rm-desc">Core algorithm validation, five-layer pipeline, real satellite integration via SpaceTrack (ISS, Sentinel-6A). Working governance outputs.</div>
-              </div>
-            </div>
-            <div class="rm-step">
-              <div class="rm-num">II</div>
-              <div>
-                <div class="rm-title">Pilot Integration</div>
-                <div class="rm-when future">Q3 2026</div>
-                <div class="rm-desc">Integration with select mid-tier operator telemetry systems. Compliance rule library expansion for multiple jurisdictions.</div>
-              </div>
-            </div>
-            <div class="rm-step">
-              <div class="rm-num">III</div>
-              <div>
-                <div class="rm-title">Operator Deployment</div>
-                <div class="rm-when future">2027</div>
-                <div class="rm-desc">Commercial availability for constellation operators with 10–300 satellites in LEO. API-first architecture.</div>
-              </div>
-            </div>
-            <div class="rm-step">
-              <div class="rm-num">IV</div>
-              <div>
-                <div class="rm-title">Regulatory Standardisation</div>
-                <div class="rm-when future">2028</div>
-                <div class="rm-desc">Collaboration with international agencies on standardised EoL reporting. Cross-operator coordination layer.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="scroll-reveal">
-          <div class="research-panel">
-            <div class="research-panel-title">Scientific Foundations</div>
-            <div class="research-items">
-              <div class="ri"><span class="ri-n">i</span><span class="ri-text">Post-Mission Disposal reliability studies and failure mode analysis</span></div>
-              <div class="ri"><span class="ri-n">ii</span><span class="ri-text">LEO congestion modelling and Kessler cascade dynamics</span></div>
-              <div class="ri"><span class="ri-n">iii</span><span class="ri-text">Economic loss frameworks for orbital collision events</span></div>
-              <div class="ri"><span class="ri-n">iv</span><span class="ri-text">Regulatory evolution: IADC guidelines, FCC 5-year mandate</span></div>
-              <div class="ri"><span class="ri-n">v</span><span class="ri-text">Stochastic collision intensity via Poisson event processes</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA STRIP -->
-  <section class="cta-strip" id="contact">
-    <div class="container">
-      <div class="section-tag scroll-reveal" style="justify-content:center; margin-bottom:20px;">Contact</div>
-      <h2 class="section-h scroll-reveal" style="margin-bottom:14px;">Ready to govern your <em>orbital assets</em>?</h2>
-      <p class="cta-strip-sub scroll-reveal">We work with operators, regulators, and insurers.<br>If you operate in LEO, we want to hear from you.</p>
-      <div class="cta-contacts scroll-reveal">
-        <a href="mailto:contact@navis-space.com" class="cta-contact-item">
-          <div class="cca-label">Email</div>
-          <div class="cca-val">contact@navis-space.com</div>
-        </a>
-        <a href="https://linkedin.com/company/navis-space" target="_blank" rel="noopener" class="cta-contact-item">
-          <div class="cca-label">LinkedIn</div>
-          <div class="cca-val">navis-space</div>
-        </a>
-        <a href="https://calendly.com/navis-space/intro" target="_blank" rel="noopener" class="cta-contact-item">
-          <div class="cca-label">Schedule a Call</div>
-          <div class="cca-val">30-min introduction</div>
-        </a>
-      </div>
-      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;" class="scroll-reveal">
-        <button class="btn-gold" onclick="showPage('demo')">
-          Request a Demo
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <a href="mailto:contact@navis-space.com?subject=Technical Brief" class="btn-outline">Download Technical Brief</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">NAVIS</div>
-    <div class="footer-links">
-      <a href="#" onclick="scrollTo('problem');return false;">Problem</a>
-      <a href="#" onclick="scrollTo('framework');return false;">Framework</a>
-      <a href="#" onclick="scrollTo('differentiation');return false;">Differentiation</a>
-      <a href="#" onclick="scrollTo('roadmap');return false;">Roadmap</a>
-    </div>
-    <div class="footer-note">© 2026 NAVIS · All outputs are recommendations only · Author: Kavya Murali Parthasarathy</div>
-  </footer>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">NAVIS</div>
+  <div class="footer-links">
+    <a href="#" onclick="goTo('problem');return false;">Problem</a>
+    <a href="#" onclick="goTo('framework');return false;">Framework</a>
+    <a href="#" onclick="goTo('differentiation');return false;">Differentiation</a>
+    <a href="#" onclick="goTo('roadmap');return false;">Roadmap</a>
+    <a href="#" onclick="goTo('contact');return false;">Contact</a>
+  </div>
+  <div class="footer-note">© 2026 NAVIS · All outputs are recommendations only · Author: Kavya Murali Parthasarathy</div>
+</footer>
 
 </div><!-- /main-page -->
 
-
-<!-- ═══════════════════════════════════════════
-     DEMO PAGE
-═══════════════════════════════════════════ -->
+<!-- ══════════════ DEMO PAGE ══════════════ -->
 <div id="demo-page" class="page">
   <div id="demo-form-wrap">
     <div class="demo-inner">
       <button class="demo-back" onclick="showPage('main')">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         Back to NAVIS
       </button>
       <div class="demo-tag">Request a Demo</div>
       <h1 class="demo-title">See NAVIS<br><em>in action.</em></h1>
       <p class="demo-sub">Tell us about your operation. We will prepare a tailored demonstration of NAVIS applied to your satellite fleet and orbital context.</p>
       <div class="demo-rule"></div>
-
       <form class="demo-form" onsubmit="submitDemo(event)">
         <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">First Name <span>*</span></label>
-            <input class="form-input" type="text" placeholder="Kavya" required>
-          </div>
-          <div class="form-field">
-            <label class="form-label">Last Name <span>*</span></label>
-            <input class="form-input" type="text" placeholder="Parthasarathy" required>
-          </div>
+          <div class="form-field"><label class="form-label">First Name <span>*</span></label><input class="form-input" type="text" placeholder="Kavya" required></div>
+          <div class="form-field"><label class="form-label">Last Name <span>*</span></label><input class="form-input" type="text" placeholder="Parthasarathy" required></div>
         </div>
         <div class="form-row">
-          <div class="form-field">
-            <label class="form-label">Work Email <span>*</span></label>
-            <input class="form-input" type="email" placeholder="you@organisation.com" required>
-          </div>
-          <div class="form-field">
-            <label class="form-label">Organisation <span>*</span></label>
-            <input class="form-input" type="text" placeholder="Aerospace Corp" required>
-          </div>
+          <div class="form-field"><label class="form-label">Work Email <span>*</span></label><input class="form-input" type="email" placeholder="you@organisation.com" required></div>
+          <div class="form-field"><label class="form-label">Organisation <span>*</span></label><input class="form-input" type="text" placeholder="Aerospace Corp" required></div>
         </div>
         <div class="form-row">
           <div class="form-field">
             <label class="form-label">Your Role <span>*</span></label>
             <select class="form-select" required>
               <option value="" disabled selected>Select your role</option>
-              <option>Satellite Operator</option>
-              <option>Mission Manager</option>
-              <option>Systems Engineer</option>
-              <option>Compliance / Legal</option>
-              <option>Regulator</option>
-              <option>Insurer / Underwriter</option>
-              <option>Investor</option>
-              <option>Researcher / Academic</option>
-              <option>Other</option>
+              <option>Satellite Operator</option><option>Mission Manager</option><option>Systems Engineer</option>
+              <option>Compliance / Legal</option><option>Regulator</option><option>Insurer / Underwriter</option>
+              <option>Investor</option><option>Researcher / Academic</option><option>Other</option>
             </select>
           </div>
           <div class="form-field">
             <label class="form-label">Fleet Size</label>
             <select class="form-select">
               <option value="" disabled selected>Number of satellites</option>
-              <option>1–10</option>
-              <option>10–50</option>
-              <option>50–150</option>
-              <option>150–300</option>
-              <option>300+</option>
-              <option>Not applicable</option>
+              <option>1–10</option><option>10–50</option><option>50–150</option>
+              <option>150–300</option><option>300+</option><option>Not applicable</option>
             </select>
           </div>
         </div>
@@ -954,91 +767,71 @@ footer {
           <label class="form-label">Orbital Regime</label>
           <select class="form-select">
             <option value="" disabled selected>Where are your satellites?</option>
-            <option>LEO (200–2,000 km)</option>
-            <option>MEO (2,000–35,786 km)</option>
-            <option>GEO (≈35,786 km)</option>
-            <option>Multiple regimes</option>
+            <option>LEO (200–2,000 km)</option><option>MEO (2,000–35,786 km)</option>
+            <option>GEO (≈35,786 km)</option><option>Multiple regimes</option>
             <option>Planning stage — not yet launched</option>
           </select>
         </div>
         <div class="form-field full">
           <label class="form-label">What brings you to NAVIS?</label>
-          <textarea class="form-textarea" placeholder="Tell us about your current EoL decision process, compliance challenges, or what you would like to see in a demonstration…"></textarea>
+          <textarea class="form-textarea" placeholder="Tell us about your current EoL decision process, compliance challenges, or what you would like to see in the demonstration…"></textarea>
         </div>
         <div class="form-divider"></div>
-        <div class="form-note">
-          NAVIS is a decision intelligence layer — all outputs are recommendations only. Final operational authority remains with the satellite operator. Your information will be used solely to prepare your demonstration.
-        </div>
+        <div class="form-note">NAVIS is a decision intelligence layer — all outputs are recommendations only. Final operational authority remains with the satellite operator. Your information will be used solely to prepare your demonstration.</div>
         <div class="form-submit">
           <span class="form-submit-note">We respond within one business day.</span>
-          <button type="submit" class="btn-gold">
-            Submit Request
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+          <button type="submit" class="btn-gold">Submit Request <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
         </div>
       </form>
     </div>
   </div>
-
-  <!-- SUCCESS STATE -->
   <div class="demo-success" id="demo-success">
-    <div class="demo-inner" style="text-align:center; padding-top:40px;">
-      <button class="demo-back" onclick="showPage('main')" style="margin:0 auto 60px;">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <div class="demo-inner" style="text-align:center;padding-top:40px;">
+      <button class="demo-back" onclick="showPage('main')" style="margin:0 auto 64px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         Back to NAVIS
       </button>
       <div class="success-mark">✓</div>
       <h2 class="success-title">Request <em>received.</em></h2>
       <p class="success-sub">Thank you. We will review your details and reach out within one business day to arrange your NAVIS demonstration.</p>
-      <button class="btn-gold" onclick="showPage('main')">
-        Return to NAVIS
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
+      <button class="btn-gold" onclick="showPage('main')">Return to NAVIS <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
     </div>
   </div>
 </div><!-- /demo-page -->
 
-
 <script>
-/* ─── PAGE ROUTING ─── */
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id + '-page').classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-
+  window.scrollTo({ top: 0, behavior: 'instant' });
   if (id === 'demo') {
     document.getElementById('demo-form-wrap').style.display = 'block';
     document.getElementById('demo-success').style.display = 'none';
   }
 }
-
-function scrollTo(id) {
+function goTo(id) {
+  showPage('main');
   setTimeout(() => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 60);
+  }, 80);
+  return false;
 }
 
-/* ─── NAV SCROLL ─── */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 40);
 }, { passive: true });
 
-/* ─── SCROLL REVEAL ─── */
 const ro = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('revealed'); ro.unobserve(e.target); }
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); ro.unobserve(e.target); } });
+}, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
 document.querySelectorAll('.scroll-reveal').forEach(el => ro.observe(el));
 
-/* ─── DEMO FORM ─── */
 function submitDemo(e) {
   e.preventDefault();
   document.getElementById('demo-form-wrap').style.display = 'none';
-  const s = document.getElementById('demo-success');
-  s.style.display = 'block';
+  document.getElementById('demo-success').style.display = 'block';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
